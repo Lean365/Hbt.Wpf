@@ -1,0 +1,53 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:fa="clr-namespace:FontAwesome.Sharp;assembly=FontAwesome.Sharp"
+    xmlns:helpers="clr-namespace:Hbt.Fluent.Helpers">
+
+    <helpers:StringToIconCharConverter x:Key="StringToIconCharConverter"/>
+
+    <ItemsPanelTemplate x:Key="WrapPanelTemplate">
+        <WrapPanel Margin="10"
+                Orientation="Horizontal"/>
+    </ItemsPanelTemplate>
+
+    <DataTemplate x:Key="NavigationCardTemplate">
+        <Button
+            Width="360"
+            Height="90"
+            Margin="7"
+            Padding="20,10"
+            HorizontalContentAlignment="Left"
+            AutomationProperties.Name="{Binding Title, StringFormat='{}{0}页面'}"
+            Command="{Binding DataContext.ViewModel.NavigateCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+            CommandParameter="{Binding MenuItem}">
+            <StackPanel Orientation="Horizontal">
+                <fa:IconBlock
+                    Icon="{Binding Icon, Converter={StaticResource StringToIconCharConverter}}"
+                    IconFont="Solid"
+                    Width="50"
+                    Height="50"
+                    Margin="0,0,8,0"
+                    Foreground="{DynamicResource TextFillColorPrimaryBrush}"/>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock
+                        Margin="10,0,0,0"
+                        FontSize="14"
+                        FontWeight="SemiBold"
+                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                        Text="{Binding Title}" />
+                    <TextBlock
+                        Width="240"
+                        Margin="10,4,0,0"
+                        FontSize="12"
+                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                        Opacity="0.7"
+                        TextWrapping="Wrap"
+                        Text="{Binding Description}"/>
+                </StackPanel>
+            </StackPanel>
+        </Button>
+    </DataTemplate>
+
+</ResourceDictionary>
+

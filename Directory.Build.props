@@ -1,0 +1,24 @@
+<Project>
+  <PropertyGroup>
+    <!-- Unified versioning -->
+    <Version>0.0.1</Version>
+    <AssemblyVersion>0.0.1.0</AssemblyVersion>
+    <FileVersion>0.0.1.0</FileVersion>
+    <PackageVersion>0.0.1</PackageVersion>
+
+    <!-- Product metadata -->
+    <Company>黑冰台WPF开发</Company>
+    <Product>黑冰台WPF开发</Product>
+    <Authors>Hbt(Cursor AI)</Authors>
+
+    <!-- Common build settings -->
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+
+    <!-- Suppress NU1900 audit warning globally (optional) -->
+    <NoWarn>$(NoWarn);NU1900</NoWarn>
+  </PropertyGroup>
+</Project>
+
+

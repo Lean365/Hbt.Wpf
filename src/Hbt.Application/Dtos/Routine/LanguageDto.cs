@@ -1,0 +1,153 @@
+//===================================================================
+// 项目名 : Lean.Hbt
+// 文件名 : LanguageDto.cs
+// 创建者 : AI Assistant
+// 创建时间: 2025-01-20
+// 版本号 : 1.0
+// 描述    : 语言数据传输对象
+//===================================================================
+
+namespace Hbt.Application.Dtos.Routine;
+
+/// <summary>
+/// 语言数据传输对象
+/// 用于传输语言信息
+/// </summary>
+public class LanguageDto
+{
+    // 继承自 BaseEntity
+    public long Id { get; set; }
+    public string? Remarks { get; set; }
+    public string? CreatedBy { get; set; }
+    public DateTime CreatedTime { get; set; }
+    public string? UpdatedBy { get; set; }
+    public DateTime UpdatedTime { get; set; }
+    public int IsDeleted { get; set; }
+    public string? DeletedBy { get; set; }
+    public DateTime? DeletedTime { get; set; }
+
+    // Language 特有字段
+    public string LanguageCode { get; set; } = string.Empty;
+    public string LanguageName { get; set; } = string.Empty;
+    public string? NativeName { get; set; }
+    public string? LanguageIcon { get; set; }
+    public int IsDefault { get; set; }
+    public int OrderNum { get; set; }
+    public int IsBuiltin { get; set; }
+    public int LanguageStatus { get; set; }
+}
+
+/// <summary>
+/// 语言查询数据传输对象
+/// </summary>
+public class LanguageQueryDto : Hbt.Common.Results.PagedQuery
+{
+    /// <summary>
+    /// 语言代码
+    /// </summary>
+    public string? LanguageCode { get; set; }
+
+    /// <summary>
+    /// 语言名称
+    /// </summary>
+    public string? LanguageName { get; set; }
+
+    /// <summary>
+    /// 状态
+    /// </summary>
+    public int? LanguageStatus { get; set; }
+}
+
+/// <summary>
+/// 创建语言数据传输对象
+/// </summary>
+public class LanguageCreateDto
+{
+    /// <summary>
+    /// 语言代码
+    /// </summary>
+    public string LanguageCode { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 语言名称
+    /// </summary>
+    public string LanguageName { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 本地化名称
+    /// </summary>
+    public string? NativeName { get; set; }
+
+    /// <summary>
+    /// 语言图标
+    /// </summary>
+    public string? LanguageIcon { get; set; }
+
+    /// <summary>
+    /// 是否默认（0=否，1=是）
+    /// </summary>
+    public int IsDefault { get; set; }
+
+    /// <summary>
+    /// 排序号
+    /// </summary>
+    public int OrderNum { get; set; }
+
+    /// <summary>
+    /// 是否内置（0=否，1=是）
+    /// </summary>
+    public int IsBuiltin { get; set; }
+
+    /// <summary>
+    /// 语言状态（0=启用，1=禁用）
+    /// </summary>
+    public int LanguageStatus { get; set; }
+}
+
+/// <summary>
+/// 更新语言数据传输对象
+/// </summary>
+public class LanguageUpdateDto : LanguageCreateDto
+{
+    /// <summary>
+    /// 语言ID
+    /// </summary>
+    public long Id { get; set; }
+
+    /// <summary>
+    /// 语言状态（0=启用，1=禁用）
+    /// </summary>
+    public new int LanguageStatus { get; set; }
+}
+
+/// <summary>
+/// 语言选项DTO
+/// 用于下拉列表等UI组件
+/// </summary>
+public class LanguageOptionDto : Hbt.Common.Models.SelectOptionModel<string>
+{
+    /// <summary>
+    /// 语言ID（保留用于后端业务逻辑）
+    /// </summary>
+    public long Id { get; set; }
+
+    /// <summary>
+    /// 语言代码（如：zh-CN, en-US）
+    /// 映射到父类的 Value 属性
+    /// </summary>
+    public string Code
+    {
+        get => Value;
+        set => Value = value;
+    }
+
+    /// <summary>
+    /// 语言名称
+    /// 映射到父类的 Label 属性
+    /// </summary>
+    public string Name
+    {
+        get => Label;
+        set => Label = value;
+    }
+}

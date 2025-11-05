@@ -1,0 +1,64 @@
+---
+alwaysApply: true
+---
+
+# AvalonDock 使用规范
+
+## DockingManager 配置
+
+**标准配置**：@src/Hbt.Fluent/Views/MainWindow.xaml:367-396
+
+```xml
+<avalonDock:DockingManager 
+    x:Name="DockingManager"
+    DocumentsSource="{Binding ViewModel.Documents}"
+    ActiveContent="{Binding ViewModel.ActiveDocument, Mode=TwoWay}"
+    DocumentClosing="DockingManager_DocumentClosing"
+    DocumentClosed="DockingManager_DocumentClosed">
+    
+    <!-- LayoutItemContainerStyle：绑定 LayoutDocumentItem 属性 -->
+    <avalonDock:DockingManager.LayoutItemContainerStyle>
+        <Style TargetType="{x:Type avalonControls:LayoutDocumentItem}">
+            <Setter Property="Title" Value="{Binding Model.Title, Mode=OneWay}"/>
+            <Setter Property="IconSource" Value="{Binding Model.IconSource, Mode=OneWay}"/>
+        </Style>
+    </avalonDock:DockingManager.LayoutItemContainerStyle>
+    
+    <!-- LayoutItemTemplate：定义文档内容显示 -->
+    <avalonDock:DockingManager.LayoutItemTemplate>
+        <DataTemplate>
+            <ContentPresenter Content="{Binding Content}"/>
+        </DataTemplate>
+    </avalonDock:DockingManager.LayoutItemTemplate>
+</avalonDock:DockingManager>
+```
+
+## LayoutDocument 包装类
+
+**标准实现**：@src/Hbt.Fluent/Models/AvalonDocument.cs:60-138
+
+**关键要求**：
+- ✅ 直接继承 `LayoutDocument`，不要使用包装模式
+- ✅ `Title` 使用 `SetValue(TitleProperty, title)` 设置依赖属性
+- ✅ `IconSource` 直接赋值即可（AvalonDock 会自动处理）
+- ✅ `Content` 必须是 `UIElement` 类型
+
+**代码示例**：
+```csharp
+// @src/Hbt.Fluent/Models/AvalonDocument.cs:77
+SetValue(TitleProperty, title);
+
+// @src/Hbt.Fluent/Models/AvalonDocument.cs:114
+this.IconSource = iconSource;
+```
+
+## 官方文档参考
+
+- [AvalonDock 官方文档](https://github.com/Dirkster99/AvalonDock/wiki)
+- 必须基于官方文档实现，不能推测
+
+## 常见错误
+
+- ❌ `LayoutDocumentTabItem` 没有 `IconSource` 属性（只有 `LayoutDocumentItem` 有）
+- ❌ 不要自定义 `LayoutDocumentTabItem` 的 Style（无效）
+- ✅ 使用 `LayoutItemContainerStyle` 绑定 `LayoutDocumentItem` 的属性
