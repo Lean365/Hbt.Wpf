@@ -1,0 +1,52 @@
+name: Commit Message Check
+
+on:
+  push:
+    branches: [ master, main, develop ]
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  check-commit-message:
+    name: Validate Commit Message
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        
+    - name: Check commit message format
+      shell: bash
+      run: |
+        # 获取所有提交消息
+        if [ "${{ github.event_name }}" = "pull_request" ]; then
+          # PR 时检查 PR 标题
+          commit_msg="${{ github.event.pull_request.title }}"
+        else
+          # Push 时检查最新提交消息
+          commit_msg=$(git log -1 --pretty=%B)
+        fi
+        
+        echo "Checking commit message: $commit_msg"
+        
+        # 检查提交消息格式（允许中文）
+        if [[ -z "$commit_msg" ]]; then
+          echo "❌ Commit message is empty"
+          exit 1
+        fi
+        
+        # 检查长度（至少 5 个字符）
+        if [[ ${#commit_msg} -lt 5 ]]; then
+          echo "❌ Commit message is too short (minimum 5 characters)"
+          exit 1
+        fi
+        
+        # 检查是否包含版本信息（可选，仅警告）
+        if [[ "$commit_msg" =~ v[0-9]+\.[0-9]+\.[0-9]+ ]]; then
+          echo "✅ Commit message contains version information"
+        fi
+        
+        echo "✅ Commit message format is valid"
+

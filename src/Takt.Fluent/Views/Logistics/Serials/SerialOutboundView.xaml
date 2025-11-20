@@ -1,0 +1,82 @@
+<UserControl x:Class="Takt.Fluent.Views.Logistics.Serials.SerialOutboundView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:Takt.Fluent.Controls"
+             xmlns:local="clr-namespace:Takt.Fluent.Localization"
+             mc:Ignorable="d"
+             d:DesignHeight="720"
+             d:DesignWidth="1280">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400" MinWidth="300" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" MinWidth="400" />
+        </Grid.ColumnDefinitions>
+
+        <!-- 主表：产品序列号 -->
+        <controls:TaktDataGrid Grid.Column="0"
+                                x:Name="SerialDataGrid"
+                                ItemsSource="{Binding ProdSerials}"
+                                SelectedItem="{Binding SelectedProdSerial, Mode=TwoWay}"
+                                QueryKeyword="{Binding SerialKeyword, Mode=TwoWay}"
+                                QueryPlaceholder="{local:Loc Key=common.placeholder.keywordHint, Param0Key=Logistics.Serial.SerialKeyword}"
+                                ShowToolbarCreate="True"
+                                ShowToolbarUpdate="True"
+                                ShowToolbarDelete="True"
+                                CreateCommand="{Binding CreateSerialCommand}"
+                                UpdateCommand="{Binding UpdateSerialCommand}"
+                                DeleteCommand="{Binding DeleteSerialCommand}"
+                                RowUpdateCommand="{Binding UpdateSerialCommand}"
+                                RowDeleteCommand="{Binding DeleteSerialCommand}"
+                                PageIndex="{Binding SerialPageIndex, Mode=TwoWay}"
+                                PageSize="{Binding SerialPageSize, Mode=TwoWay}"
+                                TotalCount="{Binding SerialTotalCount}"
+                                QueryCommand="{Binding QuerySerialsCommand}"
+                                ResetCommand="{Binding ResetSerialsCommand}"
+                                PageChangedCommand="{Binding PageChangedSerialsCommand}"
+                                Loaded="SerialDataGrid_Loaded">
+            <controls:TaktDataGrid.Columns>
+                <controls:TaktDataGridColumnDefinition Header="{local:Loc Key=Logistics.Serial.MaterialCode}" BindingPath="MaterialCode" Width="150" />
+                <controls:TaktDataGridColumnDefinition Header="{local:Loc Key=Logistics.Serial.ModelCode}" BindingPath="ModelCode" Width="150" />
+                <controls:TaktDataGridColumnDefinition Header="{local:Loc Key=Logistics.Serial.DestCode}" BindingPath="DestCode" Width="100" />
+            </controls:TaktDataGrid.Columns>
+        </controls:TaktDataGrid>
+
+        <GridSplitter Grid.Column="1" Width="6" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+
+        <!-- 子表：序列号出库记录 -->
+        <controls:TaktDataGrid Grid.Column="2"
+                                x:Name="OutboundDataGrid"
+                                ItemsSource="{Binding ProdSerialOutbounds}"
+                                SelectedItem="{Binding SelectedProdSerialOutbound, Mode=TwoWay}"
+                                QueryKeyword="{Binding OutboundKeyword, Mode=TwoWay}"
+                                QueryPlaceholder="{local:Loc Key=common.placeholder.keywordHint, Param0Key=Logistics.SerialOutbound.OutboundKeyword}"
+                                ShowToolbarCreate="True"
+                                ShowToolbarUpdate="True"
+                                ShowToolbarDelete="True"
+                                CreateCommand="{Binding CreateOutboundCommand}"
+                                UpdateCommand="{Binding UpdateOutboundCommand}"
+                                DeleteCommand="{Binding DeleteOutboundCommand}"
+                                RowUpdateCommand="{Binding UpdateOutboundCommand}"
+                                RowDeleteCommand="{Binding DeleteOutboundCommand}"
+                                PageIndex="{Binding OutboundPageIndex, Mode=TwoWay}"
+                                PageSize="{Binding OutboundPageSize, Mode=TwoWay}"
+                                TotalCount="{Binding OutboundTotalCount}"
+                                QueryCommand="{Binding QueryOutboundsCommand}"
+                                ResetCommand="{Binding ResetOutboundsCommand}"
+                                PageChangedCommand="{Binding PageChangedOutboundsCommand}"
+                                Loaded="OutboundDataGrid_Loaded">
+            <controls:TaktDataGrid.Columns>
+                <controls:TaktDataGridColumnDefinition Header="{local:Loc Key=Logistics.SerialOutbound.OutboundNo}" BindingPath="OutboundNo" Width="150" />
+                <controls:TaktDataGridColumnDefinition Header="{local:Loc Key=Logistics.SerialOutbound.SerialNumber}" BindingPath="SerialNumber" Width="150" />
+                <controls:TaktDataGridColumnDefinition Header="{local:Loc Key=Logistics.SerialOutbound.Quantity}" BindingPath="Quantity" Width="100" />
+                <controls:TaktDataGridColumnDefinition Header="{local:Loc Key=Logistics.SerialOutbound.OutboundDate}" BindingPath="OutboundDate" Width="150" />
+                <controls:TaktDataGridColumnDefinition Header="{local:Loc Key=Logistics.SerialOutbound.Destination}" BindingPath="Destination" Width="150" />
+                <controls:TaktDataGridColumnDefinition Header="{local:Loc Key=Logistics.SerialOutbound.DestinationPort}" BindingPath="DestinationPort" Width="150" />
+            </controls:TaktDataGrid.Columns>
+        </controls:TaktDataGrid>
+    </Grid>
+</UserControl>
+

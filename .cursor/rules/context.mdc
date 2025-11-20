@@ -1,0 +1,74 @@
+---
+alwaysApply: true
+---
+
+# 上下文管理规范
+
+## 上下文分类
+
+**必须提供的信息**：
+
+1. **代码上下文**（必须）：
+```markdown
+**相关代码**：
+- @src/Takt.Fluent/Views/MainWindow.xaml
+- @src/Takt.Fluent/Models/AvalonDocument.cs:114
+```
+
+2. **架构上下文**（必须）：
+```markdown
+**架构上下文**：
+- 分层架构：Fluent -> Application -> Domain -> Infrastructure
+- MVVM 模式：View -> ViewModel -> Service -> Repository
+```
+
+3. **当前状态**（必须）：
+```markdown
+**当前状态**：
+- 已完成：图标转换逻辑已实现，IconSource 已正确设置
+- 存在问题：图标在 UI 中不显示
+- 已验证：日志显示 IconSource=RenderTargetBitmap, 16x16
+```
+
+## 文件引用规范
+
+**引用格式**：
+
+- 完整文件：`@src/Takt.Fluent/Views/MainWindow.xaml`
+- 特定行：`@src/Takt.Fluent/Models/AvalonDocument.cs:114`
+- 行范围：`@src/Takt.Fluent/Models/AvalonDocument.cs:60-138`
+- 多文件：
+```markdown
+**相关文件**：
+- @src/Takt.Fluent/Views/MainWindow.xaml（DockingManager 配置）
+- @src/Takt.Fluent/Models/AvalonDocument.cs（图标转换逻辑）
+```
+
+## 上下文完整性检查
+
+**必须检查项**：
+
+- [ ] 是否提供了项目名称、技术栈、架构模式？
+- [ ] 是否提供了所有相关文件的路径（使用 @ 符号）？
+- [ ] 是否说明了模块间的依赖关系？
+- [ ] 是否说明了当前实现状态和问题？
+- [ ] 是否提供了相关的日志输出？
+- [ ] 是否提供了可重现的测试步骤？
+
+## 上下文更新规范
+
+**更新时机**：
+
+1. **代码变更后**（必须更新）：
+```markdown
+**上下文更新**：
+- 更新原因：代码已修改，需要重新分析
+- 更新内容：@src/Takt.Fluent/Models/AvalonDocument.cs:114（已修改）
+```
+
+2. **问题状态变化**（必须更新）：
+```markdown
+**问题状态更新**：
+- 之前状态：图标不显示
+- 当前状态：图标已显示，但位置不正确
+```

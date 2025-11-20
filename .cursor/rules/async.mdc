@@ -1,0 +1,65 @@
+---
+alwaysApply: true
+---
+
+# 异步编程规范
+
+## 异步方法命名
+
+**强制要求**：异步方法必须以 `Async` 结尾
+
+```csharp
+// ✅ 正确
+public async Task<List<UserDto>> GetUsersAsync() { }
+public async Task<UserDto> GetUserByIdAsync(int id) { }
+
+// ❌ 错误
+public async Task<List<UserDto>> GetUsers() { }  // 缺少 Async 后缀
+```
+
+**示例文件**：
+- @src/Takt.Application/Services/（查看实际异步方法）
+
+## 异步调用规范
+
+**禁止使用 `.Result` 或 `.Wait()`**：
+
+```csharp
+// ✅ 正确：使用 async/await
+private async Task LoadUsersAsync()
+{
+    var result = await _userService.GetListAsync();
+    if (result.Success)
+    {
+        Users = new ObservableCollection<UserDto>(result.Data);
+    }
+}
+
+// ❌ 错误：使用 .Result 或 .Wait()
+private void LoadUsers()
+{
+    var result = _userService.GetListAsync().Result;  // ❌ 死锁风险
+    _userService.GetListAsync().Wait();  // ❌ 死锁风险
+}
+```
+
+## UI 线程操作
+
+**规范**：在后台线程执行，回到 UI 线程更新
+
+```csharp
+// ✅ 正确
+private async Task LoadUsersAsync()
+{
+    var users = await _userService.GetListAsync();  // 后台线程
+    
+    // 自动回到 UI 线程（如果 ViewModel 在 UI 线程创建）
+    Users = new ObservableCollection<UserDto>(users);
+    
+    // 或者显式调度到 UI 线程
+    Application.Current.Dispatcher.Invoke(() =>
+    {
+        Users = new ObservableCollection<UserDto>(users);
+    });
+}
+```

@@ -1,0 +1,79 @@
+<UserControl x:Class="Takt.Fluent.Views.Logistics.Visitors.VisitorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:Takt.Fluent.Controls"
+             xmlns:local="clr-namespace:Takt.Fluent.Localization"
+             mc:Ignorable="d"
+             d:DesignHeight="720"
+             d:DesignWidth="1280">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400" MinWidth="300" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" MinWidth="400" />
+        </Grid.ColumnDefinitions>
+
+        <!-- 主表：访客 -->
+        <controls:TaktDataGrid Grid.Column="0"
+                                x:Name="VisitorDataGrid"
+                                ItemsSource="{Binding Visitors}"
+                                SelectedItem="{Binding SelectedVisitor, Mode=TwoWay}"
+                                QueryKeyword="{Binding VisitorKeyword, Mode=TwoWay}"
+                                QueryPlaceholder="{local:Loc Key=common.placeholder.keywordHint, Param0Key=Logistics.Visitor.VisitorKeyword}"
+                                ShowToolbarCreate="True"
+                                ShowToolbarUpdate="True"
+                                ShowToolbarDelete="True"
+                                CreateCommand="{Binding CreateVisitorCommand}"
+                                UpdateCommand="{Binding UpdateVisitorCommand}"
+                                DeleteCommand="{Binding DeleteVisitorCommand}"
+                                RowUpdateCommand="{Binding UpdateVisitorCommand}"
+                                RowDeleteCommand="{Binding DeleteVisitorCommand}"
+                                PageIndex="{Binding VisitorPageIndex, Mode=TwoWay}"
+                                PageSize="{Binding VisitorPageSize, Mode=TwoWay}"
+                                TotalCount="{Binding VisitorTotalCount}"
+                                QueryCommand="{Binding QueryVisitorsCommand}"
+                                ResetCommand="{Binding ResetVisitorsCommand}"
+                                PageChangedCommand="{Binding PageChangedVisitorsCommand}"
+                                Loaded="VisitorDataGrid_Loaded">
+            <controls:TaktDataGrid.Columns>
+                <controls:TaktDataGridColumnDefinition Header="{local:Loc Key=Logistics.Visitor.CompanyName}" BindingPath="CompanyName" Width="*" />
+                <controls:TaktDataGridColumnDefinition Header="{local:Loc Key=Logistics.Visitor.StartTime}" BindingPath="StartTime" Width="150" />
+                <controls:TaktDataGridColumnDefinition Header="{local:Loc Key=Logistics.Visitor.EndTime}" BindingPath="EndTime" Width="150" />
+            </controls:TaktDataGrid.Columns>
+        </controls:TaktDataGrid>
+
+        <GridSplitter Grid.Column="1" Width="6" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+
+        <!-- 子表：访客详情 -->
+        <controls:TaktDataGrid Grid.Column="2"
+                                x:Name="VisitorDetailDataGrid"
+                                ItemsSource="{Binding VisitorDetails}"
+                                SelectedItem="{Binding SelectedVisitorDetail, Mode=TwoWay}"
+                                QueryKeyword="{Binding DetailKeyword, Mode=TwoWay}"
+                                QueryPlaceholder="{local:Loc Key=common.placeholder.keywordHint, Param0Key=Logistics.Visitor.DetailKeyword}"
+                                ShowToolbarCreate="True"
+                                ShowToolbarUpdate="True"
+                                ShowToolbarDelete="True"
+                                CreateCommand="{Binding CreateDetailCommand}"
+                                UpdateCommand="{Binding UpdateDetailCommand}"
+                                DeleteCommand="{Binding DeleteDetailCommand}"
+                                RowUpdateCommand="{Binding UpdateDetailCommand}"
+                                RowDeleteCommand="{Binding DeleteDetailCommand}"
+                                PageIndex="{Binding DetailPageIndex, Mode=TwoWay}"
+                                PageSize="{Binding DetailPageSize, Mode=TwoWay}"
+                                TotalCount="{Binding DetailTotalCount}"
+                                QueryCommand="{Binding QueryDetailsCommand}"
+                                ResetCommand="{Binding ResetDetailsCommand}"
+                                PageChangedCommand="{Binding PageChangedDetailsCommand}"
+                                Loaded="VisitorDetailDataGrid_Loaded">
+            <controls:TaktDataGrid.Columns>
+                <controls:TaktDataGridColumnDefinition Header="{local:Loc Key=Logistics.Visitor.Department}" BindingPath="Department" Width="150" />
+                <controls:TaktDataGridColumnDefinition Header="{local:Loc Key=Logistics.Visitor.Name}" BindingPath="Name" Width="150" />
+                <controls:TaktDataGridColumnDefinition Header="{local:Loc Key=Logistics.Visitor.Position}" BindingPath="Position" Width="150" />
+            </controls:TaktDataGrid.Columns>
+        </controls:TaktDataGrid>
+    </Grid>
+</UserControl>
+

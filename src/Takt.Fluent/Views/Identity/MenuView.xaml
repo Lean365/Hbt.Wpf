@@ -1,0 +1,253 @@
+<UserControl x:Class="Takt.Fluent.Views.Identity.MenuView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:Takt.Fluent.Controls"
+             xmlns:local="clr-namespace:Takt.Fluent.Localization"
+             xmlns:helpers="clr-namespace:Takt.Fluent.Helpers"
+             xmlns:fa="clr-namespace:FontAwesome.Sharp;assembly=FontAwesome.Sharp"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d"
+             d:DesignHeight="720"
+             d:DesignWidth="1280">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <helpers:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter" />
+        <helpers:StringToIconCharConverter x:Key="StringToIconCharConverter" />
+        <helpers:StringToTranslationConverter x:Key="StringToTranslationConverter" />
+        <helpers:EnumToStringConverter x:Key="EnumToStringConverter" />
+
+        <!-- 表头样式 -->
+        <Style x:Key="MenuHeaderStyle" TargetType="Border">
+            <Setter Property="Background" Value="{DynamicResource MaterialDesignPaper}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignDivider}" />
+            <Setter Property="BorderThickness" Value="0,0,0,1" />
+            <Setter Property="Padding" Value="16,8" />
+        </Style>
+
+        <!-- 树形视图项容器样式 -->
+        <Style x:Key="MenuTreeViewItemStyle" TargetType="TreeViewItem">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource MaterialDesignCardBackground}" />
+                </Trigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource AccentFillColorDefaultBrush}" />
+                    <Setter Property="Foreground" Value="{DynamicResource TextOnAccentFillColorPrimaryBrush}" />
+                </Trigger>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsSelected" Value="True" />
+                        <Condition Property="IsMouseOver" Value="True" />
+                    </MultiTrigger.Conditions>
+                    <Setter Property="Background" Value="{DynamicResource AccentFillColorTertiaryBrush}" />
+                    <Setter Property="Foreground" Value="{DynamicResource TextOnAccentFillColorPrimaryBrush}" />
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <!-- TaktTreeView -->
+        <controls:TaktTreeView
+                               ItemsSource="{Binding Menus}"
+                               SelectedItem="{Binding SelectedMenu, Mode=TwoWay}"
+                               QueryKeyword="{Binding Keyword, Mode=TwoWay}"
+                               QueryPlaceholder="{local:Loc Key=common.placeholder.keywordHint, Param0Key=Identity.Menu.Keyword}"
+                               EmptyText="{Binding EmptyMessage}"
+                               ShowQueryArea="True"
+                               ShowToolbarCreate="True"
+                               ShowToolbarUpdate="True"
+                               ShowToolbarDelete="True"
+                               ShowToolbarImport="False"
+                               ShowToolbarExport="False"
+                               ShowAdvancedQueryButton="False"
+                               QueryCommand="{Binding QueryCommand}"
+                               ResetCommand="{Binding ResetCommand}"
+                               CreateCommand="{Binding CreateCommand}"
+                               UpdateCommand="{Binding UpdateCommand}"
+                               DeleteCommand="{Binding DeleteCommand}">
+            <controls:TaktTreeView.HeaderContent>
+                <Border Style="{StaticResource MenuHeaderStyle}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="16"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="2"
+                                   Text="{local:Loc Key=Identity.Menu.MenuName}"
+                                   FontWeight="Bold"
+                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"/>
+                        <TextBlock Grid.Column="3"
+                                   Text="{local:Loc Key=Identity.Menu.MenuCode}"
+                                   FontWeight="Bold"
+                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"/>
+                        <TextBlock Grid.Column="4"
+                                   Text="{local:Loc Key=Identity.Menu.MenuType}"
+                                   FontWeight="Bold"
+                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"/>
+                        <TextBlock Grid.Column="5"
+                                   Text="{local:Loc Key=Identity.Menu.PermCode}"
+                                   FontWeight="Bold"
+                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"/>
+                        <TextBlock Grid.Column="6"
+                                   Text="{local:Loc Key=Identity.Menu.OrderNum}"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Right"
+                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"/>
+                        <TextBlock Grid.Column="7"
+                                   Text="{local:Loc Key=Identity.Menu.MenuStatus}"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center"
+                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"/>
+                    </Grid>
+                </Border>
+            </controls:TaktTreeView.HeaderContent>
+            <controls:TaktTreeView.ItemContainerStyle>
+                <Style TargetType="TreeViewItem" BasedOn="{StaticResource MenuTreeViewItemStyle}">
+                    <EventSetter Event="Selected" Handler="MenuTreeViewItem_Selected" />
+                </Style>
+            </controls:TaktTreeView.ItemContainerStyle>
+            <controls:TaktTreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                    <Grid MinHeight="32" Margin="16,2,16,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="16"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- 图标 -->
+                        <fa:IconBlock Grid.Column="0"
+                                      Width="16"
+                                      Height="16"
+                                      VerticalAlignment="Center"
+                                      IconFont="Solid"
+                                      Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                      Icon="{Binding Icon, Converter={StaticResource StringToIconCharConverter}}"
+                                      Visibility="{Binding Icon, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+
+                        <!-- 菜单名称 -->
+                        <TextBlock Grid.Column="2"
+                                   VerticalAlignment="Center"
+                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}">
+                            <TextBlock.Text>
+                                <MultiBinding Converter="{StaticResource StringToTranslationConverter}">
+                                    <Binding Path="I18nKey" />
+                                    <Binding Path="MenuName" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+
+                        <!-- 菜单编码 -->
+                        <TextBlock Grid.Column="3"
+                                   Text="{Binding MenuCode}"
+                                   VerticalAlignment="Center"
+                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
+
+                        <!-- 菜单类型 -->
+                        <TextBlock Grid.Column="4"
+                                   VerticalAlignment="Center"
+                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+                            <TextBlock.Text>
+                                <Binding Path="MenuType" Converter="{StaticResource EnumToStringConverter}"/>
+                            </TextBlock.Text>
+                        </TextBlock>
+
+                        <!-- 权限码 -->
+                        <TextBlock Grid.Column="5"
+                                   Text="{Binding PermCode}"
+                                   VerticalAlignment="Center"
+                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                   TextTrimming="CharacterEllipsis"/>
+
+                        <!-- 排序号 -->
+                        <TextBlock Grid.Column="6"
+                                   Text="{Binding OrderNum}"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Right"
+                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
+
+                        <!-- 状态 -->
+                        <TextBlock Grid.Column="7"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+                            <TextBlock.Text>
+                                <Binding Path="MenuStatus" Converter="{StaticResource EnumToStringConverter}"/>
+                            </TextBlock.Text>
+                        </TextBlock>
+
+                        <!-- 操作列 -->
+                        <StackPanel Grid.Column="8"
+                                    Orientation="Horizontal"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Margin="8,0,0,0">
+                            <!-- 新增按钮 -->
+                            <Button Style="{StaticResource DefaultIconPlainPrimarySmall}"
+                                    Width="24"
+                                    Height="24"
+                                    Margin="2,0"
+                                    ToolTip="{local:Loc Key=common.button.create}"
+                                    Visibility="{Binding ShowRowCreate, RelativeSource={RelativeSource AncestorType=controls:TaktTreeView}, Converter={StaticResource BoolToVisibilityConverter}}"
+                                    Command="{Binding RowCreateCommand, RelativeSource={RelativeSource AncestorType=controls:TaktTreeView}}"
+                                    CommandParameter="{Binding}">
+                                <materialDesign:PackIcon Kind="PlaylistPlus" 
+                                                         Width="16" 
+                                                         Height="16" />
+                            </Button>
+                            <!-- 更新按钮 -->
+                            <Button Style="{StaticResource DefaultIconPlainSuccessSmall}"
+                                    Width="24"
+                                    Height="24"
+                                    Margin="2,0"
+                                    ToolTip="{local:Loc Key=common.button.update}"
+                                    Visibility="{Binding ShowRowUpdate, RelativeSource={RelativeSource AncestorType=controls:TaktTreeView}, Converter={StaticResource BoolToVisibilityConverter}}"
+                                    Command="{Binding RowUpdateCommand, RelativeSource={RelativeSource AncestorType=controls:TaktTreeView}}"
+                                    CommandParameter="{Binding}">
+                                <materialDesign:PackIcon Kind="Pencil" 
+                                                         Width="16" 
+                                                         Height="16" />
+                            </Button>
+                            <!-- 删除按钮 -->
+                            <Button Style="{StaticResource DefaultIconPlainWarningSmall}"
+                                    Width="24"
+                                    Height="24"
+                                    Margin="2,0"
+                                    ToolTip="{local:Loc Key=common.button.delete}"
+                                    Visibility="{Binding ShowRowDelete, RelativeSource={RelativeSource AncestorType=controls:TaktTreeView}, Converter={StaticResource BoolToVisibilityConverter}}"
+                                    Command="{Binding RowDeleteCommand, RelativeSource={RelativeSource AncestorType=controls:TaktTreeView}}"
+                                    CommandParameter="{Binding}">
+                                <materialDesign:PackIcon Kind="Delete" 
+                                                         Width="16" 
+                                                         Height="16" />
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </HierarchicalDataTemplate>
+            </controls:TaktTreeView.ItemTemplate>
+        </controls:TaktTreeView>
+    </Grid>
+</UserControl>
+

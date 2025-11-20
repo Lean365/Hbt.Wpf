@@ -1,0 +1,73 @@
+<UserControl x:Class="Takt.Fluent.Views.Logging.DiffLogView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:Takt.Fluent.Controls"
+             xmlns:local="clr-namespace:Takt.Fluent.Localization"
+             mc:Ignorable="d"
+             d:DesignHeight="720"
+             d:DesignWidth="1280">
+    <controls:TaktDataGrid ItemsSource="{Binding DiffLogs}"
+                                SelectedItem="{Binding SelectedDiffLog, Mode=TwoWay}"
+                                QueryKeyword="{Binding Keyword, Mode=TwoWay}"
+                                QueryPlaceholder="{local:Loc Key=common.placeholder.keywordHint, Param0Key=Logging.DiffLog.Keyword}"
+                                QueryButtonText="{local:Loc Key=common.search}"
+                                ResetButtonText="{local:Loc Key=common.reset}"
+                                EmptyText="{Binding EmptyMessage}"
+                                ShowToolbarCreate="False"
+                                ShowToolbarUpdate="False"
+                                ShowToolbarDelete="False"
+                                ShowToolbarImport="False"
+                                ShowToolbarExport="True"
+                                ShowAdvancedQueryButton="False"
+                                ShowRowCreate="False"
+                                ShowRowUpdate="False"
+                                ShowRowDelete="False"
+                                ShowRowDetail="False"
+                                ShowRowAssignRole="False"
+                                ShowRowAuthorize="False"
+                                PageIndex="{Binding PageIndex, Mode=TwoWay}"
+                                PageSize="{Binding PageSize, Mode=TwoWay}"
+                                TotalCount="{Binding TotalCount}"
+                                QueryCommand="{Binding QueryCommand}"
+                                ResetCommand="{Binding ResetCommand}"
+                                ExportCommand="{Binding ExportCommand}"
+                                PageChangedCommand="{Binding PageChangedCommand}">
+        <controls:TaktDataGrid.Columns>
+            <controls:TaktDataGridColumnDefinition Header="{local:Loc Key=Logging.DiffLog.TableName}"
+                                                        BindingPath="TableName"
+                                                        Width="180" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Loc Key=Logging.DiffLog.DiffType}"
+                                                        BindingPath="DiffType"
+                                                        Width="120" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Loc Key=Logging.DiffLog.BusinessData}"
+                                                        BindingPath="BusinessData"
+                                                        Width="200" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Loc Key=Logging.DiffLog.BeforeData}"
+                                                        BindingPath="BeforeData"
+                                                        Width="300" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Loc Key=Logging.DiffLog.AfterData}"
+                                                        BindingPath="AfterData"
+                                                        Width="300" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Loc Key=Logging.DiffLog.DiffTime}"
+                                                        BindingPath="DiffTime"
+                                                        Width="180"
+                                                        StringFormat="{}{0:yyyy-MM-dd HH:mm:ss}" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Loc Key=Logging.DiffLog.ElapsedTime}"
+                                                        BindingPath="ElapsedTime"
+                                                        Width="120" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Loc Key=Logging.DiffLog.Username}"
+                                                        BindingPath="Username"
+                                                        Width="150" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Loc Key=Logging.DiffLog.IpAddress}"
+                                                        BindingPath="IpAddress"
+                                                        Width="150" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Loc Key=common.audit.CreatedTime}"
+                                                        BindingPath="CreatedTime"
+                                                        Width="180"
+                                                        StringFormat="{}{0:yyyy-MM-dd HH:mm:ss}" />
+        </controls:TaktDataGrid.Columns>
+    </controls:TaktDataGrid>
+</UserControl>
+

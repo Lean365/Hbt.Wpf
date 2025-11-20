@@ -1,0 +1,370 @@
+<Window x:Class="Takt.Fluent.Views.Identity.UserComponent.UserForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Takt.Fluent.Localization"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:helpers="clr-namespace:Takt.Fluent.Helpers"
+        xmlns:controls="clr-namespace:Takt.Fluent.Controls"
+        mc:Ignorable="d"
+        d:DesignHeight="600"
+        d:DesignWidth="800"
+        Title="{Binding Title}" 
+        SizeToContent="Manual" 
+        WindowStartupLocation="Manual"
+        ResizeMode="CanResize" 
+        Background="{DynamicResource MaterialDesignPaper}">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <helpers:IntEqualsConverter x:Key="IntEqualsConverter"/>
+        <helpers:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter"/>
+        <helpers:StringToBoolConverter x:Key="StringToBoolConverter"/>
+        <helpers:InverseBoolConverter x:Key="InverseBoolConverter"/>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TabControl Grid.Row="0" Margin="0,0,0,16">
+            <!-- 基本信息 -->
+            <TabItem Header="{local:Loc Key=Identity.User.BasicInfo}">
+                <StackPanel Margin="16">
+                        <!-- 用户名 -->
+                        <StackPanel Margin="0,0,0,8" MinHeight="56">
+                            <Grid MinHeight="32">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                    <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                    <Run Text="{local:Loc Key=Identity.User.Username}"/>
+                                </TextBlock>
+                                <controls:TaktTextBox x:Name="UsernameTextBox"
+                                                            Grid.Column="1" 
+                                                            Size="Small"
+                                                            VerticalAlignment="Center"
+                                                            Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                                                            HasError="{Binding UsernameError, Converter={StaticResource StringToBoolConverter}}"
+                                                            IsReadOnly="{Binding IsCreate, Converter={StaticResource InverseBoolConverter}}"
+                                                            Hint="{Binding UsernameHint}"/>
+                            </Grid>
+                            <TextBlock Grid.Column="1" 
+                                       Style="{StaticResource ErrorTextStyle}" 
+                                       Text="{Binding UsernameError}"
+                                       Visibility="{Binding UsernameError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                        </StackPanel>
+
+                        <!-- 真实姓名 -->
+                        <StackPanel Margin="0,0,0,8" MinHeight="56">
+                            <Grid MinHeight="32">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                    <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                    <Run Text="{local:Loc Key=Identity.User.RealName}"/>
+                                </TextBlock>
+                                <controls:TaktTextBox x:Name="RealNameTextBox"
+                                                            Grid.Column="1" 
+                                                            Size="Small"
+                                                            VerticalAlignment="Center"
+                                                            Text="{Binding RealName, UpdateSourceTrigger=PropertyChanged}"
+                                                            HasError="{Binding RealNameError, Converter={StaticResource StringToBoolConverter}}"
+                                                            Hint="{Binding RealNameHint}"/>
+                            </Grid>
+                            <TextBlock Grid.Column="1" 
+                                       Style="{StaticResource ErrorTextStyle}" 
+                                       Text="{Binding RealNameError}"
+                                       Visibility="{Binding RealNameError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                        </StackPanel>
+
+                        <!-- 昵称 -->
+                        <StackPanel Margin="0,0,0,8" MinHeight="56">
+                            <Grid MinHeight="32">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                    <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                    <Run Text="{local:Loc Key=Identity.User.Nickname}"/>
+                                </TextBlock>
+                                <controls:TaktTextBox x:Name="NicknameTextBox"
+                                                            Grid.Column="1" 
+                                                            Size="Small"
+                                                            VerticalAlignment="Center"
+                                                            Text="{Binding Nickname, UpdateSourceTrigger=PropertyChanged}"
+                                                            HasError="{Binding NicknameError, Converter={StaticResource StringToBoolConverter}}"
+                                                            Hint="{Binding NicknameHint}"/>
+                            </Grid>
+                            <TextBlock Grid.Column="1" 
+                                       Style="{StaticResource ErrorTextStyle}" 
+                                       Text="{Binding NicknameError}"
+                                       Visibility="{Binding NicknameError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                        </StackPanel>
+
+                        <!-- 邮箱 -->
+                        <StackPanel Margin="0,0,0,8" MinHeight="56">
+                            <Grid MinHeight="32">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                    <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                    <Run Text="{local:Loc Key=Identity.User.Email}"/>
+                                </TextBlock>
+                                <controls:TaktTextBox x:Name="EmailTextBox"
+                                                            Grid.Column="1" 
+                                                            Size="Small"
+                                                            VerticalAlignment="Center"
+                                                            Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"
+                                                            HasError="{Binding EmailError, Converter={StaticResource StringToBoolConverter}}"
+                                                            Hint="{Binding EmailHint}"/>
+                            </Grid>
+                            <TextBlock Grid.Column="1" 
+                                       Style="{StaticResource ErrorTextStyle}" 
+                                       Text="{Binding EmailError}"
+                                       Visibility="{Binding EmailError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                        </StackPanel>
+
+                        <!-- 手机号 -->
+                        <StackPanel Margin="0,0,0,8" MinHeight="56">
+                            <Grid MinHeight="32">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                    <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                    <Run Text="{local:Loc Key=Identity.User.Phone}"/>
+                                </TextBlock>
+                                <controls:TaktTextBox x:Name="PhoneTextBox"
+                                                            Grid.Column="1" 
+                                                            Size="Small"
+                                                            VerticalAlignment="Center"
+                                                            Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}"
+                                                            HasError="{Binding PhoneError, Converter={StaticResource StringToBoolConverter}}"
+                                                            Hint="{Binding PhoneHint}"/>
+                            </Grid>
+                            <TextBlock Grid.Column="1" 
+                                       Style="{StaticResource ErrorTextStyle}" 
+                                       Text="{Binding PhoneError}"
+                                       Visibility="{Binding PhoneError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                        </StackPanel>
+
+                        <!-- 头像 -->
+                        <StackPanel Margin="0,0,0,8" MinHeight="56">
+                            <Grid MinHeight="32">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                    <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                    <Run Text="{local:Loc Key=Identity.User.Avatar}"/>
+                                </TextBlock>
+                                <controls:TaktTextBox x:Name="AvatarTextBox"
+                                                            Grid.Column="1" 
+                                                            Size="Small"
+                                                            VerticalAlignment="Center"
+                                                            Text="{Binding Avatar, UpdateSourceTrigger=PropertyChanged}"
+                                                            HasError="{Binding AvatarError, Converter={StaticResource StringToBoolConverter}}"
+                                                            IsReadOnly="True"
+                                                            Hint="头像路径（只读，默认：assets/avatar.png）"/>
+                            </Grid>
+                            <TextBlock Grid.Column="1" 
+                                       Style="{StaticResource ErrorTextStyle}" 
+                                       Text="{Binding AvatarError}"
+                                       Visibility="{Binding AvatarError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                        </StackPanel>
+
+                        <!-- 密码 -->
+                        <StackPanel x:Name="PasswordStackPanel" Margin="0,0,0,8" MinHeight="56" Visibility="{Binding IsCreate, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Grid MinHeight="32">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                    <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                    <Run Text="{local:Loc Key=Identity.User.Password}"/>
+                                </TextBlock>
+                                <controls:TaktPasswordBox Grid.Column="1" 
+                                                                x:Name="Pwd"
+                                                                Size="Small"
+                                                                VerticalAlignment="Center"
+                                                                HasError="{Binding PasswordError, Converter={StaticResource StringToBoolConverter}}"
+                                                                Hint="{Binding PasswordHint}"/>
+                            </Grid>
+                            <TextBlock Grid.Column="1" 
+                                       Style="{StaticResource ErrorTextStyle}" 
+                                       Text="{Binding PasswordError}"
+                                       Visibility="{Binding PasswordError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                        </StackPanel>
+
+                        <!-- 确认密码 -->
+                        <StackPanel x:Name="PasswordConfirmStackPanel" Margin="0,0,0,8" MinHeight="56" Visibility="{Binding IsCreate, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Grid MinHeight="32">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                    <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                    <Run Text="{local:Loc Key=Identity.User.PasswordConfirm}"/>
+                                </TextBlock>
+                                <controls:TaktPasswordBox Grid.Column="1" 
+                                                               x:Name="Pwd2"
+                                                               Size="Small"
+                                                               VerticalAlignment="Center"
+                                                               HasError="{Binding PasswordConfirmError, Converter={StaticResource StringToBoolConverter}}"/>
+                            </Grid>
+                            <TextBlock Grid.Column="1" 
+                                       Style="{StaticResource ErrorTextStyle}" 
+                                       Text="{Binding PasswordConfirmError}"
+                                       Visibility="{Binding PasswordConfirmError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                        </StackPanel>
+                </StackPanel>
+            </TabItem>
+
+            <!-- 状态信息 -->
+            <TabItem Header="{local:Loc Key=Identity.User.StatusInfo}">
+                <StackPanel Margin="16">
+                        <!-- 用户类型 -->
+                        <StackPanel Margin="0,0,0,8" MinHeight="56">
+                            <Grid MinHeight="32">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                    <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                    <Run Text="{local:Loc Key=Identity.User.UserType}"/>
+                                </TextBlock>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                    <controls:TaktRadioButton Content="{local:Loc Key=Identity.User.UserType.System}"
+                                                                    Size="Small"
+                                                                    GroupName="UserTypeGroup"
+                                                                    VerticalAlignment="Center"
+                                                                    IsChecked="{Binding UserType, Converter={StaticResource IntEqualsConverter}, ConverterParameter=0}"/>
+                                    <controls:TaktRadioButton Content="{local:Loc Key=Identity.User.UserType.Normal}"
+                                                                    Size="Small"
+                                                                    GroupName="UserTypeGroup"
+                                                                    VerticalAlignment="Center"
+                                                                    Margin="12,0,0,0"
+                                                                    IsChecked="{Binding UserType, Converter={StaticResource IntEqualsConverter}, ConverterParameter=1}"/>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+
+                        <!-- 性别 -->
+                        <StackPanel Margin="0,0,0,8" MinHeight="56">
+                            <Grid MinHeight="32">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{local:Loc Key=Identity.User.UserGender}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                    <controls:TaktRadioButton Content="{local:Loc Key=Identity.User.UserGender.Unknown}"
+                                                                   Size="Small"
+                                                                   GroupName="UserGenderGroup"
+                                                                   VerticalAlignment="Center"
+                                                                   IsChecked="{Binding UserGender, Converter={StaticResource IntEqualsConverter}, ConverterParameter=0}"/>
+                                    <controls:TaktRadioButton Content="{local:Loc Key=Identity.User.UserGender.Male}"
+                                                                   Size="Small"
+                                                                   GroupName="UserGenderGroup"
+                                                                   VerticalAlignment="Center"
+                                                                   Margin="12,0,0,0"
+                                                                   IsChecked="{Binding UserGender, Converter={StaticResource IntEqualsConverter}, ConverterParameter=1}"/>
+                                    <controls:TaktRadioButton Content="{local:Loc Key=Identity.User.UserGender.Female}"
+                                                                   Size="Small"
+                                                                   GroupName="UserGenderGroup"
+                                                                   VerticalAlignment="Center"
+                                                                   Margin="12,0,0,0"
+                                                                   IsChecked="{Binding UserGender, Converter={StaticResource IntEqualsConverter}, ConverterParameter=2}"/>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+
+                        <!-- 状态 -->
+                        <StackPanel Margin="0,0,0,8" MinHeight="56">
+                            <Grid MinHeight="32">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                    <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                    <Run Text="{local:Loc Key=Identity.User.UserStatus}"/>
+                                </TextBlock>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                    <controls:TaktRadioButton Content="{local:Loc Key=Identity.User.UserStatus.Normal}"
+                                                                   Size="Small"
+                                                                   GroupName="UserStatusGroup"
+                                                                   VerticalAlignment="Center"
+                                                                   IsChecked="{Binding UserStatus, Converter={StaticResource IntEqualsConverter}, ConverterParameter=0}"/>
+                                    <controls:TaktRadioButton Content="{local:Loc Key=Identity.User.UserStatus.Disabled}"
+                                                                   Size="Small"
+                                                                   GroupName="UserStatusGroup"
+                                                                   VerticalAlignment="Center"
+                                                                   Margin="12,0,0,0"
+                                                                   IsChecked="{Binding UserStatus, Converter={StaticResource IntEqualsConverter}, ConverterParameter=1}"/>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                </StackPanel>
+            </TabItem>
+
+            <!-- 备注信息 -->
+            <TabItem Header="{local:Loc Key=Identity.User.RemarksInfo}">
+                <StackPanel Margin="16">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Loc Key=common.audit.Remarks}" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <StackPanel Grid.Column="1">
+                                <controls:TaktTextBox 
+                                    Size="Medium"
+                                    Text="{Binding Remarks}"
+                                    HasError="{Binding RemarksError, Converter={StaticResource StringToBoolConverter}}"
+                                    TextWrapping="Wrap" 
+                                    AcceptsReturn="True" 
+                                    VerticalScrollBarVisibility="Hidden"
+                                    MinHeight="200"/>
+                                <TextBlock 
+                                    Style="{StaticResource ErrorTextStyle}" 
+                                    Text="{Binding RemarksError}"
+                                    Margin="0,4,0,0"
+                                    Visibility="{Binding RemarksError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                            </StackPanel>
+                        </Grid>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button IsDefault="True" 
+                    Command="{Binding SaveCommand}" 
+                    Content="{local:Loc Key=common.button.submit}" 
+                    Style="{StaticResource DefaultPrimary}"
+                    Margin="0,0,12,0"/>
+            <Button IsCancel="True" 
+                    Content="{local:Loc Key=common.button.cancel}"
+                    Style="{StaticResource DefaultInfo}"/>
+        </StackPanel>
+    </Grid>
+</Window>

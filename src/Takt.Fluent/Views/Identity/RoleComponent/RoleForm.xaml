@@ -1,0 +1,249 @@
+<Window x:Class="Takt.Fluent.Views.Identity.RoleComponent.RoleForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Takt.Fluent.Localization"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:helpers="clr-namespace:Takt.Fluent.Helpers"
+        xmlns:controls="clr-namespace:Takt.Fluent.Controls"
+        mc:Ignorable="d"
+        d:DesignHeight="600"
+        d:DesignWidth="800"
+        Title="{Binding Title}" 
+        SizeToContent="Manual" 
+        WindowStartupLocation="Manual"
+        ResizeMode="CanResize" 
+        Background="{DynamicResource MaterialDesignPaper}">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <helpers:IntEqualsConverter x:Key="IntEqualsConverter"/>
+        <helpers:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter"/>
+        <helpers:StringToBoolConverter x:Key="StringToBoolConverter"/>
+        <helpers:InverseBoolConverter x:Key="InverseBoolConverter"/>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TabControl Grid.Row="0" Margin="0,0,0,16">
+            <!-- 基本信息 -->
+            <TabItem Header="{local:Loc Key=Identity.Role.BasicInfo}">
+                <StackPanel Margin="16">
+                    <!-- 角色名称 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                <Run Text="{local:Loc Key=Identity.Role.RoleName}"/>
+                            </TextBlock>
+                            <controls:TaktTextBox x:Name="RoleNameTextBox"
+                                                        Grid.Column="1" 
+                                                        Size="Small"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding RoleName, UpdateSourceTrigger=PropertyChanged}"
+                                                        HasError="{Binding RoleNameError, Converter={StaticResource StringToBoolConverter}}"
+                                                        Hint="{Binding RoleNameHint}"/>
+                        </Grid>
+                        <TextBlock Grid.Column="1" 
+                                   Style="{StaticResource ErrorTextStyle}" 
+                                   Text="{Binding RoleNameError}"
+                                   Visibility="{Binding RoleNameError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                    </StackPanel>
+
+                    <!-- 角色编码 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                <Run Text="{local:Loc Key=Identity.Role.RoleCode}"/>
+                            </TextBlock>
+                            <controls:TaktTextBox x:Name="RoleCodeTextBox"
+                                                        Grid.Column="1" 
+                                                        Size="Small"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding RoleCode, UpdateSourceTrigger=PropertyChanged}"
+                                                        HasError="{Binding RoleCodeError, Converter={StaticResource StringToBoolConverter}}"
+                                                        IsReadOnly="{Binding IsCreate, Converter={StaticResource InverseBoolConverter}}"
+                                                        Hint="{Binding RoleCodeHint}"/>
+                        </Grid>
+                        <TextBlock Grid.Column="1" 
+                                   Style="{StaticResource ErrorTextStyle}" 
+                                   Text="{Binding RoleCodeError}"
+                                   Visibility="{Binding RoleCodeError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                    </StackPanel>
+
+                    <!-- 角色描述 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Loc Key=Identity.Role.Description}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <controls:TaktTextBox Grid.Column="1" 
+                                                        Size="Small"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"
+                                                        HasError="{Binding DescriptionError, Converter={StaticResource StringToBoolConverter}}"/>
+                        </Grid>
+                        <TextBlock Grid.Column="1" 
+                                   Style="{StaticResource ErrorTextStyle}" 
+                                   Text="{Binding DescriptionError}"
+                                   Visibility="{Binding DescriptionError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+
+            <!-- 状态信息 -->
+            <TabItem Header="{local:Loc Key=Identity.Role.StatusInfo}">
+                <StackPanel Margin="16">
+                    <!-- 数据范围 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Loc Key=Identity.Role.DataScope}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                <controls:TaktRadioButton Content="{local:Loc Key=Identity.Role.DataScope.All}"
+                                                               Size="Small"
+                                                               GroupName="DataScopeGroup"
+                                                               VerticalAlignment="Center"
+                                                               IsChecked="{Binding DataScope, Converter={StaticResource IntEqualsConverter}, ConverterParameter=1}"/>
+                                <controls:TaktRadioButton Content="{local:Loc Key=Identity.Role.DataScope.Custom}"
+                                                               Size="Small"
+                                                               GroupName="DataScopeGroup"
+                                                               VerticalAlignment="Center"
+                                                               Margin="12,0,0,0"
+                                                               IsChecked="{Binding DataScope, Converter={StaticResource IntEqualsConverter}, ConverterParameter=2}"/>
+                                <controls:TaktRadioButton Content="{local:Loc Key=Identity.Role.DataScope.Department}"
+                                                               Size="Small"
+                                                               GroupName="DataScopeGroup"
+                                                               VerticalAlignment="Center"
+                                                               Margin="12,0,0,0"
+                                                               IsChecked="{Binding DataScope, Converter={StaticResource IntEqualsConverter}, ConverterParameter=3}"/>
+                                <controls:TaktRadioButton Content="{local:Loc Key=Identity.Role.DataScope.DepartmentAndBelow}"
+                                                               Size="Small"
+                                                               GroupName="DataScopeGroup"
+                                                               VerticalAlignment="Center"
+                                                               Margin="12,0,0,0"
+                                                               IsChecked="{Binding DataScope, Converter={StaticResource IntEqualsConverter}, ConverterParameter=4}"/>
+                                <controls:TaktRadioButton Content="{local:Loc Key=Identity.Role.DataScope.Self}"
+                                                               Size="Small"
+                                                               GroupName="DataScopeGroup"
+                                                               VerticalAlignment="Center"
+                                                               Margin="12,0,0,0"
+                                                               IsChecked="{Binding DataScope, Converter={StaticResource IntEqualsConverter}, ConverterParameter=5}"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- 排序号 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Loc Key=Identity.Role.OrderNum}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <controls:TaktTextBox Grid.Column="1" 
+                                                        Size="Small"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding OrderNum, UpdateSourceTrigger=PropertyChanged}"
+                                                        HasError="{Binding OrderNumError, Converter={StaticResource StringToBoolConverter}}"/>
+                        </Grid>
+                        <TextBlock Grid.Column="1" 
+                                   Style="{StaticResource ErrorTextStyle}" 
+                                   Text="{Binding OrderNumError}"
+                                   Visibility="{Binding OrderNumError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                    </StackPanel>
+
+                    <!-- 状态 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                <Run Text="{local:Loc Key=Identity.Role.RoleStatus}"/>
+                            </TextBlock>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                <controls:TaktRadioButton Content="{local:Loc Key=Identity.Role.RoleStatus.Normal}"
+                                                               Size="Small"
+                                                               GroupName="RoleStatusGroup"
+                                                               VerticalAlignment="Center"
+                                                               IsChecked="{Binding RoleStatus, Converter={StaticResource IntEqualsConverter}, ConverterParameter=0}"/>
+                                <controls:TaktRadioButton Content="{local:Loc Key=Identity.Role.RoleStatus.Disabled}"
+                                                               Size="Small"
+                                                               GroupName="RoleStatusGroup"
+                                                               VerticalAlignment="Center"
+                                                               Margin="12,0,0,0"
+                                                               IsChecked="{Binding RoleStatus, Converter={StaticResource IntEqualsConverter}, ConverterParameter=1}"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+
+            <!-- 备注信息 -->
+            <TabItem Header="{local:Loc Key=Identity.Role.RemarksInfo}">
+                <StackPanel Margin="16">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{local:Loc Key=common.audit.Remarks}" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                        <StackPanel Grid.Column="1">
+                            <controls:TaktTextBox 
+                                Size="Medium"
+                                Text="{Binding Remarks}"
+                                HasError="{Binding RemarksError, Converter={StaticResource StringToBoolConverter}}"
+                                TextWrapping="Wrap" 
+                                AcceptsReturn="True" 
+                                VerticalScrollBarVisibility="Hidden"
+                                MinHeight="200"/>
+                            <TextBlock 
+                                Style="{StaticResource ErrorTextStyle}" 
+                                Text="{Binding RemarksError}"
+                                Margin="0,4,0,0"
+                                Visibility="{Binding RemarksError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button IsDefault="True" 
+                    Command="{Binding SaveCommand}" 
+                    Content="{local:Loc Key=common.button.submit}" 
+                    Style="{StaticResource DefaultPrimary}"
+                    Margin="0,0,12,0"/>
+            <Button IsCancel="True" 
+                    Command="{Binding CancelCommand}"
+                    Content="{local:Loc Key=common.button.cancel}"
+                    Style="{StaticResource DefaultInfo}"/>
+        </StackPanel>
+    </Grid>
+</Window>
+

@@ -1,0 +1,427 @@
+<Window x:Class="Takt.Fluent.Views.Identity.MenuComponent.MenuForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Takt.Fluent.Localization"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:helpers="clr-namespace:Takt.Fluent.Helpers"
+        xmlns:controls="clr-namespace:Takt.Fluent.Controls"
+        mc:Ignorable="d"
+        d:DesignHeight="700"
+        d:DesignWidth="900"
+        Title="{Binding Title}" 
+        SizeToContent="Manual" 
+        WindowStartupLocation="Manual"
+        ResizeMode="CanResize" 
+        Background="{DynamicResource MaterialDesignPaper}">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <helpers:IntEqualsConverter x:Key="IntEqualsConverter"/>
+        <helpers:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter"/>
+        <helpers:StringToBoolConverter x:Key="StringToBoolConverter"/>
+        <helpers:InverseBoolConverter x:Key="InverseBoolConverter"/>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TabControl Grid.Row="0" Margin="0,0,0,16">
+            <!-- 基本信息 -->
+            <TabItem Header="{local:Loc Key=Identity.Menu.BasicInfo}">
+                <StackPanel Margin="16">
+                    <!-- 菜单名称 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                <Run Text="{local:Loc Key=Identity.Menu.MenuName}"/>
+                            </TextBlock>
+                            <controls:TaktTextBox x:Name="MenuNameTextBox"
+                                                        Grid.Column="1" 
+                                                        Size="Small"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding MenuName, UpdateSourceTrigger=PropertyChanged}"
+                                                        HasError="{Binding MenuNameError, Converter={StaticResource StringToBoolConverter}}"
+                                                        Hint="{Binding MenuNameHint}"/>
+                        </Grid>
+                        <TextBlock Grid.Column="1" 
+                                   Style="{StaticResource ErrorTextStyle}" 
+                                   Text="{Binding MenuNameError}"
+                                   Visibility="{Binding MenuNameError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                    </StackPanel>
+
+                    <!-- 菜单编码 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                <Run Text="{local:Loc Key=Identity.Menu.MenuCode}"/>
+                            </TextBlock>
+                            <controls:TaktTextBox x:Name="MenuCodeTextBox"
+                                                        Grid.Column="1" 
+                                                        Size="Small"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding MenuCode, UpdateSourceTrigger=PropertyChanged}"
+                                                        HasError="{Binding MenuCodeError, Converter={StaticResource StringToBoolConverter}}"
+                                                        IsReadOnly="{Binding IsCreate, Converter={StaticResource InverseBoolConverter}}"
+                                                        Hint="{Binding MenuCodeHint}"/>
+                        </Grid>
+                        <TextBlock Grid.Column="1" 
+                                   Style="{StaticResource ErrorTextStyle}" 
+                                   Text="{Binding MenuCodeError}"
+                                   Visibility="{Binding MenuCodeError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                    </StackPanel>
+
+                    <!-- 国际化键 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Loc Key=Identity.Menu.I18nKey}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <controls:TaktTextBox Grid.Column="1" 
+                                                        Size="Small"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding I18nKey, UpdateSourceTrigger=PropertyChanged}"
+                                                        HasError="{Binding I18nKeyError, Converter={StaticResource StringToBoolConverter}}"
+                                                        Hint="{Binding I18nKeyHint}"/>
+                        </Grid>
+                        <TextBlock Grid.Column="1" 
+                                   Style="{StaticResource ErrorTextStyle}" 
+                                   Text="{Binding I18nKeyError}"
+                                   Visibility="{Binding I18nKeyError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                    </StackPanel>
+
+                    <!-- 权限码 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Loc Key=Identity.Menu.PermCode}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <controls:TaktTextBox Grid.Column="1" 
+                                                        Size="Small"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding PermCode, UpdateSourceTrigger=PropertyChanged}"
+                                                        HasError="{Binding PermCodeError, Converter={StaticResource StringToBoolConverter}}"
+                                                        Hint="{Binding PermCodeHint}"/>
+                        </Grid>
+                        <TextBlock Grid.Column="1" 
+                                   Style="{StaticResource ErrorTextStyle}" 
+                                   Text="{Binding PermCodeError}"
+                                   Visibility="{Binding PermCodeError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                    </StackPanel>
+
+                    <!-- 菜单类型 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                <Run Text="{local:Loc Key=Identity.Menu.MenuType}"/>
+                            </TextBlock>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                <controls:TaktRadioButton Content="{local:Loc Key=Identity.Menu.MenuType.Directory}"
+                                                               Size="Small"
+                                                               GroupName="MenuTypeGroup"
+                                                               VerticalAlignment="Center"
+                                                               IsChecked="{Binding MenuType, Converter={StaticResource IntEqualsConverter}, ConverterParameter=0}"/>
+                                <controls:TaktRadioButton Content="{local:Loc Key=Identity.Menu.MenuType.Menu}"
+                                                               Size="Small"
+                                                               GroupName="MenuTypeGroup"
+                                                               VerticalAlignment="Center"
+                                                               Margin="12,0,0,0"
+                                                               IsChecked="{Binding MenuType, Converter={StaticResource IntEqualsConverter}, ConverterParameter=1}"/>
+                                <controls:TaktRadioButton Content="{local:Loc Key=Identity.Menu.MenuType.Button}"
+                                                               Size="Small"
+                                                               GroupName="MenuTypeGroup"
+                                                               VerticalAlignment="Center"
+                                                               Margin="12,0,0,0"
+                                                               IsChecked="{Binding MenuType, Converter={StaticResource IntEqualsConverter}, ConverterParameter=2}"/>
+                                <controls:TaktRadioButton Content="{local:Loc Key=Identity.Menu.MenuType.Api}"
+                                                               Size="Small"
+                                                               GroupName="MenuTypeGroup"
+                                                               VerticalAlignment="Center"
+                                                               Margin="12,0,0,0"
+                                                               IsChecked="{Binding MenuType, Converter={StaticResource IntEqualsConverter}, ConverterParameter=3}"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- 父级菜单ID -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Loc Key=Identity.Menu.ParentId}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <controls:TaktTextBox x:Name="ParentIdTextBox"
+                                                        Grid.Column="1" 
+                                                        Size="Small"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding ParentId, UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}"
+                                                        HasError="{Binding ParentIdError, Converter={StaticResource StringToBoolConverter}}"
+                                                        Hint="父级菜单ID（0表示顶级菜单，留空表示0）"/>
+                        </Grid>
+                        <TextBlock Grid.Column="1" 
+                                   Style="{StaticResource ErrorTextStyle}" 
+                                   Text="{Binding ParentIdError}"
+                                   Visibility="{Binding ParentIdError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+
+            <!-- 路由信息 -->
+            <TabItem Header="{local:Loc Key=Identity.Menu.RouteInfo}">
+                <StackPanel Margin="16">
+                    <!-- 路由路径 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Loc Key=Identity.Menu.RoutePath}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <controls:TaktTextBox Grid.Column="1" 
+                                                        Size="Small"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding RoutePath, UpdateSourceTrigger=PropertyChanged}"
+                                                        HasError="{Binding RoutePathError, Converter={StaticResource StringToBoolConverter}}"/>
+                        </Grid>
+                        <TextBlock Grid.Column="1" 
+                                   Style="{StaticResource ErrorTextStyle}" 
+                                   Text="{Binding RoutePathError}"
+                                   Visibility="{Binding RoutePathError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                    </StackPanel>
+
+                    <!-- 图标 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Loc Key=Identity.Menu.Icon}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <controls:TaktTextBox Grid.Column="1" 
+                                                        Size="Small"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding Icon, UpdateSourceTrigger=PropertyChanged}"
+                                                        HasError="{Binding IconError, Converter={StaticResource StringToBoolConverter}}"/>
+                        </Grid>
+                        <TextBlock Grid.Column="1" 
+                                   Style="{StaticResource ErrorTextStyle}" 
+                                   Text="{Binding IconError}"
+                                   Visibility="{Binding IconError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                    </StackPanel>
+
+                    <!-- 组件路径 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Loc Key=Identity.Menu.Component}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <controls:TaktTextBox Grid.Column="1" 
+                                                        Size="Small"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding Component, UpdateSourceTrigger=PropertyChanged}"
+                                                        HasError="{Binding ComponentError, Converter={StaticResource StringToBoolConverter}}"/>
+                        </Grid>
+                        <TextBlock Grid.Column="1" 
+                                   Style="{StaticResource ErrorTextStyle}" 
+                                   Text="{Binding ComponentError}"
+                                   Visibility="{Binding ComponentError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+
+            <!-- 状态信息 -->
+            <TabItem Header="{local:Loc Key=Identity.Menu.StatusInfo}">
+                <StackPanel Margin="16">
+                    <!-- 是否外链 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Loc Key=Identity.Menu.IsExternal}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                <controls:TaktRadioButton Content="{local:Loc Key=Identity.Menu.IsExternal.External}"
+                                                               Size="Small"
+                                                               GroupName="IsExternalGroup"
+                                                               VerticalAlignment="Center"
+                                                               IsChecked="{Binding IsExternal, Converter={StaticResource IntEqualsConverter}, ConverterParameter=0}"/>
+                                <controls:TaktRadioButton Content="{local:Loc Key=Identity.Menu.IsExternal.NotExternal}"
+                                                               Size="Small"
+                                                               GroupName="IsExternalGroup"
+                                                               VerticalAlignment="Center"
+                                                               Margin="12,0,0,0"
+                                                               IsChecked="{Binding IsExternal, Converter={StaticResource IntEqualsConverter}, ConverterParameter=1}"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- 是否缓存 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Loc Key=Identity.Menu.IsCache}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                <controls:TaktRadioButton Content="{local:Loc Key=Identity.Menu.IsCache.Cache}"
+                                                               Size="Small"
+                                                               GroupName="IsCacheGroup"
+                                                               VerticalAlignment="Center"
+                                                               IsChecked="{Binding IsCache, Converter={StaticResource IntEqualsConverter}, ConverterParameter=0}"/>
+                                <controls:TaktRadioButton Content="{local:Loc Key=Identity.Menu.IsCache.NoCache}"
+                                                               Size="Small"
+                                                               GroupName="IsCacheGroup"
+                                                               VerticalAlignment="Center"
+                                                               Margin="12,0,0,0"
+                                                               IsChecked="{Binding IsCache, Converter={StaticResource IntEqualsConverter}, ConverterParameter=1}"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- 是否可见 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Loc Key=Identity.Menu.IsVisible}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                <controls:TaktRadioButton Content="{local:Loc Key=Identity.Menu.IsVisible.Visible}"
+                                                               Size="Small"
+                                                               GroupName="IsVisibleGroup"
+                                                               VerticalAlignment="Center"
+                                                               IsChecked="{Binding IsVisible, Converter={StaticResource IntEqualsConverter}, ConverterParameter=0}"/>
+                                <controls:TaktRadioButton Content="{local:Loc Key=Identity.Menu.IsVisible.Invisible}"
+                                                               Size="Small"
+                                                               GroupName="IsVisibleGroup"
+                                                               VerticalAlignment="Center"
+                                                               Margin="12,0,0,0"
+                                                               IsChecked="{Binding IsVisible, Converter={StaticResource IntEqualsConverter}, ConverterParameter=1}"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- 排序号 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Loc Key=Identity.Menu.OrderNum}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <controls:TaktTextBox Grid.Column="1" 
+                                                        Size="Small"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding OrderNum, UpdateSourceTrigger=PropertyChanged}"
+                                                        HasError="{Binding OrderNumError, Converter={StaticResource StringToBoolConverter}}"/>
+                        </Grid>
+                        <TextBlock Grid.Column="1" 
+                                   Style="{StaticResource ErrorTextStyle}" 
+                                   Text="{Binding OrderNumError}"
+                                   Visibility="{Binding OrderNumError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                    </StackPanel>
+
+                    <!-- 菜单状态 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                <Run Text="{local:Loc Key=Identity.Menu.MenuStatus}"/>
+                            </TextBlock>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                <controls:TaktRadioButton Content="{local:Loc Key=Identity.Menu.MenuStatus.Normal}"
+                                                               Size="Small"
+                                                               GroupName="MenuStatusGroup"
+                                                               VerticalAlignment="Center"
+                                                               IsChecked="{Binding MenuStatus, Converter={StaticResource IntEqualsConverter}, ConverterParameter=0}"/>
+                                <controls:TaktRadioButton Content="{local:Loc Key=Identity.Menu.MenuStatus.Disabled}"
+                                                               Size="Small"
+                                                               GroupName="MenuStatusGroup"
+                                                               VerticalAlignment="Center"
+                                                               Margin="12,0,0,0"
+                                                               IsChecked="{Binding MenuStatus, Converter={StaticResource IntEqualsConverter}, ConverterParameter=1}"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+
+            <!-- 备注信息 -->
+            <TabItem Header="{local:Loc Key=Identity.Menu.RemarksInfo}">
+                <StackPanel Margin="16">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{local:Loc Key=common.audit.Remarks}" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                        <StackPanel Grid.Column="1">
+                            <controls:TaktTextBox 
+                                Size="Medium"
+                                Text="{Binding Remarks}"
+                                HasError="{Binding RemarksError, Converter={StaticResource StringToBoolConverter}}"
+                                TextWrapping="Wrap" 
+                                AcceptsReturn="True" 
+                                VerticalScrollBarVisibility="Hidden"
+                                MinHeight="200"/>
+                            <TextBlock 
+                                Style="{StaticResource ErrorTextStyle}" 
+                                Text="{Binding RemarksError}"
+                                Margin="0,4,0,0"
+                                Visibility="{Binding RemarksError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button IsDefault="True" 
+                    Command="{Binding SaveCommand}" 
+                    Content="{local:Loc Key=common.button.submit}" 
+                    Style="{StaticResource DefaultPrimary}"
+                    Margin="0,0,12,0"/>
+            <Button IsCancel="True" 
+                    Command="{Binding CancelCommand}"
+                    Content="{local:Loc Key=common.button.cancel}"
+                    Style="{StaticResource DefaultInfo}"/>
+        </StackPanel>
+    </Grid>
+</Window>
+

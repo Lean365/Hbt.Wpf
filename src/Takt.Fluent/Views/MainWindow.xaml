@@ -1,0 +1,619 @@
+<Window x:Class="Takt.Fluent.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:helpers="clr-namespace:Takt.Fluent.Helpers"
+        xmlns:fa="clr-namespace:FontAwesome.Sharp;assembly=FontAwesome.Sharp"
+        xmlns:local="clr-namespace:Takt.Fluent.Localization"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        Title="{local:Loc Key=application.title}"
+        Height="800"
+        Width="1200"
+        WindowStartupLocation="CenterScreen"
+        MinWidth="780"
+        MinHeight="450"
+        WindowStyle="None"
+        ResizeMode="CanResize"
+        Background="{DynamicResource ApplicationBackgroundBrush}">
+
+    <Window.Resources>
+        <helpers:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter" />
+        <helpers:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+        <helpers:StringToIconCharConverter x:Key="StringToIconCharConverter" />
+        <helpers:StringToTranslationConverter x:Key="StringToTranslationConverter" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <helpers:FirstCharConverter x:Key="FirstCharConverter" />
+        <helpers:PathToPackUriConverter x:Key="PathToPackUriConverter" />
+
+        <!-- IconBlock 默认样式，确保 IconFont 始终为 Solid，防止空字符串导致错误 -->
+        <Style TargetType="fa:IconBlock">
+            <Setter Property="IconFont" Value="Solid"/>
+            <EventSetter Event="Unloaded" Handler="IconBlock_Unloaded"/>
+        </Style>
+
+        <Style x:Key="TitleBarInfoButtonStyle" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleSmall}">
+            <Setter Property="Width" Value="32"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource ControlStrokeColorDefaultBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="0"
+                                CornerRadius="0">
+                            <ContentPresenter x:Name="contentPresenter"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonInfoHoverBrush}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonInfoHoverBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextOnInfoBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextElement.Foreground" Value="{StaticResource ButtonTextOnInfoBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonInfoPressedBrush}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonInfoPressedBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextOnInfoBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextElement.Foreground" Value="{StaticResource ButtonTextOnInfoBrush}"/>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsEnabled" Value="False"/>
+                                </MultiTrigger.Conditions>
+                                <MultiTrigger.Setters>
+                                    <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                    <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                    <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                    <Setter TargetName="contentPresenter" Property="TextElement.Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                </MultiTrigger.Setters>
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="TitleBarCloseButtonStyle" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleSmall}">
+            <Setter Property="Width" Value="32"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="0"
+                                CornerRadius="0">
+                            <ContentPresenter x:Name="contentPresenter"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonDangerHoverBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextOnDangerBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextElement.Foreground" Value="{StaticResource ButtonTextOnDangerBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonDangerPressedBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextOnDangerBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextElement.Foreground" Value="{StaticResource ButtonTextOnDangerBrush}"/>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsEnabled" Value="False"/>
+                                </MultiTrigger.Conditions>
+                                <MultiTrigger.Setters>
+                                    <Setter TargetName="border" Property="Background" Value="Transparent"/>
+                                    <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                    <Setter TargetName="contentPresenter" Property="TextElement.Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                </MultiTrigger.Setters>
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+    
+    <Border x:Name="HighContrastBorder" 
+            BorderBrush="Transparent" 
+            BorderThickness="8 1 8 8">
+        <Grid x:Name="MainGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- Header: 标题栏 -->
+            <Grid
+                Grid.Row="0"
+                Height="44"
+                MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" /> <!-- Logo -->
+                    <ColumnDefinition Width="*" /> <!-- 标题（可选） -->
+                    <ColumnDefinition Width="Auto" /> <!-- 用户信息下拉 -->
+                    <ColumnDefinition Width="Auto" /> <!-- 最小化 -->
+                    <ColumnDefinition Width="Auto" /> <!-- 最大化 -->
+                    <ColumnDefinition Width="Auto" /> <!-- 关闭 -->
+                </Grid.ColumnDefinitions>
+
+                <!-- VS2022 样式的 Logo 容器 -->
+                <Border
+                    Grid.Column="0"
+                    Width="48"
+                    Height="32"
+                    Margin="8,0,0,0"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    VerticalAlignment="Center">
+                    <Border
+                        x:Name="LogoContainer"
+                        Width="32"
+                        Height="32"
+                        CornerRadius="6"
+                        BorderThickness="1"
+                        Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left">
+                        <Image
+                            Width="24"
+                            Height="24"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Source="pack://application:,,,/Assets/takt.ico"
+                            Stretch="Uniform"
+                            RenderOptions.BitmapScalingMode="HighQuality"/>
+                    </Border>
+                </Border>
+
+                <!-- 标题（可选，可隐藏） -->
+                <StackPanel
+                    Grid.Column="1"
+                    Margin="8,0,8,0"
+                    Orientation="Horizontal"
+                    VerticalAlignment="Center">
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        FontWeight="SemiBold"
+                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                        Text="{local:Loc Key=application.title}" />
+                </StackPanel>
+
+                <!-- 用户信息下拉按钮 -->
+                <Button
+                    x:Name="UserInfoButton"
+                    Grid.Column="2"
+                    Margin="0"
+                    Style="{StaticResource DefaultInfoNo}"
+                    Padding="8"
+                    MinHeight="0"
+                    Click="UserInfoButton_Click"
+                    ToolTip="{Binding ViewModel.CurrentUsername}">
+                    <Button.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem 
+                                Header="{local:Loc Key=MainWindow.UserInfoCenter}" 
+                                Click="UserInfoMenuItem_Click">
+                                <MenuItem.Style>
+                                    <Style TargetType="MenuItem">
+                                        <Setter Property="Background" Value="{DynamicResource ApplicationBackgroundBrush}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="{DynamicResource ControlFillColorSecondaryBrush}"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </MenuItem.Style>
+                                <MenuItem.Icon>
+                                    <fa:IconBlock
+                                        Icon="User"
+                                        IconFont="Solid"
+                                        Width="14"
+                                        Height="14"
+                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator Background="{DynamicResource CardStrokeColorDefaultBrush}"/>
+                            <MenuItem 
+                                Header="{local:Loc Key=MainWindow.Logout}" 
+                                Click="LogoutMenuItem_Click">
+                                <MenuItem.Style>
+                                    <Style TargetType="MenuItem">
+                                        <Setter Property="Background" Value="{DynamicResource ApplicationBackgroundBrush}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="{DynamicResource ControlFillColorSecondaryBrush}"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </MenuItem.Style>
+                                <MenuItem.Icon>
+                                    <fa:IconBlock
+                                        Icon="RightFromBracket"
+                                        IconFont="Solid"
+                                        Width="14"
+                                        Height="14"
+                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Button.ContextMenu>
+                    <Border
+                        Width="28"
+                        Height="28"
+                        CornerRadius="14"
+                        Background="{DynamicResource AccentFillColorDefaultBrush}"
+                        BorderThickness="0">
+                        <Grid>
+                            <!-- 头像图片 -->
+                            <Image Source="{Binding ViewModel.CurrentAvatar, Converter={StaticResource PathToPackUriConverter}}"
+                                   Width="28"
+                                   Height="28"
+                                   Stretch="UniformToFill"
+                                   RenderOptions.BitmapScalingMode="HighQuality"
+                                   Visibility="{Binding ViewModel.CurrentAvatar, Converter={StaticResource EmptyToVisibilityConverter}}">
+                                <Image.Clip>
+                                    <EllipseGeometry Center="14,14" RadiusX="14" RadiusY="14"/>
+                                </Image.Clip>
+                            </Image>
+                            <!-- 首字母后备（当头像为空时显示） -->
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                FontSize="14"
+                                FontWeight="SemiBold"
+                                Foreground="{DynamicResource TextOnAccentFillColorPrimaryBrush}"
+                                Text="{Binding ViewModel.CurrentRealName, Converter={StaticResource FirstCharConverter}}"
+                                Visibility="{Binding ViewModel.CurrentAvatar, Converter={StaticResource EmptyToVisibilityConverter}, ConverterParameter=Invert}" />
+                        </Grid>
+                    </Border>
+                </Button>
+
+                <Button
+                    x:Name="MinimizeButton"
+                    Grid.Column="3"
+                    Style="{StaticResource TitleBarInfoButtonStyle}"
+                    Width="32"
+                    Height="32"
+                    MinHeight="0"
+                    Padding="0"
+                    Click="MinimizeWindow">
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontFamily="{StaticResource SymbolThemeFontFamily}"
+                        FontSize="10"
+                        Text="&#xE921;" />
+                </Button>
+
+                <Button
+                    x:Name="MaximizeButton"
+                    Grid.Column="4"
+                    Style="{StaticResource TitleBarInfoButtonStyle}"
+                    Width="32"
+                    Height="32"
+                    MinHeight="0"
+                    Padding="0"
+                    Click="MaximizeWindow">
+                    <TextBlock
+                        x:Name="MaximizeIcon"
+                        VerticalAlignment="Center"
+                        FontFamily="{StaticResource SymbolThemeFontFamily}"
+                        FontSize="10"
+                        Text="&#xE922;" />
+                </Button>
+
+                <Button
+                    x:Name="CloseButton"
+                    Grid.Column="5"
+                    Style="{StaticResource TitleBarCloseButtonStyle}"
+                    Width="32"
+                    Height="32"
+                    MinHeight="0"
+                    Padding="0"
+                    Click="CloseWindow">
+                    <fa:IconBlock Icon="{x:Static fa:IconChar.Xmark}"
+                                  FontSize="16"/>
+                </Button>
+            </Grid>
+
+            <!-- Content: 主要内容区域 -->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                
+                    <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <TreeView
+                        x:Name="MenusList"
+                        Grid.Row="1"
+                        Margin="8,8,0,0"
+                        AutomationProperties.Name="导航菜单"
+                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                        ItemsSource="{Binding ViewModel.Menus}"
+                        SelectedItemChanged="MenusList_SelectedItemChanged"
+                        PreviewKeyDown="MenusList_PreviewKeyDown"
+                        PreviewMouseLeftButtonUp="MenusList_PreviewMouseLeftButtonUp"
+                        Loaded="MenusList_Loaded"
+                        >
+                        <TreeView.ItemTemplate>
+                            <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                                <Grid MinHeight="30">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="16" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <fa:IconBlock
+                                        Width="16"
+                                        Height="16"
+                                        VerticalAlignment="Center"
+                                        IconFont="Solid"
+                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                        Icon="{Binding Icon, Converter={StaticResource StringToIconCharConverter}}"
+                                        Visibility="{Binding Icon, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                                    <TextBlock
+                                        Grid.Column="2"
+                                        VerticalAlignment="Center"
+                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}">
+                                        <TextBlock.Text>
+                                            <MultiBinding Converter="{StaticResource StringToTranslationConverter}">
+                                                <Binding Path="I18nKey" />
+                                                <Binding Path="MenuName" />
+                                                <Binding Source="{x:Static helpers:LocalizationAdapterHelper.Adapter}" Path="CurrentLanguageCode" Mode="OneWay" FallbackValue="" TargetNullValue="" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </Grid>
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
+
+                    <DockPanel Grid.Row="2">
+                        <Button
+                            x:Name="SettingsButton"
+                            Width="250"
+                            Height="40"
+                            Margin="10"
+                            Style="{StaticResource DefaultPrimaryNo}"
+                            MinHeight="0"
+                            Padding="16,8"
+                            HorizontalContentAlignment="Left"
+                            Command="{Binding ViewModel.SettingsCommand}"
+                            DockPanel.Dock="Bottom">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock x:Name="SettingsIcon" 
+                                         Margin="0,4,0,0" 
+                                         FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                         Foreground="{DynamicResource TextFillColorPrimaryBrush}">&#xE713;</TextBlock>
+                                <TextBlock Margin="8,0,0,0" 
+                                         Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                         Text="{local:Loc Key=menu.settings}" />
+                            </StackPanel>
+                        </Button>
+                    </DockPanel>
+                </Grid>
+                
+                <Border
+                    Grid.Column="1"
+                    Margin="4,0,0,0"
+                    Padding="0"
+                    BorderThickness="1"
+                    CornerRadius="8,0,0,0"
+                    BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch">
+                    <!-- TabControl 内容区域容器，确保无顶部间距 -->
+                    <!-- Fluent Design TabControl - 原生 TabControl，100% 遵守 Fluent Design 风格 -->
+                    <TabControl x:Name="DocumentTabControl"
+                                ItemsSource="{Binding ViewModel.DocumentTabs}"
+                                SelectedItem="{Binding ViewModel.SelectedTab, Mode=TwoWay}"
+                                Background="{DynamicResource LayerFillColorDefaultBrush}"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}"
+                                BorderThickness="0">
+                        <TabControl.ItemContainerStyle>
+                            <Style TargetType="TabItem">
+                                <Setter Property="Content" Value="{Binding Content}"/>
+                                <Setter Property="Background" Value="{DynamicResource LayerFillColorDefaultBrush}"/>
+                                <Setter Property="BorderBrush" Value="{DynamicResource ControlStrokeColorDefaultBrush}"/>
+                                <Setter Property="BorderThickness" Value="1"/>
+                                <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="Margin" Value="0,0,4,0"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="TabItem">
+                                            <Border x:Name="Bd"
+                                                    Background="{TemplateBinding Background}"
+                                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                                    CornerRadius="6,6,0,0"
+                                                    Padding="12,8,12,8">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <fa:IconBlock Grid.Column="0"
+                                                                 Icon="{Binding Icon, Converter={StaticResource StringToIconCharConverter}}"
+                                                                 Width="16"
+                                                                 Height="16"
+                                                                 Margin="0,0,8,0"
+                                                                 Foreground="{TemplateBinding Foreground}"
+                                                                 Visibility="{Binding Icon, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+
+                                                    <TextBlock x:Name="TitleText"
+                                                             Grid.Column="1"
+                                                             Text="{Binding Title}"
+                                                             VerticalAlignment="Center"
+                                                             Foreground="{TemplateBinding Foreground}"
+                                                             TextTrimming="CharacterEllipsis"/>
+
+                                                    <TextBlock Grid.Column="2"
+                                                             Text="*"
+                                                             Margin="6,0,0,0"
+                                                             Foreground="{DynamicResource AccentFillColorDefaultBrush}"
+                                                             Visibility="{Binding IsModified, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                                                    <Button Grid.Column="3"
+                                                            x:Name="CloseButton"
+                                                            Style="{StaticResource DefaultDangerNoSmall}"
+                                                            Width="20"
+                                                            Height="20"
+                                                            MinHeight="0"
+                                                            Padding="0"
+                                                            Margin="8,0,0,0"
+                                                            ToolTip="{local:Loc Key=Common.Close}"
+                                                            Visibility="{Binding CanClose, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                            Click="TabItem_CloseButtonClick">
+                                                        <fa:IconBlock Icon="{x:Static fa:IconChar.Xmark}"
+                                                                      FontSize="12"
+                                                                      Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                                    </Button>
+                                                </Grid>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="{DynamicResource LayerFillColorSecondaryBrush}"/>
+                                        <Setter Property="BorderBrush" Value="{DynamicResource AccentFillColorDefaultBrush}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+                                        <Setter Property="Panel.ZIndex" Value="10"/>
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="{DynamicResource ControlFillColorSecondaryBrush}"/>
+                                    </Trigger>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Foreground" Value="{DynamicResource TextFillColorDisabledBrush}"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TabControl.ItemContainerStyle>
+                        <TabControl.Resources>
+                            <Style TargetType="TabPanel">
+                                <Setter Property="Margin" Value="8,0,8,0"/>
+                                <Setter Property="Background" Value="{DynamicResource LayerFillColorDefaultBrush}"/>
+                            </Style>
+                            <Style TargetType="ContentPresenter">
+                                <Setter Property="Margin" Value="0"/>
+                            </Style>
+                        </TabControl.Resources>
+                    </TabControl>
+                </Border>
+            </Grid>
+
+            <!-- Footer: 状态栏 -->
+            <Border
+                Grid.Row="2"
+                Height="24"
+                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                BorderThickness="0,1,0,0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    
+                    <!-- 左侧：版权信息 -->
+                    <StackPanel
+                        Grid.Column="0"
+                        Orientation="Horizontal"
+                        Margin="8,0,0,0"
+                        VerticalAlignment="Center"
+                        Opacity="0.8">
+                        <TextBlock
+                            FontSize="12"
+                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                            Text="©"/>
+                        <TextBlock
+                            FontSize="12"
+                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                            Text="{Binding Source={x:Static sys:DateTime.Now}, Path=Year}"
+                            Margin="4,0,0,0"/>
+                        <TextBlock
+                            FontSize="12"
+                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                            Text="{local:Loc Key=Common.Copyright}"
+                            Margin="4,0,0,0"/>                            
+                    </StackPanel>
+                    
+                    <!-- 中间：消息通知区域 -->
+                    <Border
+                        x:Name="StatusBarMessageArea"
+                        Grid.Column="1"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Padding="8,0"
+                        Visibility="{Binding ViewModel.StatusBarMessage, Converter={StaticResource NullToVisibilityConverter}}">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <materialDesign:PackIcon
+                                Kind="{Binding ViewModel.StatusBarMessageIcon}"
+                                Width="16"
+                                Height="16"
+                                VerticalAlignment="Center"
+                                Margin="0,0,8,0"
+                                Foreground="{Binding ViewModel.StatusBarMessageBrush}"/>
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontSize="12"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                Text="{Binding ViewModel.StatusBarMessage}"
+                                TextWrapping="NoWrap"
+                                TextTrimming="CharacterEllipsis"
+                                MaxWidth="400"/>
+                        </StackPanel>
+                    </Border>
+                    
+                    <!-- 右侧：活动文档标题 -->
+                    <StackPanel
+                        Grid.Column="2"
+                        Orientation="Horizontal"
+                        Margin="0,0,8,0">
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontSize="12"
+                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                            Text="{Binding ViewModel.ActiveDocumentTitle}"
+                            Margin="0,0,16,0" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

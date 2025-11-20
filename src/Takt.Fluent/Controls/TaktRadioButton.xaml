@@ -1,0 +1,42 @@
+<UserControl x:Class="Takt.Fluent.Controls.TaktRadioButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d"
+             d:DesignHeight="36"
+             d:DesignWidth="200">
+    <UserControl.Resources>
+        <Style x:Key="SmallRadioButtonStyle" TargetType="RadioButton" BasedOn="{StaticResource MaterialDesignRadioButton}">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="8,8"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+        </Style>
+        <Style x:Key="MediumRadioButtonStyle" TargetType="RadioButton" BasedOn="{StaticResource MaterialDesignRadioButton}">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="10,10"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+        </Style>
+        <Style x:Key="LargeRadioButtonStyle" TargetType="RadioButton" BasedOn="{StaticResource MaterialDesignRadioButton}">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="12,12"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+        </Style>
+    </UserControl.Resources>
+    
+    <RadioButton x:Name="InnerRadioButton"
+                 Content="{Binding Content, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                 GroupName="{Binding GroupName, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                 IsChecked="{Binding IsChecked, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay}"
+                 IsEnabled="{Binding IsEnabled, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                 Command="{Binding Command, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                 CommandParameter="{Binding CommandParameter, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                 Loaded="InnerRadioButton_Loaded"
+                 Checked="InnerRadioButton_Checked"
+                 Unchecked="InnerRadioButton_Unchecked"/>
+</UserControl>
+

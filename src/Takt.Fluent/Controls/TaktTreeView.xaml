@@ -1,0 +1,405 @@
+<UserControl x:Class="Takt.Fluent.Controls.TaktTreeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:Takt.Fluent.Localization"
+             xmlns:helpers="clr-namespace:Takt.Fluent.Helpers"
+             xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+             mc:Ignorable="d"
+             d:DesignHeight="720"
+             d:DesignWidth="1280"
+             x:Name="Root">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <helpers:InverseBoolConverter x:Key="InverseBoolConverter" />
+        <helpers:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+
+        <!-- 尺寸常量 -->
+        <sys:Double x:Key="ToolbarButtonHeight">32</sys:Double>
+        <sys:Double x:Key="PaginationButtonHeight">24</sys:Double>
+        <sys:Double x:Key="IconSizeSmall">18</sys:Double>
+        <sys:Double x:Key="IconSizeMedium">20</sys:Double>
+        <Thickness x:Key="ToolbarButtonMargin">0,0,12,0</Thickness>
+        <Thickness x:Key="ToolbarButtonMarginSmall">0,0,8,0</Thickness>
+        <Thickness x:Key="PaginationButtonMargin">4,0,0,0</Thickness>
+        <Thickness x:Key="IconMargin">0,0,6,0</Thickness>
+
+        <Style x:Key="DenseComboBoxStyle"
+               TargetType="ComboBox"
+               BasedOn="{StaticResource MaterialDesignComboBox}">
+            <Setter Property="Height" Value="24" />
+            <Setter Property="MinHeight" Value="0" />
+            <Setter Property="Padding" Value="6,0" />
+        </Style>
+
+        <Style x:Key="DenseOutlinedTextBoxStyle"
+               TargetType="TextBox"
+               BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
+            <Setter Property="Height" Value="24" />
+            <Setter Property="MinHeight" Value="0" />
+            <Setter Property="Padding" Value="4,0" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="materialDesign:TextFieldAssist.DecorationVisibility" Value="Collapsed" />
+        </Style>
+
+        <!-- 工具栏按钮基础样式 -->
+        <Style x:Key="ToolbarButtonBaseStyle" TargetType="Button">
+            <Setter Property="Height" Value="{StaticResource ToolbarButtonHeight}" />
+            <Setter Property="Margin" Value="{StaticResource ToolbarButtonMargin}" />
+        </Style>
+
+        <!-- 工具栏图标按钮样式 -->
+        <Style x:Key="ToolbarIconButtonStyle" TargetType="Button" BasedOn="{StaticResource ToolbarButtonBaseStyle}">
+            <Setter Property="Width" Value="32" />
+            <Setter Property="Margin" Value="{StaticResource PaginationButtonMargin}" />
+        </Style>
+
+        <!-- 分页按钮基础样式 -->
+        <Style x:Key="PaginationButtonBaseStyle" TargetType="Button">
+            <Setter Property="Height" Value="{StaticResource PaginationButtonHeight}" />
+        </Style>
+
+        <!-- TreeView 项样式 -->
+        <Style x:Key="TaktTreeViewItemStyle"
+               TargetType="TreeViewItem">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="4,2" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource MaterialDesignCardBackground}" />
+                </Trigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource AccentFillColorDefaultBrush}" />
+                    <Setter Property="Foreground" Value="{DynamicResource TextOnAccentFillColorPrimaryBrush}" />
+                </Trigger>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsSelected" Value="True" />
+                        <Condition Property="IsMouseOver" Value="True" />
+                    </MultiTrigger.Conditions>
+                    <Setter Property="Background" Value="{DynamicResource AccentFillColorTertiaryBrush}" />
+                    <Setter Property="Foreground" Value="{DynamicResource TextOnAccentFillColorPrimaryBrush}" />
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- 操作列按钮样式 -->
+        <Style x:Key="RowOperationButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="24" />
+            <Setter Property="Height" Value="24" />
+            <Setter Property="Margin" Value="2,0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+
+        <!-- 操作列容器样式 -->
+        <Style x:Key="RowOperationContainerStyle" TargetType="StackPanel">
+            <Setter Property="Orientation" Value="Horizontal" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="8,0,0,0" />
+        </Style>
+
+        <!-- 操作列模板 -->
+        <DataTemplate x:Key="RowOperationTemplate">
+            <StackPanel Style="{StaticResource RowOperationContainerStyle}">
+                <!-- 新增按钮 -->
+                <Button Style="{StaticResource DefaultIconPlainPrimarySmall}"
+                        Width="24"
+                        Height="24"
+                        Margin="2,0"
+                        ToolTip="{local:Loc Key=common.button.create}"
+                        Visibility="{Binding ShowRowCreate, RelativeSource={RelativeSource AncestorType=controls:TaktTreeView}, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Command="{Binding RowCreateCommand, RelativeSource={RelativeSource AncestorType=controls:TaktTreeView}}"
+                        CommandParameter="{Binding}">
+                    <materialDesign:PackIcon Kind="PlaylistPlus" 
+                                             Width="16" 
+                                             Height="16" />
+                </Button>
+                <!-- 更新按钮 -->
+                <Button Style="{StaticResource DefaultIconPlainSuccessSmall}"
+                        Width="24"
+                        Height="24"
+                        Margin="2,0"
+                        ToolTip="{local:Loc Key=common.button.update}"
+                        Visibility="{Binding ShowRowUpdate, RelativeSource={RelativeSource AncestorType=controls:TaktTreeView}, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Command="{Binding RowUpdateCommand, RelativeSource={RelativeSource AncestorType=controls:TaktTreeView}}"
+                        CommandParameter="{Binding}">
+                    <materialDesign:PackIcon Kind="Pencil" 
+                                             Width="16" 
+                                             Height="16" />
+                </Button>
+                <!-- 删除按钮 -->
+                <Button Style="{StaticResource DefaultIconPlainWarningSmall}"
+                        Width="24"
+                        Height="24"
+                        Margin="2,0"
+                        ToolTip="{local:Loc Key=common.button.delete}"
+                        Visibility="{Binding ShowRowDelete, RelativeSource={RelativeSource AncestorType=controls:TaktTreeView}, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Command="{Binding RowDeleteCommand, RelativeSource={RelativeSource AncestorType=controls:TaktTreeView}}"
+                        CommandParameter="{Binding}">
+                    <materialDesign:PackIcon Kind="Delete" 
+                                             Width="16" 
+                                             Height="16" />
+                </Button>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid Margin="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- 查询区域 -->
+        <Border Grid.Row="0"
+                x:Name="QueryPanel"
+                CornerRadius="8,8,0,0"
+                Padding="12,8"
+                Background="{DynamicResource MaterialDesignPaper}"
+                Visibility="{Binding ShowQueryArea, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBox Grid.Column="0"
+                         Margin="0,0,12,0"
+                         Style="{StaticResource DenseOutlinedTextBoxStyle}"
+                         Height="{StaticResource ToolbarButtonHeight}"
+                         Text="{Binding QueryKeyword, ElementName=Root, UpdateSourceTrigger=PropertyChanged}"
+                         materialDesign:HintAssist.Hint="{Binding QueryPlaceholder, ElementName=Root}"
+                         VerticalAlignment="Center"
+                         VerticalContentAlignment="Center" />
+
+                <StackPanel Grid.Column="1"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center">
+                    <Button Style="{StaticResource DefaultPrimarySmall}"
+                            Height="{StaticResource ToolbarButtonHeight}"
+                            Margin="{StaticResource ToolbarButtonMarginSmall}"
+                            Click="OnQueryButtonClick">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <materialDesign:PackIcon Kind="Magnify" 
+                                                     Width="{StaticResource IconSizeSmall}" 
+                                                     Height="{StaticResource IconSizeSmall}" 
+                                                     Margin="{StaticResource IconMargin}" />
+                            <TextBlock Text="{Binding QueryButtonText, ElementName=Root}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource DefaultInfoSmall}"
+                            Height="{StaticResource ToolbarButtonHeight}"
+                            Click="OnResetButtonClick">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <materialDesign:PackIcon Kind="Autorenew" 
+                                                     Width="{StaticResource IconSizeSmall}" 
+                                                     Height="{StaticResource IconSizeSmall}" 
+                                                     Margin="{StaticResource IconMargin}" />
+                            <TextBlock Text="{Binding ResetButtonText, ElementName=Root}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- 工具栏 -->
+        <Border Grid.Row="1"
+                Background="{DynamicResource MaterialDesignPaper}"
+                CornerRadius="0"
+                Padding="12,8"
+                Visibility="{Binding ShowToolbar, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center">
+                    <Button Style="{StaticResource DefaultPrimarySmall}"
+                            Height="{StaticResource ToolbarButtonHeight}"
+                            Margin="{StaticResource ToolbarButtonMargin}"
+                            Visibility="{Binding ShowToolbarCreate, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}"
+                            Command="{Binding CreateCommand, ElementName=Root}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Plus" 
+                                                     Width="{StaticResource IconSizeSmall}" 
+                                                     Height="{StaticResource IconSizeSmall}" 
+                                                     Margin="{StaticResource IconMargin}" />
+                            <TextBlock Text="{local:Loc Key=common.button.create}" />
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource DefaultSuccessSmall}"
+                            Height="{StaticResource ToolbarButtonHeight}"
+                            Margin="{StaticResource ToolbarButtonMargin}"
+                            Visibility="{Binding ShowToolbarUpdate, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}"
+                            Command="{Binding InternalUpdateCommand, ElementName=Root}"
+                            CommandParameter="{Binding SelectedItem, ElementName=Root}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Pencil" 
+                                                     Width="{StaticResource IconSizeSmall}" 
+                                                     Height="{StaticResource IconSizeSmall}" 
+                                                     Margin="{StaticResource IconMargin}" />
+                            <TextBlock Text="{local:Loc Key=common.button.update}" />
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource DefaultDangerSmall}"
+                            Height="{StaticResource ToolbarButtonHeight}"
+                            Margin="{StaticResource ToolbarButtonMargin}"
+                            Visibility="{Binding ShowToolbarDelete, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}"
+                            Command="{Binding InternalDeleteCommand, ElementName=Root}"
+                            CommandParameter="{Binding SelectedItem, ElementName=Root}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Delete" 
+                                                     Width="{StaticResource IconSizeSmall}" 
+                                                     Height="{StaticResource IconSizeSmall}" 
+                                                     Margin="{StaticResource IconMargin}" />
+                            <TextBlock Text="{local:Loc Key=common.button.delete}" />
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource DefaultSuccessSmall}"
+                            Height="{StaticResource ToolbarButtonHeight}"
+                            Margin="{StaticResource ToolbarButtonMargin}"
+                            Visibility="{Binding ShowToolbarImport, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}"
+                            Command="{Binding ImportCommand, ElementName=Root}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Import" 
+                                                     Width="{StaticResource IconSizeSmall}" 
+                                                     Height="{StaticResource IconSizeSmall}" 
+                                                     Margin="{StaticResource IconMargin}" />
+                            <TextBlock Text="{local:Loc Key=common.button.import}" />
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource DefaultAccentSmall}"
+                            Height="{StaticResource ToolbarButtonHeight}"
+                            Visibility="{Binding ShowToolbarExport, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}"
+                            Command="{Binding ExportCommand, ElementName=Root}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Export" 
+                                                     Width="{StaticResource IconSizeSmall}" 
+                                                     Height="{StaticResource IconSizeSmall}" 
+                                                     Margin="{StaticResource IconMargin}" />
+                            <TextBlock Text="{local:Loc Key=common.button.export}" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center">
+                    <Button Style="{StaticResource DefaultIconPlainPrimarySmall}"
+                            Width="32"
+                            Height="{StaticResource ToolbarButtonHeight}"
+                            Margin="{StaticResource PaginationButtonMargin}"
+                            ToolTip="{local:Loc Key=common.toggleQueryBar}"
+                            Click="OnToggleQueryAreaClick">
+                        <materialDesign:PackIcon Kind="Magnify" 
+                                                 Width="{StaticResource IconSizeMedium}" 
+                                                 Height="{StaticResource IconSizeMedium}" />
+                    </Button>
+
+                    <Button Style="{StaticResource DefaultIconPlainAccentSmall}"
+                            Width="32"
+                            Height="{StaticResource ToolbarButtonHeight}"
+                            Margin="{StaticResource PaginationButtonMargin}"
+                            Click="OnToggleExpandCollapseClick">
+                        <Button.ToolTip>
+                            <TextBlock>
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Text" Value="{local:Loc Key=common.expandAll}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsAllExpanded, ElementName=Root}" Value="True">
+                                                <Setter Property="Text" Value="{local:Loc Key=common.collapseAll}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Button.ToolTip>
+                        <materialDesign:PackIcon>
+                            <materialDesign:PackIcon.Style>
+                                <Style TargetType="materialDesign:PackIcon">
+                                    <Setter Property="Kind" Value="ChevronDown" />
+                                    <Setter Property="Width" Value="{StaticResource IconSizeMedium}" />
+                                    <Setter Property="Height" Value="{StaticResource IconSizeMedium}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsAllExpanded, ElementName=Root}" Value="True">
+                                            <Setter Property="Kind" Value="ChevronUp" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </materialDesign:PackIcon.Style>
+                        </materialDesign:PackIcon>
+                    </Button>
+
+                    <Button Style="{StaticResource DefaultIconPlainBrandSmall}"
+                            Width="32"
+                            Height="{StaticResource ToolbarButtonHeight}"
+                            Margin="{StaticResource PaginationButtonMargin}"
+                            ToolTip="{local:Loc Key=common.advancedQuery}"
+                            Visibility="{Binding ShowAdvancedQueryButton, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}"
+                            Command="{Binding AdvancedQueryCommand, ElementName=Root}">
+                        <materialDesign:PackIcon Kind="FilterCog" 
+                                                 Width="{StaticResource IconSizeMedium}" 
+                                                 Height="{StaticResource IconSizeMedium}" />
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- 表头区域 -->
+        <ContentControl Grid.Row="2"
+                        x:Name="PART_HeaderContent"
+                        Content="{Binding HeaderContent, ElementName=Root}"
+                        Visibility="{Binding HeaderContent, ElementName=Root, Converter={StaticResource NullToVisibilityConverter}}" />
+
+        <!-- 树形视图 -->
+        <Grid Grid.Row="3">
+            <TreeView x:Name="PART_TreeView"
+                      Background="{DynamicResource MaterialDesignPaper}"
+                      ItemsSource="{Binding ItemsSource, ElementName=Root}"
+                      ItemTemplate="{Binding ItemTemplate, ElementName=Root}"
+                      ItemContainerStyle="{Binding ItemContainerStyle, ElementName=Root, TargetNullValue={StaticResource TaktTreeViewItemStyle}}"
+                      BorderThickness="0"
+                      SelectedItemChanged="TreeView_SelectedItemChanged">
+            </TreeView>
+
+            <Border Background="Transparent"
+                    Visibility="{Binding IsEmpty, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}">
+                <StackPanel VerticalAlignment="Center"
+                            HorizontalAlignment="Center">
+                    <materialDesign:PackIcon Kind="FileTree"
+                                             Width="32"
+                                             Height="32"
+                                             Foreground="{DynamicResource MaterialDesignBody}" />
+                    <TextBlock Text="{Binding EmptyText, ElementName=Root}"
+                               Foreground="{DynamicResource MaterialDesignBody}"
+                               FontSize="16"
+                               FontWeight="SemiBold"
+                               Margin="0,12,0,0" />
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!-- 树形视图底部边框 -->
+        <Border Grid.Row="3"
+                BorderBrush="{DynamicResource MaterialDesignDivider}"
+                BorderThickness="0,1,0,0"
+                CornerRadius="0,0,8,8" />
+    </Grid>
+</UserControl>
+
