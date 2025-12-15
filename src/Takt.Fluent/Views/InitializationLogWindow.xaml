@@ -1,0 +1,23 @@
+<Window x:Class="Takt.Fluent.Views.InitializationLogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="数据初始化"
+        Width="800"
+        Height="600"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        ShowInTaskbar="True">
+    <TextBox x:Name="LogTextBox"
+             Text="{Binding LogContent, Mode=OneWay}"
+             IsReadOnly="True"
+             TextWrapping="Wrap"
+             FontFamily="Consolas"
+             FontSize="12"
+             Padding="16"
+             Background="White"
+             BorderThickness="0"
+             VerticalScrollBarVisibility="Auto"
+             HorizontalScrollBarVisibility="Auto"
+             TextChanged="LogTextBox_TextChanged"/>
+</Window>

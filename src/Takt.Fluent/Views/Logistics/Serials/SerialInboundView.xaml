@@ -1,0 +1,118 @@
+﻿<UserControl x:Class="Takt.Fluent.Views.Logistics.Serials.SerialInboundView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:Takt.Fluent.Controls"
+             xmlns:local="clr-namespace:Takt.Fluent.Extensions"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:Takt.Fluent.Helpers"
+             mc:Ignorable="d"
+             d:DesignHeight="720"
+             d:DesignWidth="1280">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="300" MinHeight="200" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" MinHeight="200" />
+        </Grid.RowDefinitions>
+
+        <!-- 主表：产品序列号 -->
+        <controls:TaktDataGrid Grid.Row="0"
+                                x:Name="SerialDataGrid"
+                                ItemsSource="{Binding ProdSerials}"
+                                SelectedItem="{Binding SelectedProdSerial, Mode=TwoWay}"
+                                QueryKeyword="{Binding SerialKeyword, Mode=TwoWay}"
+                                QueryPlaceholder="{local:Localization Key=common.placeholder.keywordHint, Param0Key=logistics.serials.prodserial.query.keyword}"
+                                ShowToolbarCreate="False"
+                                ShowToolbarUpdate="False"
+                                ShowToolbarDelete="False"
+                                ShowToolbarImport="True"
+                                ShowToolbarExport="True"
+                                ImportCommand="{Binding ImportSerialCommand}"
+                                ExportCommand="{Binding ExportSerialCommand}"
+                                PageIndex="{Binding SerialPageIndex, Mode=TwoWay}"
+                                PageSize="{Binding SerialPageSize, Mode=TwoWay}"
+                                TotalCount="{Binding SerialTotalCount}"
+                                QueryCommand="{Binding QuerySerialsCommand}"
+                                ResetCommand="{Binding ResetSerialsCommand}"
+                                PageChangedCommand="{Binding PageChangedSerialsCommand}"
+                                Loaded="SerialDataGrid_Loaded">
+            <controls:TaktDataGrid.Columns>
+                <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logistics.serials.prodserial.materialcode}" BindingPath="MaterialCode" Width="150" />
+                <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logistics.serials.prodserial.modelcode}" BindingPath="ModelCode" Width="150" />
+                <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logistics.serials.prodserial.destcode}" BindingPath="DestCode" Width="100" />
+            </controls:TaktDataGrid.Columns>
+        </controls:TaktDataGrid>
+
+        <GridSplitter Grid.Row="1" Height="6" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
+
+        <!-- 子表：序列号入库记录（支持行内编辑和分页） -->
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <!-- 自定义工具栏：扫描入库按钮 -->
+            <Border Grid.Row="0"
+                    Background="{DynamicResource MaterialDesignPaper}"
+                    Padding="12,8"
+                    Visibility="{Binding ShowToolbar, ElementName=InboundDataGrid, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <Button Style="{StaticResource DefaultPrimarySmall}"
+                            Height="32"
+                            Margin="0,0,12,0"
+                            Command="{Binding ScanInboundCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="BarcodeScan" 
+                                                     Width="18" 
+                                                     Height="18" 
+                                                     Margin="0,0,6,0" />
+                            <TextBlock Text="{local:Localization Key=logistics.serials.prodserialinbound.scaninbound}" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Border>
+            
+            <controls:TaktInlineEditDataGrid Grid.Row="1"
+                                             x:Name="InboundDataGrid"
+                                             ItemsSource="{Binding ProdSerialInbounds}"
+                                             SelectedItem="{Binding SelectedProdSerialInbound, Mode=TwoWay}"
+                                             EditingItem="{Binding EditingProdSerialInbound, Mode=TwoWay}"
+                                             ShowQueryArea="True"
+                                             QueryKeyword="{Binding InboundKeyword, Mode=TwoWay}"
+                                             QueryPlaceholder="{local:Localization Key=common.placeholder.keywordHint, Param0Key=logistics.serials.prodserialinbound.query.keyword}"
+                                             QueryCommand="{Binding QueryInboundsCommand}"
+                                             ResetCommand="{Binding ResetInboundsCommand}"
+                                             ShowToolbar="True"
+                                             ShowToolbarAddRow="False"
+                                             RowDeleteCommand="{Binding DeleteInboundCommand}"
+                                             ShowRowUpdate="False"
+                                             ShowRowSave="False"
+                                             ShowRowCancel="False"
+                                             ShowRowDelete="True"
+                                             ShowPagination="True"
+                                             PageIndex="{Binding InboundPageIndex, Mode=TwoWay}"
+                                             PageSize="{Binding InboundPageSize, Mode=TwoWay}"
+                                             TotalCount="{Binding InboundTotalCount}"
+                                             PageChangedCommand="{Binding PageChangedInboundsCommand}"
+                                             EmptyText="{local:Localization Key=common.noData}"
+                                             Loaded="InboundDataGrid_Loaded">
+            <controls:TaktInlineEditDataGrid.Columns>
+                <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logistics.serials.prodserial.materialcode}" BindingPath="MaterialCode" Width="150" />
+                <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logistics.serials.prodserialinbound.inboundno}" BindingPath="InboundNo" Width="150" />
+                <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logistics.serials.prodserialinbound.serialnumber}" BindingPath="SerialNumber" Width="150" />
+                <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logistics.serials.prodserialinbound.quantity}" BindingPath="Quantity" Width="100" />
+                <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logistics.serials.prodserialinbound.inbounddate}" BindingPath="InboundDate" Width="150" />
+                <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logistics.serials.prodserialinbound.warehouse}" BindingPath="Warehouse" Width="120" />
+                <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logistics.serials.prodserialinbound.location}" BindingPath="Location" Width="120" />
+            </controls:TaktInlineEditDataGrid.Columns>
+            </controls:TaktInlineEditDataGrid>
+        </Grid>
+    </Grid>
+</UserControl>
+

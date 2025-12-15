@@ -1,0 +1,33 @@
+<Application x:Class="Takt.Fluent.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <Application.Resources>
+        <ResourceDictionary>
+            <FontFamily x:Key="SymbolThemeFontFamily">Segoe MDL2 Assets</FontFamily>
+            
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Material Design 颜色主题（使用 BundledTheme，官方推荐方式） -->
+                <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="Teal" SecondaryColor="Cyan" />
+                <!-- Material Design 3 默认样式（Material Design 5.0.0+ 官方推荐） -->
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
+                <!-- Material Design 验证错误模板 -->
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ValidationErrorTemplate.xaml" />
+                <!-- 项目自定义按钮样式资源（使用完整的 pack URI 格式） -->
+                <ResourceDictionary Source="Controls/TaktPageHeader.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Takt.Fluent;component/Resources/TaktDefaultColors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Takt.Fluent;component/Resources/ButtonColors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Takt.Fluent;component/Resources/ButtonDefaultStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Takt.Fluent;component/Resources/ButtonDefaultNoStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Takt.Fluent;component/Resources/ButtonDefaultPlainStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Takt.Fluent;component/Resources/ButtonDefaultIconStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Takt.Fluent;component/Resources/ButtonCircleStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Takt.Fluent;component/Resources/FormStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Takt.Fluent;component/Resources/NavTemplates.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
+

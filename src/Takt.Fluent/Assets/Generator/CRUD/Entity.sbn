@@ -1,0 +1,63 @@
+// ========================================
+// 项目名称：节拍(Takt)中小企业平台 · Takt SMEs Platform
+// 命名空间：{{ namespace }}
+// 文件名称：{{ class_name }}.cs
+// 创建时间：{{ created_time }}
+// 创建人：{{ author }}
+// 功能描述：{{ table_description }}
+// 
+// 版权信息：Copyright (c) 2025 Takt  All rights reserved.
+// 免责声明：此软件使用 MIT License，作者不承担任何使用风险。
+// ========================================
+
+using SqlSugar;
+{{~ if has_enum }}
+using Takt.Common.Enums;
+{{~ end }}
+
+namespace {{ namespace }};
+
+/// <summary>
+/// {{ table_description }}
+/// </summary>
+[SugarTable("{{ table_name }}", "{{ table_description }}")]
+{{~ for column in columns }}
+{{~ if column.is_primary_key == 1 && column.is_identity == 0 }}
+[SugarIndex("IX_{{ table_name }}_{{ column.column_name }}", nameof({{ class_name }}.{{ column.property_name }}), OrderByType.Asc, true)]
+{{~ end }}
+{{~ end }}
+public class {{ class_name }} : BaseEntity
+{
+{{~ for column in business_columns }}
+    {{~ # 判断是否为数值类型 }}
+    {{~ is_numeric = column.data_type == "int" || column.data_type == "long" || column.data_type == "short" || column.data_type == "byte" || column.data_type == "decimal" || column.data_type == "float" || column.data_type == "double" || column.data_type == "bool" }}
+    {{~ # 判断是否为必填的数值类型（is_nullable: 0=是/可空, 1=否/不可空） }}
+    {{~ is_required_numeric = is_numeric && column.is_nullable == 1 }}
+    {{~ # 获取默认值：如果有配置的默认值就用配置的，否则对于必填数值类型使用类型默认值 }}
+    {{~ default_value = column.default_value }}
+    {{~ if is_required_numeric && (default_value == null || default_value == "") }}
+        {{~ if column.data_type == "bool" }}
+            {{~ default_value = "false" }}
+        {{~ else if column.data_type == "decimal" }}
+            {{~ default_value = "0m" }}
+        {{~ else }}
+            {{~ default_value = "0" }}
+        {{~ end }}
+    {{~ end }}
+    /// <summary>
+    /// {{ column.column_description }}
+    /// </summary>
+    {{~ if default_value != null && default_value != "" }}
+    /// <remarks>
+    /// 默认值：{{ default_value }}
+    {{~ if column.decimal_places != null && column.data_type == "decimal" }}
+    /// 精度：{{ column.decimal_places }}位小数
+    {{~ end }}
+    /// </remarks>
+    {{~ end }}
+    [SugarColumn(ColumnName = "{{ column.column_name }}", ColumnDescription = "{{ column.column_description }}", ColumnDataType = "{{ column.column_data_type }}", {{~ if column.length != null }}Length = {{ column.length }}, {{~ end }}{{~ if column.decimal_places != null && column.data_type == "decimal" }}DecimalDigits = {{ column.decimal_places }}, {{~ end }}IsNullable = {{ if column.is_nullable == 0 }}true{{ else }}false{{ end }}{{~ if default_value != null && default_value != "" }}, DefaultValue = "{{ default_value }}"{{~ end }})]
+    public {{ column.data_type }}{{~ if column.is_nullable == 0 && column.data_type != "string" }}?{{~ end }} {{ column.property_name }} { get; set; }{{~ if column.data_type == "string" && column.is_nullable == 1 }} = string.Empty;{{~ else if is_required_numeric && default_value != null && default_value != "" && column.is_primary_key == 1 }} = {{ default_value }};{{~ else if default_value != null && default_value != "" && column.data_type != "string" && column.is_nullable == 1 && column.is_primary_key == 1 }} = {{ default_value }};{{~ end }}
+
+{{~ end }}
+}
+

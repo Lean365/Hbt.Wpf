@@ -1,0 +1,65 @@
+---
+alwaysApply: true
+---
+
+# 依赖注入规范
+
+## 服务注册
+
+**文件位置**：@src/Takt.Fluent/App.xaml.cs
+
+**示例**：
+```csharp
+// @src/Takt.Fluent/App.xaml.cs
+public partial class App : Application
+{
+    public static IServiceProvider? Services { get; private set; }
+    
+    protected override void OnStartup(StartupEventArgs e)
+    {
+        var services = new ServiceCollection();
+        
+        // 注册服务
+        services.AddScoped<ITaktUserService, TaktUserService>();
+        services.AddTransient<UserViewModel>();
+        services.AddTransient<UserView>();
+        
+        Services = services.BuildServiceProvider();
+    }
+}
+```
+
+## 构造函数注入
+
+**规范**：必须通过构造函数注入，禁止使用 ServiceLocator
+
+```csharp
+// ✅ 正确：通过构造函数注入
+// @src/Takt.Fluent/ViewModels/Identity/UserViewModel.cs
+public class UserViewModel : ViewModelBase
+{
+    private readonly ITaktUserService _userService;
+    
+    public UserViewModel(ITaktUserService userService)
+    {
+        _userService = userService ?? throw new ArgumentNullException(nameof(userService));
+    }
+}
+
+// ❌ 错误：使用 ServiceLocator 反模式
+public class UserViewModel : ViewModelBase
+{
+    private readonly ITaktUserService _userService;
+    
+    public UserViewModel()
+    {
+        _userService = App.Services.GetService<ITaktUserService>();  // ❌ 反模式
+    }
+}
+```
+
+## 服务生命周期
+
+- `Singleton`：整个应用生命周期单例（如配置服务）
+- `Scoped`：每个请求/窗口一个实例（如业务服务）
+- `Transient`：每次获取都创建新实例（如 ViewModel、View）

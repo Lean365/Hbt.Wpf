@@ -1,0 +1,105 @@
+// ========================================
+// 项目名称：节拍(Takt)中小企业平台 · Takt SMEs Platform
+// 命名空间：Takt.Application.Dtos{{~ if module_code != "" }}.{{ module_code }}{{~ end }}
+// 文件名称：{{ class_name }}Dto.cs
+// 创建时间：{{ created_time }}
+// 创建人：{{ author }}
+// 功能描述：{{ table_description }}数据传输对象
+// 
+// 版权信息：Copyright (c) 2025 Takt  All rights reserved.
+// 免责声明：此软件使用 MIT License，作者不承担任何使用风险。
+// ========================================
+
+using Takt.Common.Results;
+{{~ if has_enum }}
+using Takt.Common.Enums;
+{{~ end }}
+
+namespace Takt.Application.Dtos{{~ if module_code != "" }}.{{ module_code }}{{~ end }};
+
+/// <summary>
+/// {{ table_description }}数据传输对象
+/// 用于传输{{ table_description }}信息
+/// </summary>
+public class {{ class_name }}Dto
+{
+{{~ for column in columns }}
+    /// <summary>
+    /// {{ column.column_description }}
+    /// </summary>
+    public {{ column.data_type }}{{~ if column.is_nullable == 0 && column.data_type != "string" }}?{{~ end }} {{ column.property_name }} { get; set; }{{~ if column.data_type == "string" && column.is_nullable == 1 }} = string.Empty;{{~ end }}
+{{~ end }}
+}
+
+/// <summary>
+/// {{ table_description }}查询数据传输对象
+/// 用于查询{{ table_description }}信息
+/// </summary>
+public class {{ class_name }}QueryDto : PagedQuery
+{
+    /// <summary>
+    /// 搜索关键词（支持在{{ table_description }}相关字段中搜索）
+    /// </summary>
+    public string? Keywords { get; set; }
+{{~ for column in columns }}
+    {{~ # 只包含 IsQuery == 0 的字段（0=是，1=否） }}
+    {{~ if column.is_query == 0 }}
+    
+    /// <summary>
+    /// {{ column.column_description }}
+    /// </summary>
+    public {{ column.data_type }}{{~ if column.is_nullable == 0 && column.data_type != "string" }}?{{~ end }} {{ column.property_name }} { get; set; }
+    {{~ end }}
+{{~ end }}
+}
+
+/// <summary>
+/// 创建{{ table_description }}数据传输对象
+/// 用于创建新{{ table_description }}
+/// </summary>
+public class {{ class_name }}CreateDto
+{
+{{~ for column in columns }}
+    {{~ # 判断是否为审计字段（不包括 remarks，remarks 可以包含在 CreateDto 中） }}
+    {{~ is_audit_column = column.column_name == "created_by" || column.column_name == "created_time" || column.column_name == "updated_by" || column.column_name == "updated_time" || column.column_name == "is_deleted" || column.column_name == "deleted_by" || column.column_name == "deleted_time" }}
+    {{~ # 只包含 IsForm == 0 的字段（0=是，1=否），排除主键和审计字段（remarks 除外） }}
+    {{~ if column.is_form == 0 && column.is_primary_key == 1 && (!is_audit_column || column.column_name == "remarks") }}
+        {{~ # 判断是否为数值类型 }}
+        {{~ is_numeric = column.data_type == "int" || column.data_type == "long" || column.data_type == "short" || column.data_type == "byte" || column.data_type == "decimal" || column.data_type == "float" || column.data_type == "double" || column.data_type == "bool" }}
+        {{~ # 判断是否为必填的数值类型（is_nullable: 0=是/可空, 1=否/不可空） }}
+        {{~ is_required_numeric = is_numeric && column.is_nullable == 1 }}
+        {{~ # 获取默认值：如果有配置的默认值就用配置的，否则对于必填数值类型使用类型默认值 }}
+        {{~ default_value = column.default_value }}
+        {{~ if is_required_numeric && (default_value == null || default_value == "") }}
+            {{~ if column.data_type == "bool" }}
+                {{~ default_value = "false" }}
+            {{~ else if column.data_type == "decimal" }}
+                {{~ default_value = "0m" }}
+            {{~ else }}
+                {{~ default_value = "0" }}
+            {{~ end }}
+        {{~ end }}
+    /// <summary>
+    /// {{ column.column_description }}
+    /// </summary>
+    public {{ column.data_type }}{{~ if column.is_nullable == 0 && column.data_type != "string" }}?{{~ end }} {{ column.property_name }} { get; set; }{{~ if column.data_type == "string" && column.is_nullable == 1 }} = string.Empty;{{~ else if is_required_numeric && default_value != null && default_value != "" }} = {{ default_value }};{{~ else if default_value != null && default_value != "" && column.data_type != "string" && column.is_nullable == 1 }} = {{ default_value }};{{~ end }}
+    {{~ end }}
+{{~ end }}
+}
+
+/// <summary>
+/// 更新{{ table_description }}数据传输对象
+/// 用于更新{{ table_description }}信息
+/// </summary>
+public class {{ class_name }}UpdateDto : {{ class_name }}CreateDto
+{
+{{~ for column in columns }}
+    {{~ if column.is_primary_key == 1 }}
+    /// <summary>
+    /// {{ column.column_description }}
+    /// </summary>
+    public {{ column.data_type }} {{ column.property_name }} { get; set; }
+    {{~ end }}
+{{~ end }}
+}
+

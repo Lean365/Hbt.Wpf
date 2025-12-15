@@ -1,0 +1,467 @@
+﻿<Window x:Class="Takt.Fluent.Views.Identity.MenuComponent.MenuForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Takt.Fluent.Extensions"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:helpers="clr-namespace:Takt.Fluent.Helpers"
+        xmlns:controls="clr-namespace:Takt.Fluent.Controls"
+        mc:Ignorable="d"
+        d:DesignHeight="700"
+        d:DesignWidth="900"
+        Title="{Binding Title}" 
+        SizeToContent="Manual" 
+        WindowStartupLocation="Manual"
+        ResizeMode="CanResize" 
+        Background="{DynamicResource MaterialDesignPaper}">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <helpers:IntEqualsConverter x:Key="IntEqualsConverter"/>
+        <helpers:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter"/>
+        <helpers:StringToBoolConverter x:Key="StringToBoolConverter"/>
+        <helpers:InverseBoolConverter x:Key="InverseBoolConverter"/>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TabControl Grid.Row="0" Margin="0,0,0,16">
+            <!-- 基本信息 -->
+            <TabItem Header="{local:Localization Key=identity.menu.basicinfo}">
+                <StackPanel Margin="16">
+                    <!-- 菜单名称 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                <Run Text="{local:Localization Key=identity.menu.menuname}"/>
+                            </TextBlock>
+                            <TextBox x:Name="MenuNameTextBox"
+                                     Grid.Column="1" 
+                                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                     materialDesign:HintAssist.Hint="{Binding MenuNameHint}"
+                                     materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                     MinHeight="32"
+                                     Padding="12,6"
+                                     FontSize="13"
+                                     VerticalAlignment="Center"
+                                     VerticalContentAlignment="Center"
+                                     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                     materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+                                <TextBox.Text>
+                                    <Binding Path="MenuName" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                </TextBox.Text>
+                            </TextBox>
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- 菜单编码 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                <Run Text="{local:Localization Key=identity.menu.menucode}"/>
+                            </TextBlock>
+                            <TextBox x:Name="MenuCodeTextBox"
+                                     Grid.Column="1" 
+                                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                     materialDesign:HintAssist.Hint="{Binding MenuCodeHint}"
+                                     materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                     MinHeight="32"
+                                     Padding="12,6"
+                                     FontSize="13"
+                                     VerticalAlignment="Center"
+                                     VerticalContentAlignment="Center"
+                                     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                     materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                     IsReadOnly="{Binding IsCreate, Converter={StaticResource InverseBoolConverter}}">
+                                <TextBox.Text>
+                                    <Binding Path="MenuCode" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                </TextBox.Text>
+                            </TextBox>
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- 国际化键 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Localization Key=identity.menu.i18nkey}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <TextBox Grid.Column="1" 
+                                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                     materialDesign:HintAssist.Hint="{Binding I18nKeyHint}"
+                                     materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                     MinHeight="32"
+                                     Padding="12,6"
+                                     FontSize="13"
+                                     VerticalAlignment="Center"
+                                     VerticalContentAlignment="Center"
+                                     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                     materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+                                <TextBox.Text>
+                                    <Binding Path="I18nKey" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                </TextBox.Text>
+                            </TextBox>
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- 权限码 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Localization Key=identity.menu.permcode}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <TextBox Grid.Column="1" 
+                                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                     materialDesign:HintAssist.Hint="{Binding PermCodeHint}"
+                                     materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                     MinHeight="32"
+                                     Padding="12,6"
+                                     FontSize="13"
+                                     VerticalAlignment="Center"
+                                     VerticalContentAlignment="Center"
+                                     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                     materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+                                <TextBox.Text>
+                                    <Binding Path="PermCode" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                </TextBox.Text>
+                            </TextBox>
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- 菜单类型 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                <Run Text="{local:Localization Key=identity.menu.menutype}"/>
+                            </TextBlock>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                <RadioButton Style="{StaticResource MaterialDesignRadioButton}" FontSize="13" Padding="12,6" Content="{local:Localization Key=identity.menu.menutype.directory}"
+                                                               GroupName="MenuTypeGroup"
+                                                               VerticalAlignment="Center"
+                                                               IsChecked="{Binding MenuType, Converter={StaticResource IntEqualsConverter}, ConverterParameter=0}"/>
+                                <RadioButton Style="{StaticResource MaterialDesignRadioButton}" FontSize="13" Padding="12,6" Content="{local:Localization Key=identity.menu.menutype.menu}"
+                                                               GroupName="MenuTypeGroup"
+                                                               VerticalAlignment="Center"
+                                                               Margin="12,0,0,0"
+                                                               IsChecked="{Binding MenuType, Converter={StaticResource IntEqualsConverter}, ConverterParameter=1}"/>
+                                <RadioButton Style="{StaticResource MaterialDesignRadioButton}" FontSize="13" Padding="12,6" Content="{local:Localization Key=identity.menu.menutype.button}"
+                                                               GroupName="MenuTypeGroup"
+                                                               VerticalAlignment="Center"
+                                                               Margin="12,0,0,0"
+                                                               IsChecked="{Binding MenuType, Converter={StaticResource IntEqualsConverter}, ConverterParameter=2}"/>
+                                <RadioButton Style="{StaticResource MaterialDesignRadioButton}" FontSize="13" Padding="12,6" Content="{local:Localization Key=identity.menu.menutype.api}"
+                                                               GroupName="MenuTypeGroup"
+                                                               VerticalAlignment="Center"
+                                                               Margin="12,0,0,0"
+                                                               IsChecked="{Binding MenuType, Converter={StaticResource IntEqualsConverter}, ConverterParameter=3}"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- 父级菜单ID -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Localization Key=identity.menu.parentid}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <TextBox x:Name="ParentIdTextBox"
+                                     Grid.Column="1" 
+                                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                     materialDesign:HintAssist.Hint="{Binding ParentIdHint}"
+                                     materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                     MinHeight="32"
+                                     Padding="12,6"
+                                     FontSize="13"
+                                     VerticalAlignment="Center"
+                                     VerticalContentAlignment="Center"
+                                     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                     materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+                                <TextBox.Text>
+                                    <Binding Path="ParentId" UpdateSourceTrigger="PropertyChanged" TargetNullValue="" ValidatesOnDataErrors="True"/>
+                                </TextBox.Text>
+                            </TextBox>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+
+            <!-- 路由信息 -->
+            <TabItem Header="{local:Localization Key=identity.menu.routeinfo}">
+                <StackPanel Margin="16">
+                    <!-- 路由路径 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Localization Key=identity.menu.routepath}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <TextBox Grid.Column="1" 
+                                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                     materialDesign:HintAssist.Hint="{Binding RoutePathHint}"
+                                     materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                     MinHeight="32"
+                                     Padding="12,6"
+                                     FontSize="13"
+                                     VerticalAlignment="Center"
+                                     VerticalContentAlignment="Center"
+                                     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                     materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+                                <TextBox.Text>
+                                    <Binding Path="RoutePath" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                </TextBox.Text>
+                            </TextBox>
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- 图标 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Localization Key=identity.menu.icon}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <TextBox Grid.Column="1" 
+                                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                     materialDesign:HintAssist.Hint="{Binding IconHint}"
+                                     materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                     MinHeight="32"
+                                     Padding="12,6"
+                                     FontSize="13"
+                                     VerticalAlignment="Center"
+                                     VerticalContentAlignment="Center"
+                                     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                     materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+                                <TextBox.Text>
+                                    <Binding Path="Icon" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                </TextBox.Text>
+                            </TextBox>
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- 组件路径 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Localization Key=identity.menu.component}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <TextBox Grid.Column="1" 
+                                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                     materialDesign:HintAssist.Hint="{Binding ComponentHint}"
+                                     materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                     MinHeight="32"
+                                     Padding="12,6"
+                                     FontSize="13"
+                                     VerticalAlignment="Center"
+                                     VerticalContentAlignment="Center"
+                                     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                     materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+                                <TextBox.Text>
+                                    <Binding Path="Component" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                </TextBox.Text>
+                            </TextBox>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+
+            <!-- 状态信息 -->
+            <TabItem Header="{local:Localization Key=identity.menu.statusinfo}">
+                <StackPanel Margin="16">
+                    <!-- 是否外链 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Localization Key=identity.menu.isexternal}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                <RadioButton Style="{StaticResource MaterialDesignRadioButton}" FontSize="13" Padding="12,6" Content="{local:Localization Key=identity.menu.isexternal.external}"
+                                                               GroupName="IsExternalGroup"
+                                                               VerticalAlignment="Center"
+                                                               IsChecked="{Binding IsExternal, Converter={StaticResource IntEqualsConverter}, ConverterParameter=0}"/>
+                                <RadioButton Style="{StaticResource MaterialDesignRadioButton}" FontSize="13" Padding="12,6" Content="{local:Localization Key=identity.menu.isexternal.notexternal}"
+                                                               GroupName="IsExternalGroup"
+                                                               VerticalAlignment="Center"
+                                                               Margin="12,0,0,0"
+                                                               IsChecked="{Binding IsExternal, Converter={StaticResource IntEqualsConverter}, ConverterParameter=1}"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- 是否缓存 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Localization Key=identity.menu.iscache}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                <RadioButton Style="{StaticResource MaterialDesignRadioButton}" FontSize="13" Padding="12,6" Content="{local:Localization Key=identity.menu.iscache.cache}"
+                                                               GroupName="IsCacheGroup"
+                                                               VerticalAlignment="Center"
+                                                               IsChecked="{Binding IsCache, Converter={StaticResource IntEqualsConverter}, ConverterParameter=0}"/>
+                                <RadioButton Style="{StaticResource MaterialDesignRadioButton}" FontSize="13" Padding="12,6" Content="{local:Localization Key=identity.menu.iscache.nocache}"
+                                                               GroupName="IsCacheGroup"
+                                                               VerticalAlignment="Center"
+                                                               Margin="12,0,0,0"
+                                                               IsChecked="{Binding IsCache, Converter={StaticResource IntEqualsConverter}, ConverterParameter=1}"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- 是否可见 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Localization Key=identity.menu.isvisible}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                <RadioButton Style="{StaticResource MaterialDesignRadioButton}" FontSize="13" Padding="12,6" Content="{local:Localization Key=identity.menu.isvisible.visible}"
+                                                               GroupName="IsVisibleGroup"
+                                                               VerticalAlignment="Center"
+                                                               IsChecked="{Binding IsVisible, Converter={StaticResource IntEqualsConverter}, ConverterParameter=0}"/>
+                                <RadioButton Style="{StaticResource MaterialDesignRadioButton}" FontSize="13" Padding="12,6" Content="{local:Localization Key=identity.menu.isvisible.invisible}"
+                                                               GroupName="IsVisibleGroup"
+                                                               VerticalAlignment="Center"
+                                                               Margin="12,0,0,0"
+                                                               IsChecked="{Binding IsVisible, Converter={StaticResource IntEqualsConverter}, ConverterParameter=1}"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- 排序号 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Localization Key=identity.menu.ordernum}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <TextBox Grid.Column="1" 
+                                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                     materialDesign:HintAssist.Hint="{Binding OrderNumHint}"
+                                     materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                     MinHeight="32"
+                                     Padding="12,6"
+                                     FontSize="13"
+                                     VerticalAlignment="Center"
+                                     VerticalContentAlignment="Center"
+                                     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                     materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+                                <TextBox.Text>
+                                    <Binding Path="OrderNum" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                </TextBox.Text>
+                            </TextBox>
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- 菜单状态 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                <Run Text="{local:Localization Key=identity.menu.menustatus}"/>
+                            </TextBlock>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                <RadioButton Style="{StaticResource MaterialDesignRadioButton}" FontSize="13" Padding="12,6" Content="{local:Localization Key=identity.menu.menustatus.normal}"
+                                                               GroupName="MenuStatusGroup"
+                                                               VerticalAlignment="Center"
+                                                               IsChecked="{Binding MenuStatus, Converter={StaticResource IntEqualsConverter}, ConverterParameter=0}"/>
+                                <RadioButton Style="{StaticResource MaterialDesignRadioButton}" FontSize="13" Padding="12,6" Content="{local:Localization Key=identity.menu.menustatus.disabled}"
+                                                               GroupName="MenuStatusGroup"
+                                                               VerticalAlignment="Center"
+                                                               Margin="12,0,0,0"
+                                                               IsChecked="{Binding MenuStatus, Converter={StaticResource IntEqualsConverter}, ConverterParameter=1}"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+
+            <!-- 备注信息 -->
+            <TabItem Header="{local:Localization Key=identity.menu.remarksinfo}">
+                <StackPanel Margin="16">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{local:Localization Key=common.audit.Remarks}" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                        <StackPanel Grid.Column="1">
+                            <TextBox 
+                                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                materialDesign:HintAssist.Hint="{Binding RemarksHint}"
+                                materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                MinHeight="200"
+                                Padding="16,10"
+                                FontSize="14"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                TextWrapping="Wrap" 
+                                AcceptsReturn="True" 
+                                VerticalScrollBarVisibility="Hidden">
+                                <TextBox.Text>
+                                    <Binding Path="Remarks" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button IsDefault="True" 
+                    Command="{Binding SaveCommand}" 
+                    Content="{local:Localization Key=common.button.submit}" 
+                    Style="{StaticResource DefaultPrimary}"
+                    Margin="0,0,12,0"/>
+            <Button IsCancel="True" 
+                    Command="{Binding CancelCommand}"
+                    Content="{local:Localization Key=common.button.cancel}"
+                    Style="{StaticResource DefaultInfo}"/>
+        </StackPanel>
+    </Grid>
+</Window>
+

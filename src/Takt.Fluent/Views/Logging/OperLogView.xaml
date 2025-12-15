@@ -1,0 +1,78 @@
+﻿<UserControl x:Class="Takt.Fluent.Views.Logging.OperLogView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:Takt.Fluent.Controls"
+             xmlns:local="clr-namespace:Takt.Fluent.Extensions"
+             mc:Ignorable="d"
+             d:DesignHeight="720"
+             d:DesignWidth="1280">
+    <controls:TaktDataGrid ItemsSource="{Binding OperLogs}"
+                                SelectedItem="{Binding SelectedOperLog, Mode=TwoWay}"
+                                QueryKeyword="{Binding Keyword, Mode=TwoWay}"
+                                QueryPlaceholder="{local:Localization Key=common.placeholder.keywordHint, Param0Key=logging.operlog.query.keyword}"
+                                QueryButtonText="{local:Localization Key=common.search}"
+                                ResetButtonText="{local:Localization Key=common.reset}"
+                                EmptyText="{Binding EmptyMessage}"
+                                ShowToolbarCreate="False"
+                                ShowToolbarUpdate="False"
+                                ShowToolbarDelete="False"
+                                ShowToolbarImport="False"
+                                ShowToolbarExport="True"
+                                ShowToolbarClear="True"
+                                ShowAdvancedQueryButton="False"
+                                ShowRowCreate="False"
+                                ShowRowUpdate="False"
+                                ShowRowDelete="False"
+                                ShowRowDetail="False"
+                                ShowRowAssignRole="False"
+                                ShowRowAuthorize="False"
+                                PageIndex="{Binding PageIndex, Mode=TwoWay}"
+                                PageSize="{Binding PageSize, Mode=TwoWay}"
+                                TotalCount="{Binding TotalCount}"
+                                QueryCommand="{Binding QueryCommand}"
+                                ResetCommand="{Binding ResetCommand}"
+                                ExportCommand="{Binding ExportCommand}"
+                                ClearCommand="{Binding ClearCommand}"
+                                PageChangedCommand="{Binding PageChangedCommand}">
+        <controls:TaktDataGrid.Columns>
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logging.operlog.username}"
+                                                        BindingPath="Username"
+                                                        Width="150" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logging.operlog.operationtype}"
+                                                        BindingPath="OperationType"
+                                                        Width="120" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logging.operlog.operationmodule}"
+                                                        BindingPath="OperationModule"
+                                                        Width="150" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logging.operlog.operationdesc}"
+                                                        BindingPath="OperationDesc"
+                                                        Width="250" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logging.operlog.operationtime}"
+                                                        BindingPath="OperationTime"
+                                                        Width="180"
+                                                        StringFormat="{}{0:yyyy-MM-dd HH:mm:ss}" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logging.operlog.requestpath}"
+                                                        BindingPath="RequestPath"
+                                                        Width="250" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logging.operlog.requestmethod}"
+                                                        BindingPath="RequestMethod"
+                                                        Width="120" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logging.operlog.elapsedtime}"
+                                                        BindingPath="ElapsedTime"
+                                                        Width="120" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logging.operlog.operationresult}"
+                                                        BindingPath="OperationResult"
+                                                        Width="120" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logging.operlog.ipaddress}"
+                                                        BindingPath="IpAddress"
+                                                        Width="150" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=common.audit.CreatedTime}"
+                                                        BindingPath="CreatedTime"
+                                                        Width="180"
+                                                        StringFormat="{}{0:yyyy-MM-dd HH:mm:ss}" />
+        </controls:TaktDataGrid.Columns>
+    </controls:TaktDataGrid>
+</UserControl>
+

@@ -1,0 +1,81 @@
+﻿<UserControl x:Class="Takt.Fluent.Views.Identity.UserView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:Takt.Fluent.Controls"
+             xmlns:local="clr-namespace:Takt.Fluent.Extensions"
+             mc:Ignorable="d"
+             d:DesignHeight="720"
+             d:DesignWidth="1280"
+             HorizontalAlignment="Stretch"
+             VerticalAlignment="Stretch">
+    <controls:TaktDataGrid ItemsSource="{Binding Users}"
+                           HorizontalAlignment="Stretch"
+                           VerticalAlignment="Stretch"
+                                SelectedItem="{Binding SelectedUser, Mode=TwoWay}"
+                                QueryKeyword="{Binding Keyword, Mode=TwoWay}"
+                                QueryPlaceholder="{local:Localization Key=common.placeholder.keywordHint, Param0Key=identity.user.query.keyword}"
+                                QueryButtonText="{local:Localization Key=common.search}"
+                                ResetButtonText="{local:Localization Key=common.reset}"
+                                EmptyText="{Binding EmptyMessage}"
+                                ShowToolbarCreate="True"
+                                ShowToolbarUpdate="True"
+                                ShowToolbarDelete="True"
+                                ShowToolbarImport="True"
+                                ShowToolbarExport="True"
+                                ShowAdvancedQueryButton="False"
+                                PageIndex="{Binding PageIndex, Mode=TwoWay}"
+                                PageSize="{Binding PageSize, Mode=TwoWay}"
+                                TotalCount="{Binding TotalCount}"
+                                QueryCommand="{Binding QueryCommand}"
+                                ResetCommand="{Binding ResetCommand}"
+                                CreateCommand="{Binding CreateCommand}"
+                                UpdateCommand="{Binding UpdateCommand}"
+                                DeleteCommand="{Binding DeleteCommand}"
+                                ImportCommand="{Binding ImportCommand}"
+                                ExportCommand="{Binding ExportCommand}"
+                                DownloadTemplateCommand="{Binding DownloadTemplateCommand}"
+                                ShowRowCreate="False"
+                                ShowRowUpdate="True"
+                                ShowRowDelete="True"
+                                ShowRowAssignRole="True"
+                                ShowRowAuthorize="True"
+                                RowUpdateCommand="{Binding UpdateCommand}"
+                                RowDeleteCommand="{Binding DeleteCommand}"
+                                RowAssignRoleCommand="{Binding AssignRoleCommand}"
+                                RowAuthorizeCommand="{Binding AuthorizeCommand}"
+                                PageChangedCommand="{Binding PageChangedCommand}">
+        <controls:TaktDataGrid.Columns>
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=identity.user.username}"
+                                                        BindingPath="Username"
+                                                        Width="180" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=identity.user.realname}"
+                                                        BindingPath="RealName"
+                                                        Width="150" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=identity.user.email}"
+                                                        BindingPath="Email"
+                                                        Width="220" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=identity.user.phone}"
+                                                        BindingPath="Phone"
+                                                        Width="160" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=identity.user.usertype}"
+                                                        BindingPath="UserType"
+                                                        Width="120" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=identity.user.usergender}"
+                                                        BindingPath="UserGender"
+                                                        Width="120" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=identity.user.userstatus}"
+                                                        BindingPath="UserStatus"
+                                                        Width="120" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=common.audit.remarks}"
+                                                        BindingPath="Remarks"
+                                                        Width="200" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=common.audit.createdtime}"
+                                                        BindingPath="CreatedTime"
+                                                        Width="200"
+                                                        StringFormat="{}{0:yyyy-MM-dd HH:mm:ss}" />
+        </controls:TaktDataGrid.Columns>
+    </controls:TaktDataGrid>
+</UserControl>
+

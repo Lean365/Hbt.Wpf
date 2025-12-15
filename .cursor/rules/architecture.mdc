@@ -1,0 +1,76 @@
+---
+alwaysApply: true
+---
+
+# 架构规范
+
+## 分层架构原则
+
+项目采用 Clean Architecture（清洁架构），依赖方向只能向下：
+
+```
+Fluent (表现层) -> Application (应用层) -> Domain (领域层) -> Infrastructure (基础设施层) -> Common (通用层)
+```
+
+**项目命名空间前缀**：`Takt.*`
+
+**文件位置**：
+- 表现层：@src/Takt.Fluent/
+- 应用层：@src/Takt.Application/
+- 领域层：@src/Takt.Domain/
+- 基础设施层：@src/Takt.Infrastructure/
+- 通用层：@src/Takt.Common/
+
+## 各层职责
+
+### Takt.Fluent (表现层)
+- **职责**: UI展示、用户交互、视图逻辑
+- **包含**: Views, ViewModels, UI Services, Helpers, Models
+- **示例**: @src/Takt.Fluent/Views/MainWindow.xaml, @src/Takt.Fluent/ViewModels/MainWindowViewModel.cs
+
+### Takt.Application (应用层)
+- **职责**: 业务逻辑编排、应用服务
+- **包含**: Services, DTOs, Mappers
+- **示例**: @src/Takt.Application/Services/
+
+### Takt.Domain (领域层)
+- **职责**: 领域模型、业务规则
+- **包含**: Entities, Repository Interfaces
+- **示例**: @src/Takt.Domain/Entities/
+
+### Takt.Infrastructure (基础设施层)
+- **职责**: 数据访问、外部服务集成
+- **包含**: Data Access, Repository Implementation
+- **示例**: @src/Takt.Infrastructure/Data/
+
+### Takt.Common (通用层)
+- **职责**: 共享组件、工具类
+- **包含**: Logging, Helpers, Results
+- **示例**: @src/Takt.Common/Logging/
+
+## 禁止事项
+
+- ❌ 表现层不能直接调用基础设施层
+- ❌ 不能跨层调用
+- ❌ 不能违反依赖方向
+
+## 代码示例
+
+```csharp
+// ✅ 正确：ViewModel 调用应用层服务
+public class UserViewModel : ViewModelBase
+{
+    private readonly IHbtUserService _userService;  // 应用层接口
+    
+    public UserViewModel(IHbtUserService userService)
+    {
+        _userService = userService;
+    }
+}
+
+// ❌ 错误：ViewModel 直接调用基础设施层
+public class UserViewModel : ViewModelBase
+{
+    private readonly IUserRepository _repository;  // ❌ 基础设施层
+}
+```

@@ -1,0 +1,1268 @@
+﻿<UserControl x:Class="Takt.Fluent.Controls.TaktDataGrid"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:Takt.Fluent.Extensions"
+             xmlns:helpers="clr-namespace:Takt.Fluent.Helpers"
+             xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+             mc:Ignorable="d"
+             d:DesignHeight="720"
+             d:DesignWidth="1280"
+             x:Name="Root"
+             ClipToBounds="False">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <helpers:InverseBoolConverter x:Key="InverseBoolConverter" />
+        <helpers:MultiplyValueConverter x:Key="MultiplyValueConverter" />
+
+        <!-- 尺寸常量 -->
+        <sys:Double x:Key="ToolbarButtonHeight">32</sys:Double>
+        <sys:Double x:Key="PaginationButtonHeight">24</sys:Double>
+        <sys:Double x:Key="IconSizeSmall">18</sys:Double>
+        <sys:Double x:Key="IconSizeMedium">20</sys:Double>
+        <Thickness x:Key="ToolbarButtonMargin">0,0,12,0</Thickness>
+        <Thickness x:Key="ToolbarButtonMarginSmall">0,0,8,0</Thickness>
+        <Thickness x:Key="PaginationButtonMargin">4,0,0,0</Thickness>
+        <Thickness x:Key="IconMargin">0,0,6,0</Thickness>
+
+        <!-- Fluent Design ContextMenu 样式 -->
+        <Style x:Key="ContextMenuStyle" TargetType="ContextMenu">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource CardStrokeColorDefaultBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="4"/>
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <StackPanel Background="Transparent"/>
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ContextMenu">
+                        <Border x:Name="Border"
+                                Background="{DynamicResource LayerFillColorDefaultBrush}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="8"
+                                Padding="{TemplateBinding Padding}">
+                            <ItemsPresenter/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Fluent Design MenuItem 基础样式 -->
+        <Style x:Key="FluentMenuItemBaseStyle" TargetType="MenuItem">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Padding" Value="12,10"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="MinHeight" Value="0"/>
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="MenuItem">
+                        <Border x:Name="border"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                BorderThickness="0"
+                                CornerRadius="6"
+                                Padding="{TemplateBinding Padding}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <!-- 图标容器 -->
+                                <ContentPresenter x:Name="IconPresenter"
+                                                  Grid.Column="0"
+                                                  ContentSource="Icon"
+                                                  Margin="0,0,12,0"
+                                                  VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center"/>
+                                
+                                <!-- 文本容器 -->
+                                <ContentPresenter x:Name="HeaderPresenter"
+                                                  Grid.Column="1"
+                                                  ContentSource="Header"
+                                                  VerticalAlignment="Center"
+                                                  HorizontalAlignment="Left"
+                                                  RecognizesAccessKey="True"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Fluent Design 下载模板菜单项样式（Info/Primary 色系） -->
+        <Style x:Key="DownloadTemplateMenuItemStyle" TargetType="MenuItem" BasedOn="{StaticResource FluentMenuItemBaseStyle}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="MenuItem">
+                        <Border x:Name="border"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                BorderThickness="0"
+                                CornerRadius="6"
+                                Padding="{TemplateBinding Padding}">
+                            <Grid Background="Transparent">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <!-- 图标容器 -->
+                                <Border x:Name="IconContainer"
+                                        Grid.Column="0"
+                                        Margin="0,0,12,0"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        Background="Transparent"
+                                        BorderBrush="Transparent"
+                                        BorderThickness="0"
+                                        TextElement.Foreground="{DynamicResource InfoFillColorDefaultBrush}">
+                                    <ContentPresenter x:Name="IconPresenter"
+                                                      ContentSource="Icon"
+                                                      VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                                </Border>
+                                
+                                <!-- 文本容器 -->
+                                <ContentPresenter x:Name="HeaderPresenter"
+                                                  Grid.Column="1"
+                                            ContentSource="Header"
+                                                  VerticalAlignment="Center"
+                                                  HorizontalAlignment="Left"
+                                            RecognizesAccessKey="True"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource InfoFillColorSecondaryBrush}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource InfoTextFillColorPrimaryBrush}"/>
+                                <Setter TargetName="IconContainer" Property="TextElement.Foreground" Value="{DynamicResource InfoTextFillColorPrimaryBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource InfoFillColorDefaultBrush}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource InfoTextFillColorPrimaryBrush}"/>
+                                <Setter TargetName="IconContainer" Property="TextElement.Foreground" Value="{DynamicResource InfoTextFillColorPrimaryBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Fluent Design 上传文件菜单项样式（Info/Primary 色系） -->
+        <Style x:Key="UploadFileMenuItemStyle" TargetType="MenuItem" BasedOn="{StaticResource FluentMenuItemBaseStyle}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="MenuItem">
+                        <Border x:Name="border"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                BorderThickness="0"
+                                CornerRadius="6"
+                                Padding="{TemplateBinding Padding}">
+                            <Grid Background="Transparent">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <!-- 图标容器 -->
+                                <Border x:Name="IconContainer"
+                                        Grid.Column="0"
+                                        Margin="0,0,12,0"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        Background="Transparent"
+                                        BorderBrush="Transparent"
+                                        BorderThickness="0"
+                                        TextElement.Foreground="{DynamicResource InfoFillColorDefaultBrush}">
+                                    <ContentPresenter x:Name="IconPresenter"
+                                                      ContentSource="Icon"
+                                                      VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                                </Border>
+                                
+                                <!-- 文本容器 -->
+                                <ContentPresenter x:Name="HeaderPresenter"
+                                                  Grid.Column="1"
+                                            ContentSource="Header"
+                                                  VerticalAlignment="Center"
+                                                  HorizontalAlignment="Left"
+                                            RecognizesAccessKey="True"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource InfoFillColorSecondaryBrush}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource InfoTextFillColorPrimaryBrush}"/>
+                                <Setter TargetName="IconContainer" Property="TextElement.Foreground" Value="{DynamicResource InfoTextFillColorPrimaryBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource InfoFillColorDefaultBrush}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource InfoTextFillColorPrimaryBrush}"/>
+                                <Setter TargetName="IconContainer" Property="TextElement.Foreground" Value="{DynamicResource InfoTextFillColorPrimaryBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Fluent Design 清理菜单项样式（Warning 色系） -->
+        <Style x:Key="ClearTodayMenuItemStyle" TargetType="MenuItem" BasedOn="{StaticResource FluentMenuItemBaseStyle}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="MenuItem">
+                        <Border x:Name="border"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                BorderThickness="0"
+                                CornerRadius="6"
+                                Padding="{TemplateBinding Padding}">
+                            <Grid Background="Transparent">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <!-- 图标容器 -->
+                                <Border x:Name="IconContainer"
+                                        Grid.Column="0"
+                                        Margin="0,0,12,0"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        Background="Transparent"
+                                        BorderBrush="Transparent"
+                                        BorderThickness="0"
+                                        TextElement.Foreground="{DynamicResource WarningFillColorDefaultBrush}">
+                                    <ContentPresenter x:Name="IconPresenter"
+                                                      ContentSource="Icon"
+                                                      VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                                </Border>
+                                
+                                <!-- 文本容器 -->
+                                <ContentPresenter x:Name="HeaderPresenter"
+                                                  Grid.Column="1"
+                                            ContentSource="Header"
+                                                  VerticalAlignment="Center"
+                                                  HorizontalAlignment="Left"
+                                            RecognizesAccessKey="True"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource WarningFillColorSecondaryBrush}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource WarningTextFillColorPrimaryBrush}"/>
+                                <Setter TargetName="IconContainer" Property="TextElement.Foreground" Value="{DynamicResource WarningTextFillColorPrimaryBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource WarningFillColorDefaultBrush}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource WarningTextFillColorPrimaryBrush}"/>
+                                <Setter TargetName="IconContainer" Property="TextElement.Foreground" Value="{DynamicResource WarningTextFillColorPrimaryBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Fluent Design 清理7天菜单项样式（Warning 色系） -->
+        <Style x:Key="ClearSevenDaysMenuItemStyle" TargetType="MenuItem" BasedOn="{StaticResource FluentMenuItemBaseStyle}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="MenuItem">
+                        <Border x:Name="border"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                BorderThickness="0"
+                                CornerRadius="6"
+                                Padding="{TemplateBinding Padding}">
+                            <Grid Background="Transparent">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <!-- 图标容器 -->
+                                <Border x:Name="IconContainer"
+                                        Grid.Column="0"
+                                        Margin="0,0,12,0"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        Background="Transparent"
+                                        BorderBrush="Transparent"
+                                        BorderThickness="0"
+                                        TextElement.Foreground="{DynamicResource WarningFillColorDefaultBrush}">
+                                    <ContentPresenter x:Name="IconPresenter"
+                                                      ContentSource="Icon"
+                                                      VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                                </Border>
+                                
+                                <!-- 文本容器 -->
+                                <ContentPresenter x:Name="HeaderPresenter"
+                                                  Grid.Column="1"
+                                            ContentSource="Header"
+                                                  VerticalAlignment="Center"
+                                                  HorizontalAlignment="Left"
+                                            RecognizesAccessKey="True"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource WarningFillColorSecondaryBrush}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource WarningTextFillColorPrimaryBrush}"/>
+                                <Setter TargetName="IconContainer" Property="TextElement.Foreground" Value="{DynamicResource WarningTextFillColorPrimaryBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource WarningFillColorDefaultBrush}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource WarningTextFillColorPrimaryBrush}"/>
+                                <Setter TargetName="IconContainer" Property="TextElement.Foreground" Value="{DynamicResource WarningTextFillColorPrimaryBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Fluent Design 清理30天菜单项样式（Warning 色系） -->
+        <Style x:Key="ClearThirtyDaysMenuItemStyle" TargetType="MenuItem" BasedOn="{StaticResource FluentMenuItemBaseStyle}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="MenuItem">
+                        <Border x:Name="border"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                BorderThickness="0"
+                                CornerRadius="6"
+                                Padding="{TemplateBinding Padding}">
+                            <Grid Background="Transparent">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <!-- 图标容器 -->
+                                <Border x:Name="IconContainer"
+                                        Grid.Column="0"
+                                        Margin="0,0,12,0"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        Background="Transparent"
+                                        BorderBrush="Transparent"
+                                        BorderThickness="0"
+                                        TextElement.Foreground="{DynamicResource WarningFillColorDefaultBrush}">
+                                    <ContentPresenter x:Name="IconPresenter"
+                                                      ContentSource="Icon"
+                                                      VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                                </Border>
+                                
+                                <!-- 文本容器 -->
+                                <ContentPresenter x:Name="HeaderPresenter"
+                                                  Grid.Column="1"
+                                            ContentSource="Header"
+                                                  VerticalAlignment="Center"
+                                                  HorizontalAlignment="Left"
+                                            RecognizesAccessKey="True"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource WarningFillColorSecondaryBrush}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource WarningTextFillColorPrimaryBrush}"/>
+                                <Setter TargetName="IconContainer" Property="TextElement.Foreground" Value="{DynamicResource WarningTextFillColorPrimaryBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource WarningFillColorDefaultBrush}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource WarningTextFillColorPrimaryBrush}"/>
+                                <Setter TargetName="IconContainer" Property="TextElement.Foreground" Value="{DynamicResource WarningTextFillColorPrimaryBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Fluent Design 清理全部菜单项样式（Warning 色系） -->
+        <Style x:Key="ClearAllMenuItemStyle" TargetType="MenuItem" BasedOn="{StaticResource FluentMenuItemBaseStyle}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="MenuItem">
+                        <Border x:Name="border"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                BorderThickness="0"
+                                CornerRadius="6"
+                                Padding="{TemplateBinding Padding}">
+                            <Grid Background="Transparent">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <!-- 图标容器 -->
+                                <Border x:Name="IconContainer"
+                                        Grid.Column="0"
+                                        Margin="0,0,12,0"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        Background="Transparent"
+                                        BorderBrush="Transparent"
+                                        BorderThickness="0"
+                                        TextElement.Foreground="{DynamicResource WarningFillColorDefaultBrush}">
+                                    <ContentPresenter x:Name="IconPresenter"
+                                                      ContentSource="Icon"
+                                                      VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                                </Border>
+                                
+                                <!-- 文本容器 -->
+                                <ContentPresenter x:Name="HeaderPresenter"
+                                                  Grid.Column="1"
+                                            ContentSource="Header"
+                                                  VerticalAlignment="Center"
+                                                  HorizontalAlignment="Left"
+                                            RecognizesAccessKey="True"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource WarningFillColorSecondaryBrush}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource WarningTextFillColorPrimaryBrush}"/>
+                                <Setter TargetName="IconContainer" Property="TextElement.Foreground" Value="{DynamicResource WarningTextFillColorPrimaryBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource WarningFillColorDefaultBrush}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource WarningTextFillColorPrimaryBrush}"/>
+                                <Setter TargetName="IconContainer" Property="TextElement.Foreground" Value="{DynamicResource WarningTextFillColorPrimaryBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="DenseComboBoxStyle"
+               TargetType="ComboBox"
+               BasedOn="{StaticResource MaterialDesignComboBox}">
+            <Setter Property="Height" Value="24" />
+            <Setter Property="MinHeight" Value="0" />
+            <Setter Property="Padding" Value="6,0" />
+        </Style>
+
+        <Style x:Key="DenseOutlinedTextBoxStyle"
+               TargetType="TextBox"
+               BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
+            <Setter Property="Height" Value="24" />
+            <Setter Property="MinHeight" Value="0" />
+            <Setter Property="Padding" Value="4,0" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="materialDesign:TextFieldAssist.DecorationVisibility" Value="Collapsed" />
+        </Style>
+
+        <!-- 工具栏按钮基础样式 -->
+        <Style x:Key="ToolbarButtonBaseStyle" TargetType="Button">
+            <Setter Property="Height" Value="{StaticResource ToolbarButtonHeight}" />
+            <Setter Property="Margin" Value="{StaticResource ToolbarButtonMargin}" />
+        </Style>
+
+        <!-- 工具栏图标按钮样式 -->
+        <Style x:Key="ToolbarIconButtonStyle" TargetType="Button" BasedOn="{StaticResource ToolbarButtonBaseStyle}">
+            <Setter Property="Width" Value="32" />
+            <Setter Property="Margin" Value="{StaticResource PaginationButtonMargin}" />
+        </Style>
+
+        <!-- 分页按钮基础样式 -->
+        <Style x:Key="PaginationButtonBaseStyle" TargetType="Button">
+            <Setter Property="Height" Value="{StaticResource PaginationButtonHeight}" />
+        </Style>
+
+        <!-- 列头调整器样式 -->
+        <Style x:Key="ColumnHeaderGripperStyle" TargetType="Thumb">
+            <Setter Property="Width" Value="8" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Cursor" Value="SizeWE" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Thumb">
+                        <Border Background="{TemplateBinding Background}"
+                                Width="{TemplateBinding Width}"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="{DynamicResource MaterialDesignDivider}" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="TaktDataGridColumnHeaderStyle"
+               TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="{DynamicResource MaterialDesignCardBackground}" />
+            <Setter Property="Foreground" Value="{DynamicResource MaterialDesignBody}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignDivider}" />
+            <Setter Property="BorderThickness" Value="0,0,1,1" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="Padding" Value="16,8" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="DataGridColumnHeader">
+                        <Grid>
+                            <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Padding="{TemplateBinding Padding}"
+                                    SnapsToDevicePixels="True"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Stretch">
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </Border>
+                            <!-- 列宽调整 Thumb -->
+                            <Thumb x:Name="PART_LeftHeaderGripper"
+                                   HorizontalAlignment="Left"
+                                   Style="{StaticResource ColumnHeaderGripperStyle}" />
+                            <Thumb x:Name="PART_RightHeaderGripper"
+                                   HorizontalAlignment="Right"
+                                   Style="{StaticResource ColumnHeaderGripperStyle}" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SelectionCheckBoxStyle"
+               TargetType="CheckBox">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="Width" Value="20" />
+            <Setter Property="Height" Value="20" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <Border Background="Transparent">
+                            <materialDesign:PackIcon x:Name="Icon"
+                                                     Kind="CheckboxBlankOutline"
+                                                     Width="18"
+                                                     Height="18"
+                                                     Foreground="{DynamicResource MaterialDesignBody}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Icon" Property="materialDesign:PackIcon.Kind" Value="CheckboxMarked" />
+                                <Setter TargetName="Icon" Property="Foreground" Value="{DynamicResource PrimaryHueMidBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="{x:Null}">
+                                <Setter TargetName="Icon" Property="materialDesign:PackIcon.Kind" Value="CheckboxIntermediate" />
+                                <Setter TargetName="Icon" Property="Foreground" Value="{DynamicResource PrimaryHueMidBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Icon" Property="Foreground" Value="{DynamicResource MaterialDesignDisabled}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="PaginationNumberButtonStyle"
+               TargetType="ToggleButton">
+            <Setter Property="MinWidth" Value="32" />
+            <Setter Property="Height" Value="24" />
+            <Setter Property="Margin" Value="4,0,0,0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignDivider}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Foreground" Value="{DynamicResource MaterialDesignBody}" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Style.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource PrimaryHueMidBrush}" />
+                    <Setter Property="Foreground" Value="{DynamicResource PrimaryHueMidForegroundBrush}" />
+                    <Setter Property="BorderBrush" Value="{DynamicResource PrimaryHueMidBrush}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="TaktDataGridRowStyle"
+               TargetType="DataGridRow">
+            <Setter Property="Background" Value="{DynamicResource MaterialDesignPaper}" />
+            <Setter Property="Foreground" Value="{DynamicResource MaterialDesignBody}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignDivider}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource MaterialDesignCardBackground}" />
+                </Trigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource AccentFillColorSecondaryBrush}" />
+                    <Setter Property="Foreground" Value="{DynamicResource TextOnAccentFillColorPrimaryBrush}" />
+                </Trigger>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsSelected" Value="True" />
+                        <Condition Property="Selector.IsSelectionActive" Value="False" />
+                    </MultiTrigger.Conditions>
+                    <Setter Property="Background" Value="{DynamicResource AccentFillColorSecondaryBrush}" />
+                    <Setter Property="Foreground" Value="{DynamicResource TextOnAccentFillColorPrimaryBrush}" />
+                </MultiTrigger>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsSelected" Value="True" />
+                        <Condition Property="IsMouseOver" Value="True" />
+                    </MultiTrigger.Conditions>
+                    <Setter Property="Background" Value="{DynamicResource AccentFillColorSecondaryBrush}" />
+                    <Setter Property="Foreground" Value="{DynamicResource TextOnAccentFillColorPrimaryBrush}" />
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="TaktDataGridCellStyle"
+               TargetType="DataGridCell">
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="TextBlock.TextTrimming" Value="CharacterEllipsis" />
+            <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
+            <Setter Property="Padding" Value="12,0" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="DataGridCell">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{DynamicResource MaterialDesignDivider}"
+                                BorderThickness="0,0,1,0"
+                                Padding="{TemplateBinding Padding}"
+                                SnapsToDevicePixels="True"
+                                VerticalAlignment="Stretch"
+                                HorizontalAlignment="Stretch">
+                            <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Margin="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- 查询区域 -->
+        <Border Grid.Row="0"
+                x:Name="QueryPanel"
+                CornerRadius="8,8,0,0"
+                Padding="12,8"
+                Background="{DynamicResource MaterialDesignPaper}"
+                Visibility="{Binding ShowQueryArea, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBox Grid.Column="0"
+                         Margin="0,0,12,0"
+                         Style="{StaticResource DenseOutlinedTextBoxStyle}"
+                         Height="{StaticResource ToolbarButtonHeight}"
+                         Text="{Binding QueryKeyword, ElementName=Root, UpdateSourceTrigger=PropertyChanged}"
+                         materialDesign:HintAssist.Hint="{Binding QueryPlaceholder, ElementName=Root}"
+                         VerticalAlignment="Center"
+                         VerticalContentAlignment="Center" />
+
+                <StackPanel Grid.Column="1"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center">
+                    <Button Style="{StaticResource DefaultPrimarySmall}"
+                            Height="{StaticResource ToolbarButtonHeight}"
+                            Margin="{StaticResource ToolbarButtonMarginSmall}"
+                            Click="OnQueryButtonClick">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <materialDesign:PackIcon Kind="Magnify" 
+                                                     Width="{StaticResource IconSizeSmall}" 
+                                                     Height="{StaticResource IconSizeSmall}" 
+                                                     Margin="{StaticResource IconMargin}" />
+                            <TextBlock Text="{Binding QueryButtonText, ElementName=Root}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource DefaultInfoSmall}"
+                            Height="{StaticResource ToolbarButtonHeight}"
+                            Click="OnResetButtonClick">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <materialDesign:PackIcon Kind="Autorenew" 
+                                                     Width="{StaticResource IconSizeSmall}" 
+                                                     Height="{StaticResource IconSizeSmall}" 
+                                                     Margin="{StaticResource IconMargin}" />
+                            <TextBlock Text="{Binding ResetButtonText, ElementName=Root}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- 工具栏 -->
+        <Border Grid.Row="1"
+                Background="{DynamicResource MaterialDesignPaper}"
+                CornerRadius="0"
+                Padding="12,8"
+                Visibility="{Binding ShowToolbar, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center">
+                    <Button Style="{StaticResource DefaultPrimarySmall}"
+                            Height="{StaticResource ToolbarButtonHeight}"
+                            Margin="{StaticResource ToolbarButtonMargin}"
+                            Visibility="{Binding ShowToolbarCreate, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}"
+                            Command="{Binding CreateCommand, ElementName=Root}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Plus" 
+                                                     Width="{StaticResource IconSizeSmall}" 
+                                                     Height="{StaticResource IconSizeSmall}" 
+                                                     Margin="{StaticResource IconMargin}" />
+                            <TextBlock Text="{local:Localization Key=common.button.create}" />
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource DefaultSuccessSmall}"
+                            Height="{StaticResource ToolbarButtonHeight}"
+                            Margin="{StaticResource ToolbarButtonMargin}"
+                            Visibility="{Binding ShowToolbarUpdate, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}"
+                            Command="{Binding InternalUpdateCommand, ElementName=Root}"
+                            CommandParameter="{Binding SelectedItem, ElementName=Root}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Pencil" 
+                                                     Width="{StaticResource IconSizeSmall}" 
+                                                     Height="{StaticResource IconSizeSmall}" 
+                                                     Margin="{StaticResource IconMargin}" />
+                            <TextBlock Text="{local:Localization Key=common.button.update}" />
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource DefaultDangerSmall}"
+                            Height="{StaticResource ToolbarButtonHeight}"
+                            Margin="{StaticResource ToolbarButtonMargin}"
+                            Visibility="{Binding ShowToolbarDelete, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}"
+                            Command="{Binding InternalDeleteCommand, ElementName=Root}"
+                            CommandParameter="{Binding SelectedItem, ElementName=Root}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Delete" 
+                                                     Width="{StaticResource IconSizeSmall}" 
+                                                     Height="{StaticResource IconSizeSmall}" 
+                                                     Margin="{StaticResource IconMargin}" />
+                            <TextBlock Text="{local:Localization Key=common.button.delete}" />
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource DefaultSuccessSmall}"
+                            Height="{StaticResource ToolbarButtonHeight}"
+                            Margin="{StaticResource ToolbarButtonMargin}"
+                            Visibility="{Binding ShowToolbarImport, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}"
+                            Click="ImportButton_Click">
+                        <Button.ContextMenu>
+                            <ContextMenu x:Name="ImportContextMenu"
+                                         Style="{StaticResource ContextMenuStyle}"
+                                         Placement="Bottom">
+                                <MenuItem Command="{Binding DownloadTemplateCommand}"
+                                          Style="{StaticResource DownloadTemplateMenuItemStyle}"
+                                          Header="{local:Localization Key=common.button.download, Param0Key=common.template}">
+                                    <MenuItem.Icon>
+                                            <materialDesign:PackIcon Kind="FileExcelBox"
+                                                                 Width="16"
+                                                                 Height="16"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Command="{Binding ImportCommand}"
+                                          Style="{StaticResource UploadFileMenuItemStyle}"
+                                          Header="{local:Localization Key=common.button.upload, Param0Key=common.file}">
+                                    <MenuItem.Icon>
+                                            <materialDesign:PackIcon Kind="FileExcel"
+                                                                 Width="16"
+                                                                 Height="16"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </Button.ContextMenu>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Import" 
+                                                     Width="{StaticResource IconSizeSmall}" 
+                                                     Height="{StaticResource IconSizeSmall}" 
+                                                     Margin="{StaticResource IconMargin}" />
+                            <TextBlock Text="{local:Localization Key=common.button.import}" />
+                            <materialDesign:PackIcon Kind="ChevronDown"
+                                                     Width="14"
+                                                     Height="14"
+                                                     Margin="8,0,0,0"
+                                                     VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                    <!-- 自定义工具栏内容 -->
+                    <ContentPresenter Content="{Binding CustomToolbarContent, ElementName=Root}"
+                                      Margin="{StaticResource ToolbarButtonMargin}"
+                                      VerticalAlignment="Center" />
+                    
+                    <Button Style="{StaticResource DefaultAccentSmall}"
+                            Height="{StaticResource ToolbarButtonHeight}"
+                            Visibility="{Binding ShowToolbarExport, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}"
+                            Command="{Binding ExportCommand, ElementName=Root}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Export" 
+                                                     Width="{StaticResource IconSizeSmall}" 
+                                                     Height="{StaticResource IconSizeSmall}" 
+                                                     Margin="{StaticResource IconMargin}" />
+                            <TextBlock Text="{local:Localization Key=common.button.export}" />
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource DefaultWarningSmall}"
+                            Height="{StaticResource ToolbarButtonHeight}"
+                            Margin="{StaticResource ToolbarButtonMargin}"
+                            Visibility="{Binding ShowToolbarClear, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}"
+                            Click="ClearButton_Click">
+                        <Button.ContextMenu>
+                            <ContextMenu x:Name="ClearContextMenu"
+                                         Style="{StaticResource ContextMenuStyle}"
+                                         Placement="Bottom">
+                                <MenuItem Command="{Binding ClearCommand}"
+                                          CommandParameter="0"
+                                          Style="{StaticResource ClearTodayMenuItemStyle}"
+                                          Header="{local:Localization Key=Logging.Cleanup.Range.Today}">
+                                    <MenuItem.Icon>
+                                            <materialDesign:PackIcon Kind="CalendarToday"
+                                                                 Width="16"
+                                                                 Height="16"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Command="{Binding ClearCommand}"
+                                          CommandParameter="7"
+                                          Style="{StaticResource ClearSevenDaysMenuItemStyle}"
+                                          Header="{local:Localization Key=Logging.Cleanup.Range.SevenDays}">
+                                    <MenuItem.Icon>
+                                            <materialDesign:PackIcon Kind="CalendarWeek"
+                                                                 Width="16"
+                                                                 Height="16"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Command="{Binding ClearCommand}"
+                                          CommandParameter="30"
+                                          Style="{StaticResource ClearThirtyDaysMenuItemStyle}"
+                                          Header="{local:Localization Key=Logging.Cleanup.Range.ThirtyDays}">
+                                    <MenuItem.Icon>
+                                            <materialDesign:PackIcon Kind="CalendarMonth"
+                                                                 Width="16"
+                                                                 Height="16"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Command="{Binding ClearCommand}"
+                                          CommandParameter="-1"
+                                          Style="{StaticResource ClearAllMenuItemStyle}"
+                                          Header="{local:Localization Key=Logging.Cleanup.Range.All}">
+                                    <MenuItem.Icon>
+                                            <materialDesign:PackIcon Kind="DeleteSweep"
+                                                                 Width="16"
+                                                                 Height="16"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </Button.ContextMenu>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Broom" 
+                                                     Width="{StaticResource IconSizeSmall}" 
+                                                     Height="{StaticResource IconSizeSmall}" 
+                                                     Margin="{StaticResource IconMargin}" />
+                            <TextBlock Text="{local:Localization Key=common.button.clear}" />
+                            <materialDesign:PackIcon Kind="ChevronDown"
+                                                     Width="14"
+                                                     Height="14"
+                                                     Margin="8,0,0,0"
+                                                     VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource DefaultPrimarySmall}"
+                            Height="{StaticResource ToolbarButtonHeight}"
+                            Margin="{StaticResource ToolbarButtonMargin}"
+                            Visibility="{Binding ShowToolbarScanInbound, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}"
+                            Command="{Binding ScanInboundCommand, ElementName=Root}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="BarcodeScan" 
+                                                     Width="{StaticResource IconSizeSmall}" 
+                                                     Height="{StaticResource IconSizeSmall}" 
+                                                     Margin="{StaticResource IconMargin}" />
+                            <TextBlock Text="{local:Localization Key=Logistics.Serials.ProdSerialInbound.ScanInbound}" />
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource DefaultPrimarySmall}"
+                            Height="{StaticResource ToolbarButtonHeight}"
+                            Visibility="{Binding ShowToolbarScanOutbound, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}"
+                            Command="{Binding ScanOutboundCommand, ElementName=Root}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="BarcodeScan" 
+                                                     Width="{StaticResource IconSizeSmall}" 
+                                                     Height="{StaticResource IconSizeSmall}" 
+                                                     Margin="{StaticResource IconMargin}" />
+                            <TextBlock Text="{local:Localization Key=Logistics.Serials.ProdSerialOutbound.ScanOutbound}" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center">
+                    <Button Style="{StaticResource DefaultIconPlainPrimarySmall}"
+                            Width="32"
+                            Height="{StaticResource ToolbarButtonHeight}"
+                            Margin="{StaticResource PaginationButtonMargin}"
+                            ToolTip="{local:Localization Key=common.toggleQueryBar}"
+                            Click="OnToggleQueryAreaClick">
+                        <materialDesign:PackIcon Kind="Magnify" 
+                                                 Width="{StaticResource IconSizeMedium}" 
+                                                 Height="{StaticResource IconSizeMedium}" />
+                    </Button>
+
+                    <Button x:Name="ColumnToggleButton"
+                            Style="{StaticResource DefaultIconPlainAccentSmall}"
+                            Width="32"
+                            Height="{StaticResource ToolbarButtonHeight}"
+                            Margin="{StaticResource PaginationButtonMargin}"
+                            ToolTip="{local:Localization Key=common.toggleColumns}"
+                            Click="OnToggleColumnPanelClick">
+                        <materialDesign:PackIcon Kind="ViewColumnOutline" 
+                                                 Width="{StaticResource IconSizeMedium}" 
+                                                 Height="{StaticResource IconSizeMedium}" />
+                    </Button>
+
+                    <Button Style="{StaticResource DefaultIconPlainBrandSmall}"
+                            Width="32"
+                            Height="{StaticResource ToolbarButtonHeight}"
+                            Margin="{StaticResource PaginationButtonMargin}"
+                            ToolTip="{local:Localization Key=common.advancedQuery}"
+                            Visibility="{Binding ShowAdvancedQueryButton, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}"
+                            Command="{Binding AdvancedQueryCommand, ElementName=Root}">
+                        <materialDesign:PackIcon Kind="FilterCog" 
+                                                 Width="{StaticResource IconSizeMedium}" 
+                                                 Height="{StaticResource IconSizeMedium}" />
+                    </Button>
+
+                    <Popup x:Name="ColumnChooserPopup"
+                           PlacementTarget="{Binding ElementName=ColumnToggleButton}"
+                           Placement="Custom"
+                           StaysOpen="False"
+                           IsOpen="{Binding IsColumnPanelOpen, ElementName=Root, Mode=TwoWay}"
+                           AllowsTransparency="True"
+                           PopupAnimation="Fade"
+                           CustomPopupPlacementCallback="OnColumnChooserPlacement"
+                           Closed="OnColumnChooserClosed">
+                        <Border x:Name="ColumnChooserBorder"
+                                Background="{DynamicResource MaterialDesignCardBackground}"
+                                CornerRadius="6"
+                                Padding="12"
+                                Height="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=ActualHeight, Converter={StaticResource MultiplyValueConverter}, ConverterParameter=0.8}"
+                                MaxWidth="300"
+                                MinWidth="200"
+                                materialDesign:ElevationAssist.Elevation="Dp4">
+                            <StackPanel>
+                                <TextBlock Text="{local:Localization Key=common.toggleColumns}"
+                                           FontWeight="SemiBold"
+                                           Margin="0,0,0,8"
+                                           Foreground="{DynamicResource MaterialDesignBody}" />
+                                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                              HorizontalScrollBarVisibility="Hidden">
+                                    <ItemsControl ItemsSource="{Binding Columns, ElementName=Root}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <CheckBox Content="{Binding Header}"
+                                                          IsChecked="{Binding IsVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                          Margin="0,4"
+                                                          Foreground="{DynamicResource MaterialDesignBody}" />
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                                <CheckBox
+                                          Margin="0,4"
+                                          Foreground="{DynamicResource MaterialDesignBody}"
+                                          IsChecked="{Binding IsSelectionColumnVisible, ElementName=Root, Mode=OneWay}"
+                                          IsHitTestVisible="False"
+                                          Focusable="False"
+                                          Visibility="{Binding IsSelectionColumnVisible, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                <CheckBox Content="{Binding OperationColumnHeader, ElementName=Root}"
+                                          Margin="0,4"
+                                          Foreground="{DynamicResource MaterialDesignBody}"
+                                          IsChecked="{Binding IsOperationColumnVisible, ElementName=Root, Mode=OneWay}"
+                                          IsHitTestVisible="False"
+                                          Focusable="False"
+                                          Visibility="{Binding IsOperationColumnVisible, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}" />
+                            </StackPanel>
+                        </Border>
+                    </Popup>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- 数据表格 -->
+        <Grid Grid.Row="2">
+            <DataGrid x:Name="PART_DataGrid"
+                      Background="{DynamicResource MaterialDesignPaper}"
+                      AutoGenerateColumns="False"
+                      ItemsSource="{Binding ItemsSource, ElementName=Root}"
+                      SelectedItem="{Binding SelectedItem, ElementName=Root, Mode=TwoWay}"
+                      SelectionMode="{Binding SelectionMode, ElementName=Root}"
+                      IsSynchronizedWithCurrentItem="False"
+                      SelectionUnit="{Binding SelectionUnit, ElementName=Root}"
+                      IsReadOnly="{Binding IsReadOnly, ElementName=Root}"
+                      CanUserAddRows="{Binding CanUserAddRows, ElementName=Root}"
+                      CanUserDeleteRows="{Binding CanUserDeleteRows, ElementName=Root}"
+                      CanUserReorderColumns="True"
+                      CanUserResizeColumns="True"
+                      CanUserSortColumns="True"
+                      ClipboardCopyMode="{Binding ClipboardCopyMode, ElementName=Root}"
+                      EnableRowVirtualization="{Binding EnableRowVirtualization, ElementName=Root}"
+                      EnableColumnVirtualization="{Binding EnableColumnVirtualization, ElementName=Root}"
+                      HeadersVisibility="{Binding HeadersVisibility, ElementName=Root}"
+                      GridLinesVisibility="{Binding GridLinesVisibility, ElementName=Root}"
+                      RowStyle="{Binding RowStyle, ElementName=Root, TargetNullValue={StaticResource TaktDataGridRowStyle}}"
+                      CellStyle="{Binding CellStyle, ElementName=Root, TargetNullValue={StaticResource TaktDataGridCellStyle}}"
+                      ColumnHeaderStyle="{Binding ColumnHeaderStyle, ElementName=Root, TargetNullValue={StaticResource TaktDataGridColumnHeaderStyle}}"
+                      HorizontalScrollBarVisibility="Auto"
+                      VerticalScrollBarVisibility="Auto"
+                      ScrollViewer.CanContentScroll="True"
+                      VirtualizingPanel.IsVirtualizing="True"
+                      VirtualizingPanel.VirtualizationMode="Recycling"
+                      BorderThickness="0"
+                      SelectionChanged="DataGrid_SelectionChanged"
+                      PreviewMouseLeftButtonDown="DataGrid_PreviewMouseLeftButtonDown"
+                      materialDesign:DataGridAssist.ColumnHeaderPadding="16,8"
+                      materialDesign:DataGridAssist.CellPadding="0">
+                <DataGrid.Style>
+                    <Style TargetType="DataGrid" BasedOn="{StaticResource MaterialDesignDataGrid}">
+                        <Setter Property="RowHeight" Value="36" />
+                        <Setter Property="FontSize" Value="14" />
+                        <Setter Property="RowDetailsVisibilityMode" Value="Collapsed" />
+                        <Setter Property="AlternatingRowBackground" Value="{x:Null}" />
+                    </Style>
+                </DataGrid.Style>
+            </DataGrid>
+
+            <Border Background="Transparent"
+                    Visibility="{Binding IsEmpty, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}">
+                <StackPanel VerticalAlignment="Center"
+                            HorizontalAlignment="Center">
+                    <materialDesign:PackIcon Kind="TableOff"
+                                             Width="32"
+                                             Height="32"
+                                             Foreground="{DynamicResource MaterialDesignBody}" />
+                    <TextBlock Text="{Binding EmptyText, ElementName=Root}"
+                               Foreground="{DynamicResource MaterialDesignBody}"
+                               FontSize="16"
+                               FontWeight="SemiBold"
+                               Margin="0,12,0,0" />
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!-- 分页区域 -->
+        <Border Grid.Row="3"
+                Background="{DynamicResource MaterialDesignPaper}"
+                CornerRadius="0,0,8,8"
+                Padding="12,8"
+                Visibility="{Binding ShowPagination, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}">
+            <DockPanel LastChildFill="False">
+                <StackPanel Orientation="Horizontal"
+                            DockPanel.Dock="Left"
+                            VerticalAlignment="Center"
+                            Margin="0,0,16,0">
+                    <TextBlock Text="{Binding TotalText, ElementName=Root}"
+                               Foreground="{DynamicResource MaterialDesignBody}"
+                               Margin="0,0,12,0" />
+                    <TextBlock Text="{Binding PageDisplay, ElementName=Root}"
+                               Foreground="{DynamicResource MaterialDesignBody}" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            DockPanel.Dock="Right">
+                    <ComboBox Width="100"
+                              Margin="0,0,12,0"
+                              ItemsSource="{Binding PageSizeOptions, ElementName=Root}"
+                              SelectedItem="{Binding PageSize, ElementName=Root, Mode=TwoWay}"
+                              Style="{StaticResource DenseComboBoxStyle}"
+                              SelectionChanged="OnPageSizeSelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding StringFormat={}{0}/page}"
+                                           Foreground="{DynamicResource MaterialDesignBody}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <Button Style="{StaticResource DefaultIconPlainPrimarySmall}"
+                            Margin="0"
+                            Command="{Binding FirstPageCommand, ElementName=Root}"
+                            Click="OnFirstPageButtonClick"
+                            ToolTip="{local:Localization Key=common.firstPage}"
+                            Height="{StaticResource PaginationButtonHeight}"
+                            IsEnabled="{Binding HasPreviousPage, ElementName=Root}">
+                        <materialDesign:PackIcon Kind="ChevronDoubleLeft" 
+                                                 Width="{StaticResource IconSizeSmall}" 
+                                                 Height="{StaticResource IconSizeSmall}" />
+                    </Button>
+                    <Button Style="{StaticResource DefaultIconPlainPrimarySmall}"
+                            Margin="{StaticResource PaginationButtonMargin}"
+                            Command="{Binding PrevPageCommand, ElementName=Root}"
+                            Click="OnPrevPageButtonClick"
+                            ToolTip="{local:Localization Key=common.prevPage}"
+                            Height="{StaticResource PaginationButtonHeight}"
+                            IsEnabled="{Binding HasPreviousPage, ElementName=Root}">
+                        <materialDesign:PackIcon Kind="ChevronLeft" 
+                                                 Width="{StaticResource IconSizeSmall}" 
+                                                 Height="{StaticResource IconSizeSmall}" />
+                    </Button>
+
+                    <ItemsControl ItemsSource="{Binding PageButtons, ElementName=Root}"
+                                  Margin="8,0">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <ToggleButton Style="{StaticResource PaginationNumberButtonStyle}"
+                                              Content="{Binding Number}"
+                                              Tag="{Binding Number}"
+                                              IsChecked="{Binding IsCurrent, Mode=OneWay}"
+                                              IsEnabled="{Binding IsCurrent, Converter={StaticResource InverseBoolConverter}}"
+                                              Click="OnPageNumberButtonClick" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <Button Style="{StaticResource DefaultIconPlainPrimarySmall}"
+                            Margin="0"
+                            Command="{Binding NextPageCommand, ElementName=Root}"
+                            Click="OnNextPageButtonClick"
+                            ToolTip="{local:Localization Key=common.nextPage}"
+                            Height="{StaticResource PaginationButtonHeight}"
+                            IsEnabled="{Binding HasNextPage, ElementName=Root}">
+                        <materialDesign:PackIcon Kind="ChevronRight" 
+                                                 Width="{StaticResource IconSizeSmall}" 
+                                                 Height="{StaticResource IconSizeSmall}" />
+                    </Button>
+                    <Button Style="{StaticResource DefaultIconPlainPrimarySmall}"
+                            Margin="{StaticResource PaginationButtonMargin}"
+                            Command="{Binding LastPageCommand, ElementName=Root}"
+                            Click="OnLastPageButtonClick"
+                            ToolTip="{local:Localization Key=common.lastPage}"
+                            Height="{StaticResource PaginationButtonHeight}"
+                            IsEnabled="{Binding HasNextPage, ElementName=Root}">
+                        <materialDesign:PackIcon Kind="ChevronDoubleRight" 
+                                                 Width="{StaticResource IconSizeSmall}" 
+                                                 Height="{StaticResource IconSizeSmall}" />
+                    </Button>
+
+                    <TextBlock Text="{local:Localization Key=common.goTo}"
+                               Foreground="{DynamicResource MaterialDesignBody}"
+                               Margin="12,0,8,0"
+                               VerticalAlignment="Center" />
+                    <TextBox Width="48"
+                             HorizontalContentAlignment="Center"
+                             Style="{StaticResource DenseOutlinedTextBoxStyle}"
+                             Text="{Binding GoToPageText, ElementName=Root, UpdateSourceTrigger=PropertyChanged}"
+                             materialDesign:HintAssist.Hint="{Binding GoToPageHint, ElementName=Root}" />
+                    <Button Style="{StaticResource DefaultPrimarySmall}"
+                            Margin="8,0,0,0"
+                            Height="{StaticResource PaginationButtonHeight}"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Padding="8,0"
+                            Click="OnGoToPageButtonClick">
+                        <TextBlock Text="{Binding GoToPageButtonText, ElementName=Root}" />
+                    </Button>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+    </Grid>
+</UserControl>

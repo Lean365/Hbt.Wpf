@@ -1,0 +1,461 @@
+﻿<Window x:Class="Takt.Fluent.Views.Identity.UserComponent.UserForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Takt.Fluent.Extensions"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:helpers="clr-namespace:Takt.Fluent.Helpers"
+        xmlns:controls="clr-namespace:Takt.Fluent.Controls"
+        xmlns:system="clr-namespace:System;assembly=System.Runtime"
+        xmlns:automation="clr-namespace:System.Windows.Automation;assembly=PresentationCore"
+        mc:Ignorable="d"
+        d:DesignHeight="600"
+        d:DesignWidth="800"
+        Title="{Binding Title}" 
+        SizeToContent="Manual" 
+        WindowStartupLocation="Manual"
+        ResizeMode="CanResize" 
+        Background="{DynamicResource MaterialDesignPaper}">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <helpers:IntEqualsConverter x:Key="IntEqualsConverter"/>
+        <helpers:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter"/>
+        <helpers:StringToBoolConverter x:Key="StringToBoolConverter"/>
+        <helpers:InverseBoolConverter x:Key="InverseBoolConverter"/>
+        <helpers:StringToIntEqualsConverter x:Key="StringToIntEqualsConverter"/>
+        <helpers:RadioButtonMarginConverter x:Key="RadioButtonMarginConverter"/>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TabControl Grid.Row="0" Margin="0,0,0,16">
+            <!-- 基本信息 -->
+            <TabItem Header="{local:Localization Key=identity.user.basicinfo}">
+                <StackPanel Margin="16,24,16,16">
+                        <!-- 用户名 -->
+                        <StackPanel Margin="0,8,0,8" MinHeight="56">
+                            <Grid MinHeight="32">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                    <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                    <Run Text="{local:Localization Key=identity.user.username}"/>
+                                </TextBlock>
+                                <TextBox x:Name="UsernameTextBox"
+                                         Grid.Column="1" 
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         materialDesign:HintAssist.Hint="{Binding UsernameHint}"
+                                         materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                         MinHeight="32"
+                                         Padding="12,6"
+                                         FontSize="13"
+                                         VerticalAlignment="Center"
+                                         VerticalContentAlignment="Center"
+                                         IsReadOnly="{Binding IsCreate, Converter={StaticResource InverseBoolConverter}}"
+                                         Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                         materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+                                    <TextBox.Text>
+                                        <Binding Path="Username" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </Grid>
+                        </StackPanel>
+
+                        <!-- 真实姓名 -->
+                        <StackPanel Margin="0,0,0,8" MinHeight="56">
+                            <Grid MinHeight="32">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                    <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                    <Run Text="{local:Localization Key=identity.user.realname}"/>
+                                </TextBlock>
+                                <TextBox x:Name="RealNameTextBox"
+                                         Grid.Column="1" 
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         materialDesign:HintAssist.Hint="{Binding RealNameHint}"
+                                         materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                         MinHeight="32"
+                                         Padding="12,6"
+                                         FontSize="13"
+                                         VerticalAlignment="Center"
+                                         VerticalContentAlignment="Center"
+                                         Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                         materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+                                    <TextBox.Text>
+                                        <Binding Path="RealName" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </Grid>
+                        </StackPanel>
+
+                        <!-- 昵称 -->
+                        <StackPanel Margin="0,0,0,8" MinHeight="56">
+                            <Grid MinHeight="32">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                    <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                    <Run Text="{local:Localization Key=identity.user.nickname}"/>
+                                </TextBlock>
+                                <TextBox x:Name="NicknameTextBox"
+                                         Grid.Column="1" 
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         materialDesign:HintAssist.Hint="{Binding NicknameHint}"
+                                         materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                         MinHeight="32"
+                                         Padding="12,6"
+                                         FontSize="13"
+                                         VerticalAlignment="Center"
+                                         VerticalContentAlignment="Center"
+                                         Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                         materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+                                    <TextBox.Text>
+                                        <Binding Path="Nickname" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </Grid>
+                        </StackPanel>
+
+                        <!-- 邮箱 -->
+                        <StackPanel Margin="0,0,0,8" MinHeight="56">
+                            <Grid MinHeight="32">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                    <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                    <Run Text="{local:Localization Key=identity.user.email}"/>
+                                </TextBlock>
+                                <TextBox x:Name="EmailTextBox"
+                                         Grid.Column="1" 
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         materialDesign:HintAssist.Hint="{Binding EmailHint}"
+                                         materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                         MinHeight="32"
+                                         Padding="12,6"
+                                         FontSize="13"
+                                         VerticalAlignment="Center"
+                                         VerticalContentAlignment="Center"
+                                         Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                         materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+                                    <TextBox.Text>
+                                        <Binding Path="Email" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </Grid>
+                        </StackPanel>
+
+                        <!-- 手机号 -->
+                        <StackPanel Margin="0,0,0,8" MinHeight="56">
+                            <Grid MinHeight="32">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                    <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                    <Run Text="{local:Localization Key=identity.user.phone}"/>
+                                </TextBlock>
+                                <TextBox x:Name="PhoneTextBox"
+                                         Grid.Column="1" 
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         materialDesign:HintAssist.Hint="{Binding PhoneHint}"
+                                         materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                         MinHeight="32"
+                                         Padding="12,6"
+                                         FontSize="13"
+                                         VerticalAlignment="Center"
+                                         VerticalContentAlignment="Center"
+                                         Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                         materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+                                    <TextBox.Text>
+                                        <Binding Path="Phone" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </Grid>
+                        </StackPanel>
+
+                        <!-- 头像 -->
+                        <StackPanel Margin="0,0,0,8" MinHeight="56">
+                            <Grid MinHeight="32">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                    <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                    <Run Text="{local:Localization Key=identity.user.avatar}"/>
+                                </TextBlock>
+                                <TextBox x:Name="AvatarTextBox"
+                                         Grid.Column="1" 
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         materialDesign:HintAssist.Hint="头像路径（只读，默认：assets/avatar.png）"
+                                         materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                         MinHeight="32"
+                                         Padding="12,6"
+                                         FontSize="13"
+                                         VerticalAlignment="Center"
+                                         VerticalContentAlignment="Center"
+                                         IsReadOnly="True"
+                                         Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                         materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                         Background="{DynamicResource ControlFillColorSecondaryBrush}">
+                                    <TextBox.Text>
+                                        <Binding Path="Avatar" Mode="OneWay"/>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </Grid>
+                        </StackPanel>
+
+                        <!-- 密码 -->
+                        <StackPanel x:Name="PasswordStackPanel" Margin="0,0,0,8" MinHeight="56" Visibility="{Binding IsCreate, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Grid MinHeight="32">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                    <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                    <Run Text="{local:Localization Key=identity.user.password}"/>
+                                </TextBlock>
+                                <PasswordBox Grid.Column="1" 
+                                             x:Name="Pwd"
+                                             Style="{StaticResource MaterialDesignOutlinedPasswordBox}"
+                                             materialDesign:HintAssist.Hint="{Binding PasswordHint}"
+                                             materialDesign:HintAssist.HelperText="{Binding PasswordError}"
+                                             materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                             MinHeight="32"
+                                             Padding="12,6"
+                                             FontSize="13"
+                                             VerticalAlignment="Center"
+                                             VerticalContentAlignment="Center"
+                                             Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                             materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
+                            </Grid>
+                        </StackPanel>
+
+                        <!-- 确认密码 -->
+                        <StackPanel x:Name="PasswordConfirmStackPanel" Margin="0,0,0,8" MinHeight="56" Visibility="{Binding IsCreate, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Grid MinHeight="32">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                    <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                    <Run Text="{local:Localization Key=identity.user.passwordconfirm}"/>
+                                </TextBlock>
+                                <PasswordBox Grid.Column="1" 
+                                             x:Name="Pwd2"
+                                             Style="{StaticResource MaterialDesignOutlinedPasswordBox}"
+                                             materialDesign:HintAssist.Hint="{Binding PasswordConfirmHint}"
+                                             materialDesign:HintAssist.HelperText="{Binding PasswordConfirmError}"
+                                             materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                             MinHeight="32"
+                                             Padding="12,6"
+                                             FontSize="13"
+                                             VerticalAlignment="Center"
+                                             VerticalContentAlignment="Center"
+                                             Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                             materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
+                            </Grid>
+                        </StackPanel>
+                </StackPanel>
+            </TabItem>
+
+            <!-- 状态信息 -->
+            <TabItem Header="{local:Localization Key=identity.user.statusinfo}">
+                <StackPanel Margin="16">
+                        <!-- 用户类型 -->
+                        <StackPanel Margin="0,0,0,8" MinHeight="56">
+                            <Grid MinHeight="32">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                    <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                    <Run Text="{local:Localization Key=identity.user.usertype}"/>
+                                </TextBlock>
+                                <ItemsControl Grid.Column="1" ItemsSource="{Binding UserTypeOptions}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <RadioButton Content="{Binding DataLabel}"
+                                                 Style="{StaticResource MaterialDesignRadioButton}"
+                                                 GroupName="UserTypeGroup"
+                                                 VerticalAlignment="Center"
+                                                 FontSize="13"
+                                                 Padding="8,0"
+                                                         Margin="{Binding Converter={StaticResource RadioButtonMarginConverter}}">
+                                                <RadioButton.IsChecked>
+                                                    <MultiBinding Converter="{StaticResource StringToIntEqualsConverter}">
+                                                        <Binding Path="DataValue"/>
+                                                        <Binding RelativeSource="{RelativeSource AncestorType=Window}" Path="DataContext.UserType"/>
+                                                    </MultiBinding>
+                                                </RadioButton.IsChecked>
+                                                <RadioButton.Command>
+                                                    <Binding RelativeSource="{RelativeSource AncestorType=Window}" Path="DataContext.SetUserTypeCommand"/>
+                                                </RadioButton.Command>
+                                                <RadioButton.CommandParameter>
+                                                    <Binding Path="DataValue"/>
+                                                </RadioButton.CommandParameter>
+                                            </RadioButton>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Grid>
+                        </StackPanel>
+
+                        <!-- 性别 -->
+                        <StackPanel Margin="0,0,0,8" MinHeight="56">
+                            <Grid MinHeight="32">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{local:Localization Key=identity.user.usergender}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                                <ItemsControl Grid.Column="1" ItemsSource="{Binding UserGenderOptions}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <RadioButton Content="{Binding DataLabel}"
+                                                 Style="{StaticResource MaterialDesignRadioButton}"
+                                                 GroupName="UserGenderGroup"
+                                                 VerticalAlignment="Center"
+                                                 FontSize="13"
+                                                 Padding="8,0"
+                                                         Margin="{Binding Converter={StaticResource RadioButtonMarginConverter}}">
+                                                <RadioButton.IsChecked>
+                                                    <MultiBinding Converter="{StaticResource StringToIntEqualsConverter}">
+                                                        <Binding Path="DataValue"/>
+                                                        <Binding RelativeSource="{RelativeSource AncestorType=Window}" Path="DataContext.UserGender"/>
+                                                    </MultiBinding>
+                                                </RadioButton.IsChecked>
+                                                <RadioButton.Command>
+                                                    <Binding RelativeSource="{RelativeSource AncestorType=Window}" Path="DataContext.SetUserGenderCommand"/>
+                                                </RadioButton.Command>
+                                                <RadioButton.CommandParameter>
+                                                    <Binding Path="DataValue"/>
+                                                </RadioButton.CommandParameter>
+                                            </RadioButton>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Grid>
+                        </StackPanel>
+
+                        <!-- 状态 -->
+                        <StackPanel Margin="0,0,0,8" MinHeight="56">
+                            <Grid MinHeight="32">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                    <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                    <Run Text="{local:Localization Key=identity.user.userstatus}"/>
+                                </TextBlock>
+                                <ItemsControl Grid.Column="1" ItemsSource="{Binding UserStatusOptions}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <RadioButton Content="{Binding DataLabel}"
+                                                 Style="{StaticResource MaterialDesignRadioButton}"
+                                                 GroupName="UserStatusGroup"
+                                                 VerticalAlignment="Center"
+                                                 FontSize="13"
+                                                 Padding="8,0"
+                                                         Margin="{Binding Converter={StaticResource RadioButtonMarginConverter}}">
+                                                <RadioButton.IsChecked>
+                                                    <MultiBinding Converter="{StaticResource StringToIntEqualsConverter}">
+                                                        <Binding Path="DataValue"/>
+                                                        <Binding RelativeSource="{RelativeSource AncestorType=Window}" Path="DataContext.UserStatus"/>
+                                                    </MultiBinding>
+                                                </RadioButton.IsChecked>
+                                                <RadioButton.Command>
+                                                    <Binding RelativeSource="{RelativeSource AncestorType=Window}" Path="DataContext.SetUserStatusCommand"/>
+                                                </RadioButton.Command>
+                                                <RadioButton.CommandParameter>
+                                                    <Binding Path="DataValue"/>
+                                                </RadioButton.CommandParameter>
+                                            </RadioButton>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Grid>
+                        </StackPanel>
+                </StackPanel>
+            </TabItem>
+
+            <!-- 备注信息 -->
+            <TabItem Header="{local:Localization Key=identity.user.remarksinfo}">
+                <StackPanel Margin="16">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Localization Key=common.audit.Remarks}" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <StackPanel Grid.Column="1">
+                                <TextBox x:Name="RemarksTextBox"
+                                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                    materialDesign:HintAssist.Hint="{Binding RemarksHint}"
+                                    materialDesign:HintAssist.HelperText="{Binding RemarksError}"
+                                    materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                    MinHeight="200"
+                                    Padding="16,10"
+                                    FontSize="14"
+                                    VerticalContentAlignment="Top"
+                                    TextWrapping="Wrap" 
+                                    AcceptsReturn="True" 
+                                    VerticalScrollBarVisibility="Hidden"
+                                    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                    materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
+                            </StackPanel>
+                        </Grid>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button IsDefault="True" 
+                    Command="{Binding SaveCommand}" 
+                    Content="{local:Localization Key=common.button.submit}" 
+                    Style="{StaticResource DefaultPrimary}"
+                    Margin="0,0,12,0"/>
+            <Button IsCancel="True" 
+                    Content="{local:Localization Key=common.button.cancel}"
+                    Style="{StaticResource DefaultInfo}"/>
+        </StackPanel>
+    </Grid>
+</Window>
