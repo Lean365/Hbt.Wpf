@@ -1,0 +1,60 @@
+<!-- ========================================
+     项目名称：节拍(Takt)中小企业平台 · Takt SMEs Platform
+     命名空间：Takt.Fluent.Resources
+     文件名称：NavTemplates.xaml
+     创建时间：2025-11-11
+     创建人：Takt365(Cursor AI)
+     功能描述：定义导航模板资源
+
+     版权信息：Copyright (c) 2025 Takt All rights reserved.
+     免责声明：此软件使用 MIT License，作者不承担任何使用风险。
+     ======================================== -->
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:fa="clr-namespace:FontAwesome.Sharp;assembly=FontAwesome.Sharp"
+    xmlns:helpers="clr-namespace:Takt.Fluent.Helpers">
+
+    <helpers:StringToIconCharConverter x:Key="StringToIconCharConverter"/>
+
+    <ItemsPanelTemplate x:Key="WrapPanelTemplate">
+        <WrapPanel Margin="10"
+                Orientation="Horizontal"/>
+    </ItemsPanelTemplate>
+
+    <DataTemplate x:Key="NavigationCardTemplate">
+        <Button
+            Width="360"
+            Height="90"
+            Margin="7"
+            Padding="20,10"
+            HorizontalContentAlignment="Left"
+            AutomationProperties.Name="{Binding Title, StringFormat='{}{0}Page'}"
+            Command="{Binding DataContext.ViewModel.NavigateCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+            CommandParameter="{Binding MenuItem}">
+            <StackPanel Orientation="Horizontal">
+                <fa:IconBlock
+                    Icon="{Binding Icon, Converter={StaticResource StringToIconCharConverter}}"
+                    IconFont="Solid"
+                    Width="50"
+                    Height="50"
+                    Margin="0,0,8,0"/>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock
+                        Margin="10,0,0,0"
+                        Style="{DynamicResource MaterialDesignHeadlineSmallTextBlockStyle}"
+                        Text="{Binding Title}" 
+                        AutomationProperties.HeadingLevel="Level3" />
+                    <TextBlock
+                        Width="240"
+                        Margin="10,0,0,0"
+                        Opacity="0.7"
+                        Style="{DynamicResource MaterialDesignBodySmallTextBlockStyle}"
+                        Text="{Binding Description}"/>
+                </StackPanel>
+            </StackPanel>
+        </Button>
+    </DataTemplate>
+
+</ResourceDictionary>
+

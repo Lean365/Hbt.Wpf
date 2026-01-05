@@ -1,0 +1,262 @@
+﻿<Window x:Class="Takt.Fluent.Views.Routine.SettingComponent.SettingForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Takt.Fluent.Extensions"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:helpers="clr-namespace:Takt.Fluent.Helpers"
+        xmlns:controls="clr-namespace:Takt.Fluent.Controls"
+        mc:Ignorable="d"
+        d:DesignHeight="500"
+        d:DesignWidth="600"
+        Title="{Binding Title}" 
+        SizeToContent="Manual" 
+        WindowStartupLocation="Manual"
+        ResizeMode="CanResize" 
+        Background="{DynamicResource MaterialDesignPaper}">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <helpers:IntEqualsConverter x:Key="IntEqualsConverter"/>
+        <helpers:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter"/>
+        <helpers:StringToBoolConverter x:Key="StringToBoolConverter"/>
+        <helpers:InverseBoolConverter x:Key="InverseBoolConverter"/>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="16">
+                <!-- 设置键 -->
+                <StackPanel Margin="0,0,0,8" MinHeight="56">
+                    <Grid MinHeight="32">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                            <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                            <Run Text="{local:Localization Key=routine.setting.key}"/>
+                        </TextBlock>
+                        <TextBox Grid.Column="1" 
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 materialDesign:HintAssist.HelperText="{Binding SettingKeyError}"
+                                 materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                 MinHeight="32"
+                                 Padding="12,6"
+                                 FontSize="13"
+                                 VerticalAlignment="Center"
+                                 VerticalContentAlignment="Center"
+                                 Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                 materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                 Text="{Binding SettingKey, UpdateSourceTrigger=PropertyChanged}"
+                                 IsReadOnly="{Binding IsCreate, Converter={StaticResource InverseBoolConverter}}"/>
+                    </Grid>
+                    <TextBlock Grid.Column="1" 
+                               Style="{StaticResource ErrorTextStyle}" 
+                               Text="{Binding SettingKeyError}"
+                               Visibility="{Binding SettingKeyError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                </StackPanel>
+
+                <!-- 设置值 -->
+                <StackPanel Margin="0,0,0,8" MinHeight="56">
+                    <Grid MinHeight="32">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                            <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                            <Run Text="{local:Localization Key=routine.setting.value}"/>
+                        </TextBlock>
+                        <TextBox Grid.Column="1" 
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 materialDesign:HintAssist.HelperText="{Binding SettingValueError}"
+                                 materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                 MinHeight="32"
+                                 Padding="12,6"
+                                 FontSize="13"
+                                 VerticalAlignment="Center"
+                                 VerticalContentAlignment="Center"
+                                 Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                 materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                 Text="{Binding SettingValue, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Grid>
+                    <TextBlock Grid.Column="1" 
+                               Style="{StaticResource ErrorTextStyle}" 
+                               Text="{Binding SettingValueError}"
+                               Visibility="{Binding SettingValueError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                </StackPanel>
+
+                <!-- 分类 -->
+                <StackPanel Margin="0,0,0,8" MinHeight="56">
+                    <Grid MinHeight="32">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{local:Localization Key=routine.setting.category}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                        <TextBox Grid.Column="1" 
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 materialDesign:HintAssist.HelperText="{Binding CategoryError}"
+                                 materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                 MinHeight="32"
+                                 Padding="12,6"
+                                 FontSize="13"
+                                 VerticalAlignment="Center"
+                                 VerticalContentAlignment="Center"
+                                 Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                 materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                 Text="{Binding Category, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Grid>
+                    <TextBlock Grid.Column="1" 
+                               Style="{StaticResource ErrorTextStyle}" 
+                               Text="{Binding CategoryError}"
+                               Visibility="{Binding CategoryError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                </StackPanel>
+
+                <!-- 排序号 -->
+                <StackPanel Margin="0,0,0,8" MinHeight="56">
+                    <Grid MinHeight="32">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{local:Localization Key=routine.setting.ordernum}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                        <TextBox Grid.Column="1" 
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 materialDesign:HintAssist.HelperText="{Binding OrderNumError}"
+                                 materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                 MinHeight="32"
+                                 Padding="12,6"
+                                 FontSize="13"
+                                 VerticalAlignment="Center"
+                                 VerticalContentAlignment="Center"
+                                 Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                 materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                 Text="{Binding OrderNum, UpdateSourceTrigger=PropertyChanged, StringFormat='{}{0}'}"/>
+                    </Grid>
+                    <TextBlock Grid.Column="1" 
+                               Style="{StaticResource ErrorTextStyle}" 
+                               Text="{Binding OrderNumError}"
+                               Visibility="{Binding OrderNumError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                </StackPanel>
+
+                <!-- 设置类型 -->
+                <StackPanel Margin="0,0,0,8" MinHeight="56">
+                    <Grid MinHeight="32">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                            <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                            <Run Text="{local:Localization Key=routine.setting.type}"/>
+                        </TextBlock>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                            <RadioButton Style="{StaticResource MaterialDesignRadioButton}" FontSize="13" Padding="12,6" Content="{local:Localization Key=routine.setting.type.string}"
+                                                            GroupName="SettingTypeGroup"
+                                                            VerticalAlignment="Center"
+                                                            IsChecked="{Binding SettingType, Converter={StaticResource IntEqualsConverter}, ConverterParameter=0}"/>
+                            <RadioButton Style="{StaticResource MaterialDesignRadioButton}" FontSize="13" Padding="12,6" Content="{local:Localization Key=routine.setting.type.number}"
+                                                            GroupName="SettingTypeGroup"
+                                                            VerticalAlignment="Center"
+                                                            Margin="12,0,0,0"
+                                                            IsChecked="{Binding SettingType, Converter={StaticResource IntEqualsConverter}, ConverterParameter=1}"/>
+                            <RadioButton Style="{StaticResource MaterialDesignRadioButton}" FontSize="13" Padding="12,6" Content="{local:Localization Key=routine.setting.type.boolean}"
+                                                            GroupName="SettingTypeGroup"
+                                                            VerticalAlignment="Center"
+                                                            Margin="12,0,0,0"
+                                                            IsChecked="{Binding SettingType, Converter={StaticResource IntEqualsConverter}, ConverterParameter=2}"/>
+                            <RadioButton Style="{StaticResource MaterialDesignRadioButton}" FontSize="13" Padding="12,6" Content="{local:Localization Key=routine.setting.type.json}"
+                                                            GroupName="SettingTypeGroup"
+                                                            VerticalAlignment="Center"
+                                                            Margin="12,0,0,0"
+                                                            IsChecked="{Binding SettingType, Converter={StaticResource IntEqualsConverter}, ConverterParameter=3}"/>
+                        </StackPanel>
+                    </Grid>
+                    <TextBlock Grid.Column="1" 
+                               Style="{StaticResource ErrorTextStyle}" 
+                               Text="{Binding SettingTypeError}"
+                               Visibility="{Binding SettingTypeError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                </StackPanel>
+
+                <!-- 设置描述 -->
+                <StackPanel Margin="0,0,0,8" MinHeight="56">
+                    <Grid MinHeight="32">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{local:Localization Key=routine.setting.description}" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                        <StackPanel Grid.Column="1">
+                            <TextBox 
+                                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                materialDesign:HintAssist.HelperText="{Binding SettingValueError}"
+                                materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                Padding="16,10"
+                                FontSize="14"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                Text="{Binding SettingDescription}"
+                                TextWrapping="Wrap" 
+                                AcceptsReturn="True" 
+                                VerticalScrollBarVisibility="Hidden"
+                                MinHeight="80"/>
+                            <TextBlock 
+                                Style="{StaticResource ErrorTextStyle}" 
+                                Text="{Binding SettingValueError}"
+                                Margin="0,4,0,0"
+                                Visibility="{Binding SettingValueError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+
+                <!-- 备注 -->
+                <StackPanel Margin="0,0,0,8" MinHeight="56">
+                    <Grid MinHeight="32">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{local:Localization Key=common.audit.Remarks}" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                        <StackPanel Grid.Column="1">
+                            <TextBox 
+                                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                Padding="16,10"
+                                FontSize="14"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                Text="{Binding Remarks}"
+                                TextWrapping="Wrap" 
+                                AcceptsReturn="True" 
+                                VerticalScrollBarVisibility="Hidden"
+                                MinHeight="80"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button IsDefault="True" 
+                    Command="{Binding SaveCommand}" 
+                    Content="{local:Localization Key=common.button.submit}" 
+                    Style="{StaticResource DefaultPrimary}"
+                    Margin="0,0,12,0"/>
+            <Button IsCancel="True" 
+                    Content="{local:Localization Key=common.button.cancel}"
+                    Style="{StaticResource DefaultInfo}"/>
+        </StackPanel>
+    </Grid>
+</Window>
+

@@ -1,0 +1,83 @@
+﻿<Window x:Class="Takt.Fluent.Views.Logistics.Serials.SerialComponent.SerialInboundForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Takt.Fluent.Extensions"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:helpers="clr-namespace:Takt.Fluent.Helpers"
+        xmlns:controls="clr-namespace:Takt.Fluent.Controls"
+        mc:Ignorable="d"
+        d:DesignHeight="300"
+        d:DesignWidth="500"
+        Title="{Binding Title}" 
+        SizeToContent="Manual" 
+        WindowStartupLocation="Manual"
+        ResizeMode="CanResize" 
+        Background="{DynamicResource MaterialDesignPaper}">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <helpers:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter"/>
+        <helpers:StringToBoolConverter x:Key="StringToBoolConverter"/>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource MaterialDesignBody}"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="16">
+            <!-- 完整序列号（扫描输入） -->
+            <StackPanel Margin="0,0,0,8" MinHeight="80">
+                <Grid MinHeight="32">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                        <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                        <Run Text="{local:Localization Key=logistics.serials.prodserialinbound.fullserialnumber}"/>
+                    </TextBlock>
+                    <TextBox x:Name="FullSerialNumberTextBox"
+                             Grid.Column="1" 
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                             materialDesign:HintAssist.Hint="{local:Localization Key=logistics.serials.prodserialinbound.fullserialnumberhint}"
+                             materialDesign:HintAssist.HelperText="{Binding FullSerialNumberError}"
+                             materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                             MinHeight="36"
+                             Padding="16,10"
+                             FontSize="18"
+                             VerticalAlignment="Center"
+                             VerticalContentAlignment="Center"
+                             Foreground="{DynamicResource MaterialDesignBody}"
+                             Text="{Binding FullSerialNumber, UpdateSourceTrigger=PropertyChanged}"
+                             FontWeight="SemiBold"
+                             AcceptsReturn="False"
+                             TextInput="FullSerialNumberTextBox_TextInput"/>
+                </Grid>
+                <TextBlock Grid.Column="1" 
+                           Style="{StaticResource ErrorTextStyle}" 
+                           Text="{Binding FullSerialNumberError}"
+                           Visibility="{Binding FullSerialNumberError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                <TextBlock Grid.Column="1" 
+                           Margin="0,8,0,0"
+                           FontSize="12"
+                           Foreground="{DynamicResource MaterialDesignBodyLight}"
+                           Text="{local:Localization Key=logistics.serials.prodserialinbound.fullserialnumberhint}"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button IsCancel="True" 
+                    Command="{Binding CancelCommand}"
+                    Content="{local:Localization Key=common.button.cancel}"
+                    Style="{StaticResource DefaultInfo}"/>
+        </StackPanel>
+    </Grid>
+</Window>
+

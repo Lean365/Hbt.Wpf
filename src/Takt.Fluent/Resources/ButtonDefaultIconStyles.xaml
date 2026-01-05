@@ -1,0 +1,2707 @@
+﻿<!-- ========================================
+     项目名称：节拍(Takt)中小企业平台 · Takt SMEs Platform
+     命名空间：Takt.Fluent.Resources
+     文件名称：ButtonDefaultIconStyles.xaml
+     创建时间：2025-11-11
+     创建人：Takt365(Cursor AI)
+     功能描述：定义默认图标按钮样式资源
+
+     版权信息：Copyright (c) 2025 Takt All rights reserved.
+     免责声明：此软件使用 MIT License，作者不承担任何使用风险。
+     ======================================== -->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <!-- ==================== Icon 填充样式 - Default 尺寸 ==================== -->
+    
+    <!-- Default Icon × Primary 颜色 - Default 尺寸 -->
+    <Style x:Key="DefaultIconPrimary" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyle}">
+        <Setter Property="Background" Value="{StaticResource ButtonPrimaryDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextOnPrimaryBrush}"/>
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="MinWidth" Value="32"/>
+        <Setter Property="MinHeight" Value="32"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPrimaryHoverBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnPrimaryBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPrimaryPressedBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnPrimaryBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPrimaryDisabledBrush}"/>
+
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Success 颜色 - Default 尺寸 -->
+    <Style x:Key="DefaultIconSuccess" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyle}">
+        <Setter Property="Background" Value="{StaticResource ButtonSuccessDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextOnSuccessBrush}"/>
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="MinWidth" Value="32"/>
+        <Setter Property="MinHeight" Value="32"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonSuccessHoverBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnSuccessBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonSuccessPressedBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnSuccessBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonSuccessDisabledBrush}"/>
+
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Info 颜色 - Default 尺寸 -->
+    <Style x:Key="DefaultIconInfo" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyle}">
+        <Setter Property="Background" Value="{StaticResource ButtonInfoDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextOnInfoBrush}"/>
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="MinWidth" Value="32"/>
+        <Setter Property="MinHeight" Value="32"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonInfoHoverBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnInfoBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonInfoPressedBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnInfoBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonInfoDisabledBrush}"/>
+
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Warning 颜色 - Default 尺寸 -->
+    <Style x:Key="DefaultIconWarning" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyle}">
+        <Setter Property="Background" Value="{StaticResource ButtonWarningDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextOnWarningBrush}"/>
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="MinWidth" Value="32"/>
+        <Setter Property="MinHeight" Value="32"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonWarningHoverBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnWarningBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonWarningPressedBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnWarningBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonWarningDisabledBrush}"/>
+
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Danger 颜色 - Default 尺寸 -->
+    <Style x:Key="DefaultIconDanger" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyle}">
+        <Setter Property="Background" Value="{StaticResource ButtonDangerDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextOnDangerBrush}"/>
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="MinWidth" Value="32"/>
+        <Setter Property="MinHeight" Value="32"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonDangerHoverBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnDangerBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonDangerPressedBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnDangerBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonDangerDisabledBrush}"/>
+
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Feature 颜色 - Default 尺寸 -->
+    <Style x:Key="DefaultIconFeature" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyle}">
+        <Setter Property="Background" Value="{StaticResource ButtonFeatureDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextOnFeatureBrush}"/>
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="MinWidth" Value="32"/>
+        <Setter Property="MinHeight" Value="32"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonFeatureHoverBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnFeatureBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonFeaturePressedBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnFeatureBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonFeatureDisabledBrush}"/>
+
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Accent 颜色 - Default 尺寸 -->
+    <Style x:Key="DefaultIconAccent" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyle}">
+        <Setter Property="Background" Value="{StaticResource ButtonAccentDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextOnAccentBrush}"/>
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="MinWidth" Value="32"/>
+        <Setter Property="MinHeight" Value="32"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonAccentHoverBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnAccentBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonAccentPressedBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnAccentBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonAccentDisabledBrush}"/>
+
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Brand 颜色 - Default 尺寸 -->
+    <Style x:Key="DefaultIconBrand" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyle}">
+        <Setter Property="Background" Value="{StaticResource ButtonBrandDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextOnBrandBrush}"/>
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="MinWidth" Value="32"/>
+        <Setter Property="MinHeight" Value="32"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonBrandHoverBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnBrandBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonBrandPressedBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnBrandBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonBrandDisabledBrush}"/>
+
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Promo 颜色 - Default 尺寸 -->
+    <Style x:Key="DefaultIconPromo" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyle}">
+        <Setter Property="Background" Value="{StaticResource ButtonPromoDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextOnPromoBrush}"/>
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="MinWidth" Value="32"/>
+        <Setter Property="MinHeight" Value="32"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPromoHoverBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnPromoBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPromoPressedBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnPromoBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPromoDisabledBrush}"/>
+
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!-- ==================== Icon 填充样式 - Large 尺寸 ==================== -->
+    
+    <!-- Default Icon × Primary 颜色 - Large 尺寸 -->
+    <Style x:Key="DefaultIconPrimaryLarge" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleLarge}">
+        <Setter Property="Background" Value="{StaticResource ButtonPrimaryDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextOnPrimaryBrush}"/>
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="MinWidth" Value="40"/>
+        <Setter Property="MinHeight" Value="40"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPrimaryHoverBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnPrimaryBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPrimaryPressedBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnPrimaryBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPrimaryDisabledBrush}"/>
+
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Success 颜色 - Large 尺寸 -->
+    <Style x:Key="DefaultIconSuccessLarge" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleLarge}">
+        <Setter Property="Background" Value="{StaticResource ButtonSuccessDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextOnSuccessBrush}"/>
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="MinWidth" Value="40"/>
+        <Setter Property="MinHeight" Value="40"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonSuccessHoverBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnSuccessBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonSuccessPressedBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnSuccessBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonSuccessDisabledBrush}"/>
+
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Info 颜色 - Large 尺寸 -->
+    <Style x:Key="DefaultIconInfoLarge" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleLarge}">
+        <Setter Property="Background" Value="{StaticResource ButtonInfoDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextOnInfoBrush}"/>
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="MinWidth" Value="40"/>
+        <Setter Property="MinHeight" Value="40"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonInfoHoverBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnInfoBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonInfoPressedBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnInfoBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonInfoDisabledBrush}"/>
+
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Warning 颜色 - Large 尺寸 -->
+    <Style x:Key="DefaultIconWarningLarge" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleLarge}">
+        <Setter Property="Background" Value="{StaticResource ButtonWarningDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextOnWarningBrush}"/>
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="MinWidth" Value="40"/>
+        <Setter Property="MinHeight" Value="40"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonWarningHoverBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnWarningBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonWarningPressedBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnWarningBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonWarningDisabledBrush}"/>
+
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Danger 颜色 - Large 尺寸 -->
+    <Style x:Key="DefaultIconDangerLarge" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleLarge}">
+        <Setter Property="Background" Value="{StaticResource ButtonDangerDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextOnDangerBrush}"/>
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="MinWidth" Value="40"/>
+        <Setter Property="MinHeight" Value="40"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonDangerHoverBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnDangerBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonDangerPressedBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnDangerBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonDangerDisabledBrush}"/>
+
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Feature 颜色 - Large 尺寸 -->
+    <Style x:Key="DefaultIconFeatureLarge" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleLarge}">
+        <Setter Property="Background" Value="{StaticResource ButtonFeatureDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextOnFeatureBrush}"/>
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="MinWidth" Value="40"/>
+        <Setter Property="MinHeight" Value="40"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonFeatureHoverBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnFeatureBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonFeaturePressedBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnFeatureBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonFeatureDisabledBrush}"/>
+
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Accent 颜色 - Large 尺寸 -->
+    <Style x:Key="DefaultIconAccentLarge" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleLarge}">
+        <Setter Property="Background" Value="{StaticResource ButtonAccentDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextOnAccentBrush}"/>
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="MinWidth" Value="40"/>
+        <Setter Property="MinHeight" Value="40"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonAccentHoverBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnAccentBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonAccentPressedBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnAccentBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonAccentDisabledBrush}"/>
+
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Brand 颜色 - Large 尺寸 -->
+    <Style x:Key="DefaultIconBrandLarge" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleLarge}">
+        <Setter Property="Background" Value="{StaticResource ButtonBrandDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextOnBrandBrush}"/>
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="MinWidth" Value="40"/>
+        <Setter Property="MinHeight" Value="40"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonBrandHoverBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnBrandBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonBrandPressedBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnBrandBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonBrandDisabledBrush}"/>
+
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Promo 颜色 - Large 尺寸 -->
+    <Style x:Key="DefaultIconPromoLarge" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleLarge}">
+        <Setter Property="Background" Value="{StaticResource ButtonPromoDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextOnPromoBrush}"/>
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="MinWidth" Value="40"/>
+        <Setter Property="MinHeight" Value="40"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPromoHoverBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnPromoBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPromoPressedBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnPromoBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPromoDisabledBrush}"/>
+
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!-- ==================== Icon 填充样式 - Small 尺寸 ==================== -->
+    
+    <!-- Default Icon × Primary 颜色 - Small 尺寸 -->
+    <Style x:Key="DefaultIconPrimarySmall" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleSmall}">
+        <Setter Property="Background" Value="{StaticResource ButtonPrimaryDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextOnPrimaryBrush}"/>
+        <Setter Property="Width" Value="24"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="MinWidth" Value="24"/>
+        <Setter Property="MinHeight" Value="24"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPrimaryHoverBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnPrimaryBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPrimaryPressedBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnPrimaryBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPrimaryDisabledBrush}"/>
+
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Success 颜色 - Small 尺寸 -->
+    <Style x:Key="DefaultIconSuccessSmall" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleSmall}">
+        <Setter Property="Background" Value="{StaticResource ButtonSuccessDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextOnSuccessBrush}"/>
+        <Setter Property="Width" Value="24"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="MinWidth" Value="24"/>
+        <Setter Property="MinHeight" Value="24"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonSuccessHoverBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnSuccessBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonSuccessPressedBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnSuccessBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonSuccessDisabledBrush}"/>
+
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Info 颜色 - Small 尺寸 -->
+    <Style x:Key="DefaultIconInfoSmall" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleSmall}">
+        <Setter Property="Background" Value="{StaticResource ButtonInfoDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextOnInfoBrush}"/>
+        <Setter Property="Width" Value="24"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="MinWidth" Value="24"/>
+        <Setter Property="MinHeight" Value="24"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonInfoHoverBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnInfoBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonInfoPressedBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnInfoBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonInfoDisabledBrush}"/>
+
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Warning 颜色 - Small 尺寸 -->
+    <Style x:Key="DefaultIconWarningSmall" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleSmall}">
+        <Setter Property="Background" Value="{StaticResource ButtonWarningDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextOnWarningBrush}"/>
+        <Setter Property="Width" Value="24"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="MinWidth" Value="24"/>
+        <Setter Property="MinHeight" Value="24"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonWarningHoverBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnWarningBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonWarningPressedBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnWarningBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonWarningDisabledBrush}"/>
+
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Danger 颜色 - Small 尺寸 -->
+    <Style x:Key="DefaultIconDangerSmall" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleSmall}">
+        <Setter Property="Background" Value="{StaticResource ButtonDangerDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextOnDangerBrush}"/>
+        <Setter Property="Width" Value="24"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="MinWidth" Value="24"/>
+        <Setter Property="MinHeight" Value="24"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonDangerHoverBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnDangerBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonDangerPressedBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnDangerBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonDangerDisabledBrush}"/>
+
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Feature 颜色 - Small 尺寸 -->
+    <Style x:Key="DefaultIconFeatureSmall" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleSmall}">
+        <Setter Property="Background" Value="{StaticResource ButtonFeatureDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextOnFeatureBrush}"/>
+        <Setter Property="Width" Value="24"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="MinWidth" Value="24"/>
+        <Setter Property="MinHeight" Value="24"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonFeatureHoverBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnFeatureBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonFeaturePressedBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnFeatureBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonFeatureDisabledBrush}"/>
+
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Accent 颜色 - Small 尺寸 -->
+    <Style x:Key="DefaultIconAccentSmall" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleSmall}">
+        <Setter Property="Background" Value="{StaticResource ButtonAccentDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextOnAccentBrush}"/>
+        <Setter Property="Width" Value="24"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="MinWidth" Value="24"/>
+        <Setter Property="MinHeight" Value="24"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonAccentHoverBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnAccentBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonAccentPressedBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnAccentBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonAccentDisabledBrush}"/>
+
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Brand 颜色 - Small 尺寸 -->
+    <Style x:Key="DefaultIconBrandSmall" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleSmall}">
+        <Setter Property="Background" Value="{StaticResource ButtonBrandDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextOnBrandBrush}"/>
+        <Setter Property="Width" Value="24"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="MinWidth" Value="24"/>
+        <Setter Property="MinHeight" Value="24"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonBrandHoverBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnBrandBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonBrandPressedBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnBrandBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonBrandDisabledBrush}"/>
+
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Promo 颜色 - Small 尺寸 -->
+    <Style x:Key="DefaultIconPromoSmall" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleSmall}">
+        <Setter Property="Background" Value="{StaticResource ButtonPromoDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextOnPromoBrush}"/>
+        <Setter Property="Width" Value="24"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="MinWidth" Value="24"/>
+        <Setter Property="MinHeight" Value="24"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPromoHoverBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnPromoBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPromoPressedBrush}"/>
+
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnPromoBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPromoDisabledBrush}"/>
+
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!-- ==================== Icon Plain 样式 - Default 尺寸 ==================== -->
+    
+    <!-- Default Icon × Plain × Primary 颜色 - Default 尺寸 -->
+    <Style x:Key="DefaultIconPlainPrimary" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyle}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonPrimaryDefaultBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonPrimaryDefaultBrush}"/>
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="MinWidth" Value="32"/>
+        <Setter Property="MinHeight" Value="32"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPrimaryHoverBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonPrimaryHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnPrimaryBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPrimaryPressedBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonPrimaryPressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnPrimaryBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPrimaryDisabledBrush}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonPrimaryDisabledBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Plain × Success 颜色 - Default 尺寸 -->
+    <Style x:Key="DefaultIconPlainSuccess" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyle}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonSuccessDefaultBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonSuccessDefaultBrush}"/>
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="MinWidth" Value="32"/>
+        <Setter Property="MinHeight" Value="32"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonSuccessHoverBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonSuccessHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnSuccessBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonSuccessPressedBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonSuccessPressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnSuccessBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonSuccessDisabledBrush}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonSuccessDisabledBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Plain × Info 颜色 - Default 尺寸 -->
+    <Style x:Key="DefaultIconPlainInfo" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyle}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonInfoDefaultBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonInfoDefaultBrush}"/>
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="MinWidth" Value="32"/>
+        <Setter Property="MinHeight" Value="32"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonInfoHoverBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonInfoHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnInfoBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonInfoPressedBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonInfoPressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnInfoBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonInfoDisabledBrush}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonInfoDisabledBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Plain × Warning 颜色 - Default 尺寸 -->
+    <Style x:Key="DefaultIconPlainWarning" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyle}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonWarningDefaultBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonWarningDefaultBrush}"/>
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="MinWidth" Value="32"/>
+        <Setter Property="MinHeight" Value="32"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonWarningHoverBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonWarningHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnWarningBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonWarningPressedBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonWarningPressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnWarningBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonWarningDisabledBrush}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonWarningDisabledBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Plain × Danger 颜色 - Default 尺寸 -->
+    <Style x:Key="DefaultIconPlainDanger" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyle}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonDangerDefaultBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonDangerDefaultBrush}"/>
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="MinWidth" Value="32"/>
+        <Setter Property="MinHeight" Value="32"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonDangerHoverBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonDangerHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnDangerBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonDangerPressedBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonDangerPressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnDangerBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonDangerDisabledBrush}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonDangerDisabledBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Plain × Feature 颜色 - Default 尺寸 -->
+    <Style x:Key="DefaultIconPlainFeature" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyle}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonFeatureDefaultBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonFeatureDefaultBrush}"/>
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="MinWidth" Value="32"/>
+        <Setter Property="MinHeight" Value="32"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonFeatureHoverBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonFeatureHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnFeatureBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonFeaturePressedBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonFeaturePressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnFeatureBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonFeatureDisabledBrush}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonFeatureDisabledBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Plain × Accent 颜色 - Default 尺寸 -->
+    <Style x:Key="DefaultIconPlainAccent" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyle}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonAccentDefaultBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonAccentDefaultBrush}"/>
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="MinWidth" Value="32"/>
+        <Setter Property="MinHeight" Value="32"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonAccentHoverBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonAccentHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnAccentBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonAccentPressedBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonAccentPressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnAccentBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonAccentDisabledBrush}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonAccentDisabledBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Plain × Brand 颜色 - Default 尺寸 -->
+    <Style x:Key="DefaultIconPlainBrand" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyle}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonBrandDefaultBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonBrandDefaultBrush}"/>
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="MinWidth" Value="32"/>
+        <Setter Property="MinHeight" Value="32"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonBrandHoverBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonBrandHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnBrandBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonBrandPressedBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonBrandPressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnBrandBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonBrandDisabledBrush}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonBrandDisabledBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Plain × Promo 颜色 - Default 尺寸 -->
+    <Style x:Key="DefaultIconPlainPromo" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyle}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonPromoDefaultBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonPromoDefaultBrush}"/>
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="MinWidth" Value="32"/>
+        <Setter Property="MinHeight" Value="32"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPromoHoverBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonPromoHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnPromoBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPromoPressedBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonPromoPressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnPromoBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPromoDisabledBrush}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonPromoDisabledBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!-- ==================== Icon Plain 样式 - Large 尺寸 ==================== -->
+    
+    <!-- Default Icon × Plain × Primary 颜色 - Large 尺寸 -->
+    <Style x:Key="DefaultIconPlainPrimaryLarge" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleLarge}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonPrimaryDefaultBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonPrimaryDefaultBrush}"/>
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="MinWidth" Value="40"/>
+        <Setter Property="MinHeight" Value="40"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPrimaryHoverBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonPrimaryHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnPrimaryBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPrimaryPressedBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonPrimaryPressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnPrimaryBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPrimaryDisabledBrush}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonPrimaryDisabledBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Plain × Success 颜色 - Large 尺寸 -->
+    <Style x:Key="DefaultIconPlainSuccessLarge" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleLarge}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonSuccessDefaultBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonSuccessDefaultBrush}"/>
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="MinWidth" Value="40"/>
+        <Setter Property="MinHeight" Value="40"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonSuccessHoverBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonSuccessHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnSuccessBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonSuccessPressedBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonSuccessPressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnSuccessBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonSuccessDisabledBrush}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonSuccessDisabledBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Plain × Info 颜色 - Large 尺寸 -->
+    <Style x:Key="DefaultIconPlainInfoLarge" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleLarge}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonInfoDefaultBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonInfoDefaultBrush}"/>
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="MinWidth" Value="40"/>
+        <Setter Property="MinHeight" Value="40"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonInfoHoverBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonInfoHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnInfoBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonInfoPressedBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonInfoPressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnInfoBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonInfoDisabledBrush}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonInfoDisabledBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Plain × Warning 颜色 - Large 尺寸 -->
+    <Style x:Key="DefaultIconPlainWarningLarge" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleLarge}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonWarningDefaultBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonWarningDefaultBrush}"/>
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="MinWidth" Value="40"/>
+        <Setter Property="MinHeight" Value="40"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonWarningHoverBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonWarningHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnWarningBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonWarningPressedBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonWarningPressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnWarningBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonWarningDisabledBrush}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonWarningDisabledBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Plain × Danger 颜色 - Large 尺寸 -->
+    <Style x:Key="DefaultIconPlainDangerLarge" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleLarge}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonDangerDefaultBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonDangerDefaultBrush}"/>
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="MinWidth" Value="40"/>
+        <Setter Property="MinHeight" Value="40"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonDangerHoverBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonDangerHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnDangerBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonDangerPressedBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonDangerPressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnDangerBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonDangerDisabledBrush}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonDangerDisabledBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Plain × Feature 颜色 - Large 尺寸 -->
+    <Style x:Key="DefaultIconPlainFeatureLarge" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleLarge}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonFeatureDefaultBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonFeatureDefaultBrush}"/>
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="MinWidth" Value="40"/>
+        <Setter Property="MinHeight" Value="40"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonFeatureHoverBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonFeatureHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnFeatureBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonFeaturePressedBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonFeaturePressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnFeatureBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonFeatureDisabledBrush}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonFeatureDisabledBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Plain × Accent 颜色 - Large 尺寸 -->
+    <Style x:Key="DefaultIconPlainAccentLarge" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleLarge}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonAccentDefaultBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonAccentDefaultBrush}"/>
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="MinWidth" Value="40"/>
+        <Setter Property="MinHeight" Value="40"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonAccentHoverBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonAccentHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnAccentBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonAccentPressedBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonAccentPressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnAccentBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonAccentDisabledBrush}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonAccentDisabledBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Plain × Brand 颜色 - Large 尺寸 -->
+    <Style x:Key="DefaultIconPlainBrandLarge" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleLarge}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonBrandDefaultBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonBrandDefaultBrush}"/>
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="MinWidth" Value="40"/>
+        <Setter Property="MinHeight" Value="40"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonBrandHoverBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonBrandHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnBrandBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonBrandPressedBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonBrandPressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnBrandBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonBrandDisabledBrush}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonBrandDisabledBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Plain × Promo 颜色 - Large 尺寸 -->
+    <Style x:Key="DefaultIconPlainPromoLarge" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleLarge}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonPromoDefaultBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonPromoDefaultBrush}"/>
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="MinWidth" Value="40"/>
+        <Setter Property="MinHeight" Value="40"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPromoHoverBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonPromoHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnPromoBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPromoPressedBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonPromoPressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnPromoBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPromoDisabledBrush}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonPromoDisabledBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!-- ==================== Icon Plain 样式 - Small 尺寸 ==================== -->
+    
+    <!-- Default Icon × Plain × Primary 颜色 - Small 尺寸 -->
+    <Style x:Key="DefaultIconPlainPrimarySmall" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleSmall}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonPrimaryDefaultBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonPrimaryDefaultBrush}"/>
+        <Setter Property="Width" Value="24"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="MinWidth" Value="24"/>
+        <Setter Property="MinHeight" Value="24"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPrimaryHoverBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonPrimaryHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnPrimaryBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPrimaryPressedBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonPrimaryPressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnPrimaryBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPrimaryDisabledBrush}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonPrimaryDisabledBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Plain × Success 颜色 - Small 尺寸 -->
+    <Style x:Key="DefaultIconPlainSuccessSmall" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleSmall}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonSuccessDefaultBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonSuccessDefaultBrush}"/>
+        <Setter Property="Width" Value="24"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="MinWidth" Value="24"/>
+        <Setter Property="MinHeight" Value="24"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonSuccessHoverBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonSuccessHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnSuccessBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonSuccessPressedBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonSuccessPressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnSuccessBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonSuccessDisabledBrush}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonSuccessDisabledBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Plain × Info 颜色 - Small 尺寸 -->
+    <Style x:Key="DefaultIconPlainInfoSmall" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleSmall}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonInfoDefaultBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonInfoDefaultBrush}"/>
+        <Setter Property="Width" Value="24"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="MinWidth" Value="24"/>
+        <Setter Property="MinHeight" Value="24"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonInfoHoverBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonInfoHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnInfoBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonInfoPressedBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonInfoPressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnInfoBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonInfoDisabledBrush}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonInfoDisabledBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Plain × Warning 颜色 - Small 尺寸 -->
+    <Style x:Key="DefaultIconPlainWarningSmall" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleSmall}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonWarningDefaultBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonWarningDefaultBrush}"/>
+        <Setter Property="Width" Value="24"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="MinWidth" Value="24"/>
+        <Setter Property="MinHeight" Value="24"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonWarningHoverBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonWarningHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnWarningBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonWarningPressedBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonWarningPressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnWarningBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonWarningDisabledBrush}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonWarningDisabledBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Plain × Danger 颜色 - Small 尺寸 -->
+    <Style x:Key="DefaultIconPlainDangerSmall" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleSmall}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonDangerDefaultBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonDangerDefaultBrush}"/>
+        <Setter Property="Width" Value="24"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="MinWidth" Value="24"/>
+        <Setter Property="MinHeight" Value="24"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonDangerHoverBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonDangerHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnDangerBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonDangerPressedBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonDangerPressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnDangerBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonDangerDisabledBrush}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonDangerDisabledBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Plain × Feature 颜色 - Small 尺寸 -->
+    <Style x:Key="DefaultIconPlainFeatureSmall" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleSmall}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonFeatureDefaultBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonFeatureDefaultBrush}"/>
+        <Setter Property="Width" Value="24"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="MinWidth" Value="24"/>
+        <Setter Property="MinHeight" Value="24"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonFeatureHoverBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonFeatureHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnFeatureBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonFeaturePressedBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonFeaturePressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnFeatureBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonFeatureDisabledBrush}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonFeatureDisabledBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Plain × Accent 颜色 - Small 尺寸 -->
+    <Style x:Key="DefaultIconPlainAccentSmall" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleSmall}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonAccentDefaultBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonAccentDefaultBrush}"/>
+        <Setter Property="Width" Value="24"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="MinWidth" Value="24"/>
+        <Setter Property="MinHeight" Value="24"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonAccentHoverBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonAccentHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnAccentBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonAccentPressedBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonAccentPressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnAccentBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonAccentDisabledBrush}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonAccentDisabledBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Plain × Brand 颜色 - Small 尺寸 -->
+    <Style x:Key="DefaultIconPlainBrandSmall" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleSmall}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonBrandDefaultBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonBrandDefaultBrush}"/>
+        <Setter Property="Width" Value="24"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="MinWidth" Value="24"/>
+        <Setter Property="MinHeight" Value="24"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonBrandHoverBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonBrandHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnBrandBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonBrandPressedBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonBrandPressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnBrandBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonBrandDisabledBrush}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonBrandDisabledBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Default Icon × Plain × Promo 颜色 - Small 尺寸 -->
+    <Style x:Key="DefaultIconPlainPromoSmall" TargetType="Button" BasedOn="{StaticResource BaseDefaultButtonStyleSmall}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonPromoDefaultBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonPromoDefaultBrush}"/>
+        <Setter Property="Width" Value="24"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="MinWidth" Value="24"/>
+        <Setter Property="MinHeight" Value="24"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPromoHoverBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonPromoHoverBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnPromoBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPromoPressedBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonPromoPressedBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ButtonTextOnPromoBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ButtonPromoDisabledBrush}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ButtonPromoDisabledBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonTextDisabledBrush}"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>   
+
+    
+</ResourceDictionary>

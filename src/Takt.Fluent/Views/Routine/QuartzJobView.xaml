@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="Takt.Fluent.Views.Routine.QuartzJobView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:Takt.Fluent.Controls"
+             xmlns:local="clr-namespace:Takt.Fluent.Extensions"
+             xmlns:helpers="clr-namespace:Takt.Fluent.Helpers"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d"
+             d:DesignHeight="720"
+             d:DesignWidth="1280">
+    <controls:TaktDataGrid ItemsSource="{Binding QuartzJobs}"
+                                SelectedItem="{Binding SelectedQuartzJob, Mode=TwoWay}"
+                                QueryKeyword="{Binding Keyword, Mode=TwoWay}"
+                                QueryPlaceholder="{local:Localization Key=common.placeholder.keywordHint, Param0Key=routine.quartzjob.query.keyword}"
+                                QueryButtonText="{local:Localization Key=common.search}"
+                                ResetButtonText="{local:Localization Key=common.reset}"
+                                EmptyText="{Binding EmptyMessage}"
+                                ShowToolbarCreate="True"
+                                ShowToolbarUpdate="True"
+                                ShowToolbarDelete="True"
+                                ShowToolbarImport="True"
+                                ShowToolbarExport="True"
+                                ShowAdvancedQueryButton="False"
+                                ImportCommand="{Binding ImportCommand}"
+                                ExportCommand="{Binding ExportCommand}"
+                                DownloadTemplateCommand="{Binding DownloadTemplateCommand}"
+                                PageIndex="{Binding PageIndex, Mode=TwoWay}"
+                                PageSize="{Binding PageSize, Mode=TwoWay}"
+                                TotalCount="{Binding TotalCount}"
+                                QueryCommand="{Binding QueryCommand}"
+                                ResetCommand="{Binding ResetCommand}"
+                                CreateCommand="{Binding CreateCommand}"
+                                UpdateCommand="{Binding UpdateCommand}"
+                                DeleteCommand="{Binding DeleteCommand}"
+                                ShowRowCreate="False"
+                                ShowRowUpdate="True"
+                                ShowRowDelete="True"
+                                ShowRowRun="True"
+                                ShowRowStop="True"
+                                ShowRowStart="True"
+                                ShowRowPause="False"
+                                ShowRowRestart="False"
+                                ShowRowResume="False"
+                                RowUpdateCommand="{Binding UpdateCommand}"
+                                RowDeleteCommand="{Binding DeleteCommand}"
+                                RowRunCommand="{Binding RunCommand}"
+                                RowStopCommand="{Binding StopCommand}"
+                                RowStartCommand="{Binding ResumeCommand}"
+                                PageChangedCommand="{Binding PageChangedCommand}">
+        <controls:TaktDataGrid.Columns>
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=routine.quartzjob.jobname}"
+                                                    BindingPath="JobName"
+                                                    Width="200" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=routine.quartzjob.jobgroup}"
+                                                    BindingPath="JobGroup"
+                                                    Width="150" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=routine.quartzjob.cronexpression}"
+                                                    BindingPath="CronExpression"
+                                                    Width="150" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=routine.quartzjob.jobclassname}"
+                                                    BindingPath="JobClassName"
+                                                    Width="300" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=routine.quartzjob.jobdescription}"
+                                                    BindingPath="JobDescription"
+                                                    Width="250" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=routine.quartzjob.status}"
+                                                    BindingPath="Status"
+                                                    Width="100" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=routine.quartzjob.lastruntime}"
+                                                    BindingPath="LastRunTime"
+                                                    Width="180"
+                                                    StringFormat="{}{0:yyyy-MM-dd HH:mm:ss}" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=routine.quartzjob.nextruntime}"
+                                                    BindingPath="NextRunTime"
+                                                    Width="180"
+                                                    StringFormat="{}{0:yyyy-MM-dd HH:mm:ss}" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=routine.quartzjob.runcount}"
+                                                    BindingPath="RunCount"
+                                                    Width="100" />
+        </controls:TaktDataGrid.Columns>
+    </controls:TaktDataGrid>
+</UserControl>
+

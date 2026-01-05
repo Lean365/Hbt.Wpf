@@ -1,0 +1,4 @@
+# Git attributes for secret filtering
+src/Takt.Fluent/appsettings.json filter=secret diff=secret
+src/Takt.Fluent/appsettings.Development.json filter=secret diff=secret
+

@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="Takt.Fluent.Views.Logistics.Serials.SerialScanningView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:Takt.Fluent.Controls"
+             xmlns:local="clr-namespace:Takt.Fluent.Extensions"
+             mc:Ignorable="d"
+             d:DesignHeight="720"
+             d:DesignWidth="1280">
+    <Grid>
+        <!-- 序列号扫描记录（只读，支持扫描入库/出库） -->
+        <controls:TaktDataGrid x:Name="ScanningDataGrid"
+                                ItemsSource="{Binding ProdSerialScannings}"
+                                SelectedItem="{Binding SelectedProdSerialScanning, Mode=TwoWay}"
+                                QueryKeyword="{Binding ScanningKeyword, Mode=TwoWay}"
+                                QueryPlaceholder="{local:Localization Key=common.placeholder.keywordHint, Param0Key=logistics.serials.prodserialscanning.query.keyword}"
+                                ShowToolbarCreate="False"
+                                ShowToolbarUpdate="False"
+                                ShowToolbarDelete="False"
+                                ShowToolbarScanInbound="True"
+                                ShowToolbarScanOutbound="True"
+                                ScanInboundCommand="{Binding ScanInboundCommand}"
+                                ScanOutboundCommand="{Binding ScanOutboundCommand}"
+                                ShowRowUpdate="False"
+                                ShowRowDelete="False"
+                                PageIndex="{Binding ScanningPageIndex, Mode=TwoWay}"
+                                PageSize="{Binding ScanningPageSize, Mode=TwoWay}"
+                                TotalCount="{Binding ScanningTotalCount}"
+                                QueryCommand="{Binding QueryScanningsCommand}"
+                                ResetCommand="{Binding ResetScanningsCommand}"
+                                PageChangedCommand="{Binding PageChangedScanningsCommand}"
+                                EmptyText="{local:Localization Key=common.noData}"
+                                Loaded="ScanningDataGrid_Loaded">
+            <controls:TaktDataGrid.Columns>
+                <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logistics.serials.prodserialscanning.inboundfullserialnumber}" BindingPath="InboundFullSerialNumber" Width="200" />
+                <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logistics.serials.prodserialscanning.inbounddate}" BindingPath="InboundDate" Width="150" />
+                <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logistics.serials.prodserialscanning.inboundip}" BindingPath="InboundIp" Width="120" />
+                <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logistics.serials.prodserialscanning.inboundmachinename}" BindingPath="InboundMachineName" Width="150" />
+                <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logistics.serials.prodserialscanning.outboundfullserialnumber}" BindingPath="OutboundFullSerialNumber" Width="200" />
+                <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logistics.serials.prodserialscanning.outbounddate}" BindingPath="OutboundDate" Width="150" />
+                <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logistics.serials.prodserialscanning.outboundip}" BindingPath="OutboundIp" Width="120" />
+                <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logistics.serials.prodserialscanning.outboundmachinename}" BindingPath="OutboundMachineName" Width="150" />
+            </controls:TaktDataGrid.Columns>
+        </controls:TaktDataGrid>
+    </Grid>
+</UserControl>
+

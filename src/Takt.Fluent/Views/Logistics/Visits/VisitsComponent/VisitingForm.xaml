@@ -1,0 +1,437 @@
+﻿<Window x:Class="Takt.Fluent.Views.Logistics.Visits.VisitsComponent.VisitingForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Takt.Fluent.Extensions"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:helpers="clr-namespace:Takt.Fluent.Helpers"
+        xmlns:controls="clr-namespace:Takt.Fluent.Controls"
+        xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+        mc:Ignorable="d"
+        d:DesignHeight="500"
+        d:DesignWidth="600"
+        Title="{Binding Title}" 
+        SizeToContent="Manual" 
+        WindowStartupLocation="Manual"
+        ResizeMode="CanResize" 
+        Background="{DynamicResource MaterialDesignPaper}">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <helpers:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter"/>
+        <helpers:StringToBoolConverter x:Key="StringToBoolConverter"/>
+        <helpers:IntEqualsConverter x:Key="IntEqualsConverter"/>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- 主表信息 -->
+        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" Margin="0,0,0,16" MaxHeight="300">
+            <StackPanel Margin="16">
+                <!-- 公司名称 -->
+                <StackPanel Margin="0,0,0,8" MinHeight="56">
+                    <Grid MinHeight="32">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                            <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                            <Run Text="{local:Localization Key=logistics.visits.visitingcompany.visitingcompanyname}"/>
+                        </TextBlock>
+                        <TextBox Grid.Column="1" 
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 materialDesign:HintAssist.Hint="{Binding VisitingCompanyHint}"
+                                 materialDesign:HintAssist.HelperText="{Binding VisitingCompanyError}"
+                                 materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                 MinHeight="32"
+                                 Padding="12,6"
+                                 FontSize="13"
+                                 VerticalAlignment="Center"
+                                 VerticalContentAlignment="Center"
+                                 Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                 materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+                            <TextBox.Text>
+                                <Binding Path="VisitingCompany" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                            </TextBox.Text>
+                        </TextBox>
+                    </Grid>
+                </StackPanel>
+
+                <!-- 开始时间和结束时间（一行两列） -->
+                <StackPanel Margin="0,0,0,8" MinHeight="56">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <!-- 开始时间 -->
+                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                            <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                            <Run Text="{local:Localization Key=logistics.visits.visitingcompany.visitstarttime}"/>
+                        </TextBlock>
+                        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                            <DatePicker 
+                                 SelectedDate="{Binding VisitStartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 materialDesign:HintAssist.Hint="{Binding VisitStartTimeHint}"
+                                 materialDesign:TextFieldAssist.HasClearButton="False"
+                                 Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                                 Margin="0,0,8,0"
+                                 MinWidth="120"/>
+                            <materialDesign:TimePicker 
+                                 SelectedTime="{Binding VisitStartTimeOfDay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Is24Hours="True"
+                                 Style="{StaticResource MaterialDesignOutlinedTimePicker}"
+                                 MinWidth="100"/>
+                        </StackPanel>
+                        <TextBlock Grid.Row="1" Grid.Column="1" 
+                                   Text="{Binding VisitStartTimeError}"
+                                   Foreground="{DynamicResource SystemFillColorCriticalBrush}"
+                                   FontSize="11"
+                                   Margin="100,4,0,0"
+                                   Visibility="{Binding VisitStartTimeError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                        <!-- 结束时间 -->
+                        <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                            <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                            <Run Text="{local:Localization Key=logistics.visits.visitingcompany.visitendtime}"/>
+                        </TextBlock>
+                        <StackPanel Grid.Row="0" Grid.Column="4" Orientation="Horizontal" VerticalAlignment="Center">
+                            <DatePicker 
+                                 SelectedDate="{Binding VisitEndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 materialDesign:HintAssist.Hint="{Binding VisitEndTimeHint}"
+                                 materialDesign:TextFieldAssist.HasClearButton="False"
+                                 Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                                 Margin="0,0,8,0"
+                                 MinWidth="120"/>
+                            <materialDesign:TimePicker 
+                                 SelectedTime="{Binding VisitEndTimeOfDay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Is24Hours="True"
+                                 Style="{StaticResource MaterialDesignOutlinedTimePicker}"
+                                 MinWidth="100"/>
+                        </StackPanel>
+                        <TextBlock Grid.Row="1" Grid.Column="4" 
+                                   Text="{Binding VisitEndTimeError}"
+                                   Foreground="{DynamicResource SystemFillColorCriticalBrush}"
+                                   FontSize="11"
+                                   Margin="100,4,0,0"
+                                   Visibility="{Binding VisitEndTimeError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                    </Grid>
+                </StackPanel>
+
+                <!-- 预约部门和联系人（一行两列） -->
+                <StackPanel Margin="0,0,0,8" MinHeight="56">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <!-- 预约部门 -->
+                        <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                            <Run Text="{local:Localization Key=logistics.visits.visitingcompany.reservationsdept}"/>
+                        </TextBlock>
+                        <TextBox Grid.Column="1" 
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                 MinHeight="32"
+                                 Padding="12,6"
+                                 FontSize="13"
+                                 VerticalAlignment="Center"
+                                 VerticalContentAlignment="Center"
+                                 Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                 materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+                            <TextBox.Text>
+                                <Binding Path="ReservationsDept" UpdateSourceTrigger="PropertyChanged"/>
+                            </TextBox.Text>
+                        </TextBox>
+                        <!-- 联系人 -->
+                        <TextBlock Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                            <Run Text="{local:Localization Key=logistics.visits.visitingcompany.contact}"/>
+                        </TextBlock>
+                        <TextBox Grid.Column="4" 
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                 MinHeight="32"
+                                 Padding="12,6"
+                                 FontSize="13"
+                                 VerticalAlignment="Center"
+                                 VerticalContentAlignment="Center"
+                                 Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                 materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+                            <TextBox.Text>
+                                <Binding Path="Contact" UpdateSourceTrigger="PropertyChanged"/>
+                            </TextBox.Text>
+                        </TextBox>
+                    </Grid>
+                </StackPanel>
+
+                <!-- 访问目的 -->
+                <StackPanel Margin="0,0,0,8" MinHeight="56">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{local:Localization Key=logistics.visits.visitingcompany.purpose}" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                        <StackPanel Grid.Column="1">
+                            <TextBox 
+                                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                Padding="16,10"
+                                FontSize="14"
+                                VerticalContentAlignment="Top"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                TextWrapping="Wrap" 
+                                AcceptsReturn="True" 
+                                VerticalScrollBarVisibility="Hidden"
+                                MinHeight="80">
+                                <TextBox.Text>
+                                    <Binding Path="Purpose" UpdateSourceTrigger="PropertyChanged"/>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+
+                <!-- 预计时长和所属行业（一行两列） -->
+                <StackPanel Margin="0,0,0,8" MinHeight="56">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <!-- 预计时长（分钟） -->
+                        <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                            <Run Text="{local:Localization Key=logistics.visits.visitingcompany.duration}"/>
+                        </TextBlock>
+                        <TextBox Grid.Column="1" 
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                 MinHeight="32"
+                                 Padding="12,6"
+                                 FontSize="13"
+                                 VerticalAlignment="Center"
+                                 VerticalContentAlignment="Center"
+                                 Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                 materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+                            <TextBox.Text>
+                                <Binding Path="Duration" UpdateSourceTrigger="PropertyChanged"/>
+                            </TextBox.Text>
+                        </TextBox>
+                        <!-- 所属行业 -->
+                        <TextBlock Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                            <Run Text="{local:Localization Key=logistics.visits.visitingcompany.industry}"/>
+                        </TextBlock>
+                        <TextBox Grid.Column="4" 
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                 MinHeight="32"
+                                 Padding="12,6"
+                                 FontSize="13"
+                                 VerticalAlignment="Center"
+                                 VerticalContentAlignment="Center"
+                                 Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                 materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+                            <TextBox.Text>
+                                <Binding Path="Industry" UpdateSourceTrigger="PropertyChanged"/>
+                            </TextBox.Text>
+                        </TextBox>
+                    </Grid>
+                </StackPanel>
+
+                <!-- 车牌号 -->
+                <StackPanel Margin="0,0,0,8" MinHeight="56">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                            <Run Text="{local:Localization Key=logistics.visits.visitingcompany.vehicleplate}"/>
+                        </TextBlock>
+                        <TextBox Grid.Column="1" 
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                 MinHeight="32"
+                                 Padding="12,6"
+                                 FontSize="13"
+                                 VerticalAlignment="Center"
+                                 VerticalContentAlignment="Center"
+                                 Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                 materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+                            <TextBox.Text>
+                                <Binding Path="VehiclePlate" UpdateSourceTrigger="PropertyChanged"/>
+                            </TextBox.Text>
+                        </TextBox>
+                    </Grid>
+                </StackPanel>
+
+                <!-- 欢迎牌显示和是否用车（一行两列） -->
+                <StackPanel Margin="0,0,0,8" MinHeight="56">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <!-- 欢迎牌显示（0=需要） -->
+                        <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                            <Run Text="{local:Localization Key=logistics.visits.visitingcompany.iswelcomesign}"/>
+                        </TextBlock>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                            <RadioButton Style="{StaticResource MaterialDesignRadioButton}" 
+                                         FontSize="13" 
+                                         Padding="12,6" 
+                                         Content="{local:Localization Key=common.yes}"
+                                         GroupName="WelcomeSignGroup"
+                                         VerticalAlignment="Center"
+                                         IsChecked="{Binding IsWelcomeSign, Converter={StaticResource IntEqualsConverter}, ConverterParameter=0, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <RadioButton Style="{StaticResource MaterialDesignRadioButton}" 
+                                         FontSize="13" 
+                                         Padding="12,6" 
+                                         Content="{local:Localization Key=common.no}"
+                                         GroupName="WelcomeSignGroup"
+                                         VerticalAlignment="Center"
+                                         Margin="12,0,0,0"
+                                         IsChecked="{Binding IsWelcomeSign, Converter={StaticResource IntEqualsConverter}, ConverterParameter=1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <!-- 是否用车（1=不需要） -->
+                        <TextBlock Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                            <Run Text="{local:Localization Key=logistics.visits.visitingcompany.isvehicleneeded}"/>
+                        </TextBlock>
+                        <StackPanel Grid.Column="4" Orientation="Horizontal" VerticalAlignment="Center">
+                            <RadioButton Style="{StaticResource MaterialDesignRadioButton}" 
+                                         FontSize="13" 
+                                         Padding="12,6" 
+                                         Content="{local:Localization Key=common.yes}"
+                                         GroupName="VehicleNeededGroup"
+                                         VerticalAlignment="Center"
+                                         IsChecked="{Binding IsVehicleNeeded, Converter={StaticResource IntEqualsConverter}, ConverterParameter=0, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <RadioButton Style="{StaticResource MaterialDesignRadioButton}" 
+                                         FontSize="13" 
+                                         Padding="12,6" 
+                                         Content="{local:Localization Key=common.no}"
+                                         GroupName="VehicleNeededGroup"
+                                         VerticalAlignment="Center"
+                                         Margin="12,0,0,0"
+                                         IsChecked="{Binding IsVehicleNeeded, Converter={StaticResource IntEqualsConverter}, ConverterParameter=1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+
+                <!-- 备注 -->
+                <StackPanel Margin="0,0,0,8" MinHeight="56">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{local:Localization Key=common.audit.Remarks}" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                        <StackPanel Grid.Column="1">
+                            <TextBox 
+                                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                materialDesign:HintAssist.Hint="{Binding RemarksHint}"
+                                materialDesign:HintAssist.HelperText="{Binding RemarksError}"
+                                materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                Padding="16,10"
+                                FontSize="14"
+                                VerticalContentAlignment="Top"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                TextWrapping="Wrap" 
+                                AcceptsReturn="True" 
+                                VerticalScrollBarVisibility="Hidden"
+                                MinHeight="120">
+                                <TextBox.Text>
+                                    <Binding Path="Remarks" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- 子表：来访成员详情 -->
+        <Border Grid.Row="1" 
+                BorderBrush="{DynamicResource MaterialDesignDivider}" 
+                BorderThickness="0,1,0,0"
+                Margin="0,0,0,16">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" 
+                           Text="{local:Localization Key=logistics.visits.visitingentourage.entity}" 
+                           FontSize="16" 
+                           FontWeight="SemiBold"
+                           Margin="0,16,0,8"
+                           Foreground="{DynamicResource TextFillColorPrimaryBrush}"/>
+
+                <controls:TaktInlineEditDataGrid Grid.Row="1"
+                                                 ItemsSource="{Binding VisitingEntourages}"
+                                                 SelectedItem="{Binding SelectedVisitingEntourage, Mode=TwoWay}"
+                                                 EditingItem="{Binding EditingVisitingEntourage, Mode=TwoWay}"
+                                                 ShowQueryArea="False"
+                                                 ShowToolbar="True"
+                                                 ShowToolbarAddRow="True"
+                                                 AddRowCommand="{Binding CreateVisitingEntourageInlineCommand}"
+                                                 RowUpdateCommand="{Binding UpdateVisitingEntourageInlineCommand}"
+                                                 RowSaveCommand="{Binding SaveVisitingEntourageInlineCommand}"
+                                                 RowCancelCommand="{Binding CancelVisitingEntourageInlineCommand}"
+                                                 RowDeleteCommand="{Binding DeleteVisitingEntourageCommand}"
+                                                 ShowRowUpdate="True"
+                                                 ShowRowSave="True"
+                                                 ShowRowCancel="True"
+                                                 ShowRowDelete="True"
+                                                 ShowPagination="False"
+                                                 EmptyText="{local:Localization Key=common.noData}">
+                    <controls:TaktInlineEditDataGrid.Columns>
+                        <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logistics.visits.visitingentourage.visitdept}" BindingPath="VisitDept" Width="150" />
+                        <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logistics.visits.visitingentourage.visitingmembers}" BindingPath="VisitingMembers" Width="150" />
+                        <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=logistics.visits.visitingentourage.visitpost}" BindingPath="VisitPost" Width="150" />
+                        <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=common.audit.Remarks}" BindingPath="Remarks" Width="*" />
+                    </controls:TaktInlineEditDataGrid.Columns>
+                </controls:TaktInlineEditDataGrid>
+            </Grid>
+        </Border>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button IsDefault="True" 
+                    Command="{Binding SaveCommand}" 
+                    Content="{local:Localization Key=common.button.submit}" 
+                    Style="{StaticResource DefaultPrimary}"
+                    Margin="0,0,12,0"/>
+            <Button IsCancel="True" 
+                    Content="{local:Localization Key=common.button.cancel}"
+                    Style="{StaticResource DefaultInfo}"/>
+        </StackPanel>
+    </Grid>
+</Window>
+

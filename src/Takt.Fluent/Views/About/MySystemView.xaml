@@ -1,0 +1,232 @@
+﻿<Window x:Class="Takt.Fluent.Views.About.MySystemView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Takt.Fluent.Extensions"
+        mc:Ignorable="d"
+        Title="{local:Localization Key=about.systemInfo.title}"
+        Width="900"
+        Height="700"
+        MinWidth="700"
+        MinHeight="500"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="CanResize"
+        Background="{DynamicResource ApplicationBackgroundBrush}">
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TabControl Grid.Row="0" 
+                    Background="Transparent"
+                    BorderThickness="0">
+            <!-- 系统摘要 -->
+            <TabItem Header="{local:Localization Key=about.systemInfo.tab.summary}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <DataGrid x:Name="SummaryInfoDataGrid"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              HeadersVisibility="Column"
+                              GridLinesVisibility="Horizontal"
+                              BorderThickness="0"
+                              Background="Transparent"
+                              RowBackground="Transparent"
+                              AlternatingRowBackground="{DynamicResource ControlFillColorDefaultBrush}"
+                              SelectionMode="Single"
+                              SelectionUnit="Cell">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="{local:Localization Key=about.systemInfo.column.item}" Binding="{Binding Key}" Width="200">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}"/>
+                                        <Setter Property="Padding" Value="8,4"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="{local:Localization Key=about.systemInfo.column.value}" Binding="{Binding Value}" Width="*">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+                                        <Setter Property="Padding" Value="8,4"/>
+                                        <Setter Property="TextWrapping" Value="Wrap"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- 硬件信息 -->
+            <TabItem Header="{local:Localization Key=about.systemInfo.tab.hardware}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <DataGrid x:Name="HardwareInfoDataGrid"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              HeadersVisibility="Column"
+                              GridLinesVisibility="Horizontal"
+                              BorderThickness="0"
+                              Background="Transparent"
+                              RowBackground="Transparent"
+                              AlternatingRowBackground="{DynamicResource ControlFillColorDefaultBrush}"
+                              SelectionMode="Single"
+                              SelectionUnit="Cell">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="{local:Localization Key=about.systemInfo.column.item}" Binding="{Binding Key}" Width="200">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}"/>
+                                        <Setter Property="Padding" Value="8,4"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="{local:Localization Key=about.systemInfo.column.value}" Binding="{Binding Value}" Width="*">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+                                        <Setter Property="Padding" Value="8,4"/>
+                                        <Setter Property="TextWrapping" Value="Wrap"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- 软件信息 -->
+            <TabItem Header="{local:Localization Key=about.systemInfo.tab.software}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <DataGrid x:Name="SoftwareInfoDataGrid"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              HeadersVisibility="Column"
+                              GridLinesVisibility="Horizontal"
+                              BorderThickness="0"
+                              Background="Transparent"
+                              RowBackground="Transparent"
+                              AlternatingRowBackground="{DynamicResource ControlFillColorDefaultBrush}"
+                              SelectionMode="Single"
+                              SelectionUnit="Cell">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="{local:Localization Key=about.systemInfo.software.name}" Binding="{Binding Name}" Width="*">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+                                        <Setter Property="Padding" Value="8,4"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="{local:Localization Key=about.systemInfo.software.version}" Binding="{Binding Version}" Width="150">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+                                        <Setter Property="Padding" Value="8,4"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="{local:Localization Key=about.systemInfo.software.publisher}" Binding="{Binding Publisher}" Width="200">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+                                        <Setter Property="Padding" Value="8,4"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- 网络信息 -->
+            <TabItem Header="{local:Localization Key=about.systemInfo.tab.network}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,12">
+                        <TextBlock Text="{local:Localization Key=about.systemInfo.network.adapters}" 
+                                   FontSize="14"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                    
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                        <DataGrid x:Name="NetworkAdaptersDataGrid"
+                                  AutoGenerateColumns="False"
+                                  IsReadOnly="True"
+                                  HeadersVisibility="Column"
+                                  GridLinesVisibility="Horizontal"
+                                  BorderThickness="0"
+                                  Background="Transparent"
+                                  RowBackground="Transparent"
+                                  AlternatingRowBackground="{DynamicResource ControlFillColorDefaultBrush}"
+                                  SelectionMode="Single"
+                                  SelectionUnit="Cell">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="{local:Localization Key=about.systemInfo.network.name}" Binding="{Binding Name}" Width="200">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+                                            <Setter Property="Padding" Value="8,4"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="{local:Localization Key=about.systemInfo.network.mac}" Binding="{Binding MacAddress}" Width="150">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+                                            <Setter Property="Padding" Value="8,4"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="{local:Localization Key=about.systemInfo.network.ip}" Binding="{Binding IpAddresses}" Width="*">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+                                            <Setter Property="Padding" Value="8,4"/>
+                                            <Setter Property="TextWrapping" Value="Wrap"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="{local:Localization Key=about.systemInfo.network.speed}" Binding="{Binding Speed}" Width="120">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+                                            <Setter Property="Padding" Value="8,4"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="{local:Localization Key=about.systemInfo.network.status}" Binding="{Binding Status}" Width="100">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+                                            <Setter Property="Padding" Value="8,4"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+            <Button Content="{local:Localization Key=common.button.copy}"
+                    Style="{StaticResource DefaultInfo}"
+                    Margin="0,0,12,0"
+                    Click="CopyButton_Click"
+                    MinWidth="100"/>
+            <Button Content="{local:Localization Key=common.button.close}"
+                    Style="{StaticResource DefaultInfo}"
+                    IsCancel="True"
+                    MinWidth="100"/>
+        </StackPanel>
+    </Grid>
+</Window>

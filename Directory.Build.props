@@ -1,0 +1,27 @@
+<Project>
+  <PropertyGroup>
+    <!-- Unified versioning -->
+    <Version>0.0.2</Version>
+    <AssemblyVersion>0.0.2.0</AssemblyVersion>
+    <FileVersion>0.0.2.0</FileVersion>
+    <PackageVersion>0.0.2</PackageVersion>
+
+    <!-- Product metadata -->
+    <Company>节拍信息科技有限公司（Takt IT Co.,Ltd.）</Company>
+    <Product>节拍中小企业平台（Takt SMEs Platform）</Product>
+    <Authors>Takt365(Cursor AI)</Authors>
+
+    <!-- Common build settings -->
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+
+    <!-- Copyright -->
+    <Copyright>© 2025 Takt All Rights Reserved.节拍信息科技有限公司 保留所有权利.</Copyright>
+
+    <!-- Suppress NU1900 audit warning globally (optional) -->
+    <NoWarn>$(NoWarn);NU1900</NoWarn>
+  </PropertyGroup>
+</Project>
+
+

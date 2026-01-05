@@ -1,0 +1,100 @@
+---
+alwaysApply: true
+---
+
+# MVVM 模式规范
+
+## View（视图层）
+
+**职责**：仅负责 UI 展示和用户交互，不包含业务逻辑
+
+**文件位置**：@src/Takt.Fluent/Views/
+
+**示例**：
+```xml
+<!-- ✅ 正确：View 只负责 UI -->
+<!-- @src/Takt.Fluent/Views/Identity/UserView.xaml -->
+<UserControl x:Class="Takt.Fluent.Views.Identity.UserView">
+    <DataGrid ItemsSource="{Binding Users}" 
+              SelectedItem="{Binding SelectedUser, Mode=TwoWay}"/>
+</UserControl>
+```
+
+```csharp
+// ❌ 错误：View 中包含业务逻辑
+// @src/Takt.Fluent/Views/Identity/UserView.xaml.cs
+private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+{
+    // ❌ 不要在 View 中直接调用服务
+    var service = App.Services.GetService<IUserService>();
+    service.GetUsersAsync();
+}
+```
+
+## ViewModel（视图模型层）
+
+**职责**：管理 View 的状态和数据，处理用户交互命令
+
+**文件位置**：@src/Takt.Fluent/ViewModels/
+
+**示例**：
+```csharp
+// ✅ 正确：ViewModel 继承 ViewModelBase
+// @src/Takt.Fluent/ViewModels/Identity/UserViewModel.cs
+public class UserViewModel : ViewModelBase
+{
+    private readonly IHbtUserService _userService;
+    private ObservableCollection<UserDto> _users = new();
+    
+    public ObservableCollection<UserDto> Users
+    {
+        get => _users;
+        set => SetProperty(ref _users, value);
+    }
+    
+    public ICommand LoadUsersCommand { get; }
+    
+    public UserViewModel(IHbtUserService userService)
+    {
+        _userService = userService;
+        LoadUsersCommand = new RelayCommand(async () => await LoadUsersAsync());
+    }
+    
+    private async Task LoadUsersAsync()
+    {
+        var result = await _userService.GetListAsync();
+        if (result.Success)
+        {
+            Users = new ObservableCollection<UserDto>(result.Data);
+        }
+    }
+}
+```
+
+**关键要求**：
+- ✅ 必须通过构造函数注入依赖服务
+- ✅ 使用 `SetProperty` 方法更新属性以触发通知
+- ✅ 所有异步操作使用 `async/await`
+- ✅ 命令使用 `ICommand` 接口
+
+## Model（模型层）
+
+**职责**：定义数据模型（Entity、DTO）
+
+**文件位置**：
+- Entity：@src/Takt.Domain/Entities/
+- DTO：@src/Takt.Application/Dtos/
+
+**示例**：
+```csharp
+// ✅ 正确：Entity 定义
+// @src/Takt.Domain/Entities/Identity/User.cs
+public class User : EntityBase
+{
+    [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
+    public int Id { get; set; }
+    
+    [SugarColumn(Length = 50)]
+    public string UserName { get; set; } = string.Empty;
+}
+```

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="database.connectionerror.title" xml:space="preserve">
+    <value>数据库连接失败</value>
+  </data>
+  <data name="database.connectionerror.failed" xml:space="preserve">
+    <value>数据库连接失败，无法启动系统。
+
+请检查数据库服务器和连接字符串配置。</value>
+  </data>
+  <data name="database.connectionerror.failed_detail" xml:space="preserve">
+    <value>数据库连接失败，无法启动系统。
+
+请检查：
+1. 数据库服务器是否正常运行
+2. 连接字符串配置是否正确（appsettings.json）
+3. 数据库是否已创建
+
+如需自动初始化数据库，请在 appsettings.json 中设置：
+- "EnableCodeFirst": true（自动创建表结构）
+- "EnableSeedData": true（自动初始化种子数据）</value>
+  </data>
+  <data name="database.connectionerror.exception_startup" xml:space="preserve">
+    <value>数据库连接检查失败：{0}
+
+应用程序将关闭。</value>
+  </data>
+  <data name="database.tables_not_initialized.title" xml:space="preserve">
+    <value>数据库未初始化</value>
+  </data>
+  <data name="database.tables_not_initialized.message" xml:space="preserve">
+    <value>数据库未初始化，无法启动系统。
+
+检测到数据库表不存在，系统需要初始化数据库。
+
+请在 appsettings.json 中设置以下配置之一：
+
+方案一：自动创建表结构
+  "EnableCodeFirst": true
+
+方案二：自动初始化完整数据
+  "EnableCodeFirst": true
+  "EnableSeedData": true
+
+配置完成后，请重新启动应用程序。</value>
+  </data>
+  <data name="database.initialization.title" xml:space="preserve">
+    <value>数据库初始化提示</value>
+  </data>
+  <data name="database.initialization.error" xml:space="preserve">
+    <value>数据库初始化失败：{0}
+
+应用程序将关闭。</value>
+  </data>
+  <data name="application.startup.error" xml:space="preserve">
+    <value>应用程序启动失败：{0}
+
+详细信息：{1}</value>
+  </data>
+  <data name="application.startup.error.title" xml:space="preserve">
+    <value>启动错误</value>
+  </data>
+  <data name="common.messagebox.error" xml:space="preserve">
+    <value>错误</value>
+  </data>
+</root>
+

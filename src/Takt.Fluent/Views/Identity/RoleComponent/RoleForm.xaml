@@ -1,0 +1,267 @@
+﻿<Window x:Class="Takt.Fluent.Views.Identity.RoleComponent.RoleForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Takt.Fluent.Extensions"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:helpers="clr-namespace:Takt.Fluent.Helpers"
+        xmlns:controls="clr-namespace:Takt.Fluent.Controls"
+        mc:Ignorable="d"
+        d:DesignHeight="600"
+        d:DesignWidth="800"
+        Title="{Binding Title}" 
+        SizeToContent="Manual" 
+        WindowStartupLocation="Manual"
+        ResizeMode="CanResize" 
+        Background="{DynamicResource MaterialDesignPaper}">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <helpers:IntEqualsConverter x:Key="IntEqualsConverter"/>
+        <helpers:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter"/>
+        <helpers:StringToBoolConverter x:Key="StringToBoolConverter"/>
+        <helpers:InverseBoolConverter x:Key="InverseBoolConverter"/>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TabControl Grid.Row="0" Margin="0,0,0,16">
+            <!-- 基本信息 -->
+            <TabItem Header="{local:Localization Key=identity.role.basicinfo}">
+                <StackPanel Margin="16">
+                    <!-- 角色名称 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                <Run Text="{local:Localization Key=identity.role.rolename}"/>
+                            </TextBlock>
+                            <TextBox x:Name="RoleNameTextBox"
+                                     Grid.Column="1" 
+                                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                     materialDesign:HintAssist.Hint="{Binding RoleNameHint}"
+                                     materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                     MinHeight="32"
+                                     Padding="12,6"
+                                     FontSize="13"
+                                     VerticalAlignment="Center"
+                                     VerticalContentAlignment="Center"
+                                     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                     materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+                                <TextBox.Text>
+                                    <Binding Path="RoleName" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                </TextBox.Text>
+                            </TextBox>
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- 角色编码 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                <Run Text="{local:Localization Key=identity.role.rolecode}"/>
+                            </TextBlock>
+                            <TextBox x:Name="RoleCodeTextBox"
+                                     Grid.Column="1" 
+                                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                     materialDesign:HintAssist.Hint="{Binding RoleCodeHint}"
+                                     materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                     MinHeight="32"
+                                     Padding="12,6"
+                                     FontSize="13"
+                                     VerticalAlignment="Center"
+                                     VerticalContentAlignment="Center"
+                                     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                     materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                     IsReadOnly="{Binding IsCreate, Converter={StaticResource InverseBoolConverter}}">
+                                <TextBox.Text>
+                                    <Binding Path="RoleCode" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                </TextBox.Text>
+                            </TextBox>
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- 角色描述 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Localization Key=identity.role.description}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <TextBox Grid.Column="1" 
+                                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                     materialDesign:HintAssist.Hint="{Binding DescriptionHint}"
+                                     materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                     MinHeight="32"
+                                     Padding="12,6"
+                                     FontSize="13"
+                                     VerticalAlignment="Center"
+                                     VerticalContentAlignment="Center"
+                                     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                     materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+                                <TextBox.Text>
+                                    <Binding Path="Description" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                </TextBox.Text>
+                            </TextBox>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+
+            <!-- 状态信息 -->
+            <TabItem Header="{local:Localization Key=identity.role.statusinfo}">
+                <StackPanel Margin="16">
+                    <!-- 数据范围 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Localization Key=identity.role.datascope}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                <RadioButton Style="{StaticResource MaterialDesignRadioButton}" FontSize="13" Padding="12,6" Content="{local:Localization Key=identity.role.datascope.all}"
+                                                               GroupName="DataScopeGroup"
+                                                               VerticalAlignment="Center"
+                                                               IsChecked="{Binding DataScope, Converter={StaticResource IntEqualsConverter}, ConverterParameter=1}"/>
+                                <RadioButton Style="{StaticResource MaterialDesignRadioButton}" FontSize="13" Padding="12,6" Content="{local:Localization Key=identity.role.datascope.custom}"
+                                                               GroupName="DataScopeGroup"
+                                                               VerticalAlignment="Center"
+                                                               Margin="12,0,0,0"
+                                                               IsChecked="{Binding DataScope, Converter={StaticResource IntEqualsConverter}, ConverterParameter=2}"/>
+                                <RadioButton Style="{StaticResource MaterialDesignRadioButton}" FontSize="13" Padding="12,6" Content="{local:Localization Key=identity.role.datascope.department}"
+                                                               GroupName="DataScopeGroup"
+                                                               VerticalAlignment="Center"
+                                                               Margin="12,0,0,0"
+                                                               IsChecked="{Binding DataScope, Converter={StaticResource IntEqualsConverter}, ConverterParameter=3}"/>
+                                <RadioButton Style="{StaticResource MaterialDesignRadioButton}" FontSize="13" Padding="12,6" Content="{local:Localization Key=identity.role.datascope.departmentandbelow}"
+                                                               GroupName="DataScopeGroup"
+                                                               VerticalAlignment="Center"
+                                                               Margin="12,0,0,0"
+                                                               IsChecked="{Binding DataScope, Converter={StaticResource IntEqualsConverter}, ConverterParameter=4}"/>
+                                <RadioButton Style="{StaticResource MaterialDesignRadioButton}" FontSize="13" Padding="12,6" Content="{local:Localization Key=identity.role.datascope.self}"
+                                                               GroupName="DataScopeGroup"
+                                                               VerticalAlignment="Center"
+                                                               Margin="12,0,0,0"
+                                                               IsChecked="{Binding DataScope, Converter={StaticResource IntEqualsConverter}, ConverterParameter=5}"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- 排序号 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Localization Key=identity.role.ordernum}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <TextBox Grid.Column="1" 
+                                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                     materialDesign:HintAssist.Hint="{Binding OrderNumHint}"
+                                     materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                     MinHeight="32"
+                                     Padding="12,6"
+                                     FontSize="13"
+                                     VerticalAlignment="Center"
+                                     VerticalContentAlignment="Center"
+                                     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                     materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+                                <TextBox.Text>
+                                    <Binding Path="OrderNum" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                </TextBox.Text>
+                            </TextBox>
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- 状态 -->
+                    <StackPanel Margin="0,0,0,8" MinHeight="56">
+                        <Grid MinHeight="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                <Run Text="{local:Localization Key=identity.role.rolestatus}"/>
+                            </TextBlock>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                <RadioButton Style="{StaticResource MaterialDesignRadioButton}" FontSize="13" Padding="12,6" Content="{local:Localization Key=identity.role.rolestatus.normal}"
+                                                               GroupName="RoleStatusGroup"
+                                                               VerticalAlignment="Center"
+                                                               IsChecked="{Binding RoleStatus, Converter={StaticResource IntEqualsConverter}, ConverterParameter=0}"/>
+                                <RadioButton Style="{StaticResource MaterialDesignRadioButton}" FontSize="13" Padding="12,6" Content="{local:Localization Key=identity.role.rolestatus.disabled}"
+                                                               GroupName="RoleStatusGroup"
+                                                               VerticalAlignment="Center"
+                                                               Margin="12,0,0,0"
+                                                               IsChecked="{Binding RoleStatus, Converter={StaticResource IntEqualsConverter}, ConverterParameter=1}"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+
+            <!-- 备注信息 -->
+            <TabItem Header="{local:Localization Key=identity.role.remarksinfo}">
+                <StackPanel Margin="16">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{local:Localization Key=common.audit.Remarks}" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                        <StackPanel Grid.Column="1">
+                            <TextBox 
+                                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                materialDesign:HintAssist.Hint="{Binding RemarksHint}"
+                                materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                Padding="16,10"
+                                FontSize="14"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                TextWrapping="Wrap" 
+                                AcceptsReturn="True" 
+                                VerticalScrollBarVisibility="Hidden"
+                                MinHeight="200">
+                                <TextBox.Text>
+                                    <Binding Path="Remarks" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button IsDefault="True" 
+                    Command="{Binding SaveCommand}" 
+                    Content="{local:Localization Key=common.button.submit}" 
+                    Style="{StaticResource DefaultPrimary}"
+                    Margin="0,0,12,0"/>
+            <Button IsCancel="True" 
+                    Command="{Binding CancelCommand}"
+                    Content="{local:Localization Key=common.button.cancel}"
+                    Style="{StaticResource DefaultInfo}"/>
+        </StackPanel>
+    </Grid>
+</Window>
+

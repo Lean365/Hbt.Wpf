@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="Takt.Fluent.Views.Routine.SettingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:Takt.Fluent.Controls"
+             xmlns:local="clr-namespace:Takt.Fluent.Extensions"
+             mc:Ignorable="d"
+             d:DesignHeight="720"
+             d:DesignWidth="1280">
+    <controls:TaktDataGrid x:Name="DataGrid"
+                                 ItemsSource="{Binding Settings}"
+                                 SelectedItem="{Binding SelectedSetting, Mode=TwoWay}"
+                                 QueryKeyword="{Binding Keyword, Mode=TwoWay}"
+                                 Loaded="DataGrid_Loaded"
+                                 QueryPlaceholder="{local:Localization Key=common.placeholder.keywordHint, Param0Key=routine.setting.query.keyword}"
+                                 QueryButtonText="{local:Localization Key=common.search}"
+                                 ResetButtonText="{local:Localization Key=common.reset}"
+                                 ShowToolbarCreate="True"
+                                 ShowToolbarUpdate="True"
+                                 ShowToolbarDelete="True"
+                                 CreateCommand="{Binding CreateCommand}"
+                                 UpdateCommand="{Binding UpdateCommand}"
+                                 DeleteCommand="{Binding DeleteCommand}"
+                                 RowUpdateCommand="{Binding UpdateCommand}"
+                                 RowDeleteCommand="{Binding DeleteCommand}"
+                                 ShowToolbarImport="True"
+                                 ShowToolbarExport="True"
+                                 ShowAdvancedQueryButton="False"
+                                 ImportCommand="{Binding ImportCommand}"
+                                 ExportCommand="{Binding ExportCommand}"
+                                 DownloadTemplateCommand="{Binding DownloadTemplateCommand}"
+                                 PageIndex="{Binding PageIndex, Mode=TwoWay}"
+                                 PageSize="{Binding PageSize, Mode=TwoWay}"
+                                 TotalCount="{Binding TotalCount}"
+                                 QueryCommand="{Binding QueryCommand}"
+                                 ResetCommand="{Binding ResetCommand}"
+                                 PageChangedCommand="{Binding PageChangedCommand}">
+        <controls:TaktDataGrid.Columns>
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=routine.setting.key}"
+                                                         BindingPath="SettingKey"
+                                                         Width="200" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=routine.setting.value}"
+                                                         BindingPath="SettingValue"
+                                                         Width="260" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=routine.setting.category}"
+                                                         BindingPath="Category"
+                                                         Width="160" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=routine.setting.ordernum}"
+                                                         BindingPath="OrderNum"
+                                                         Width="120" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=routine.setting.type}"
+                                                         BindingPath="SettingType"
+                                                         Width="120" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=routine.setting.isbuiltin}"
+                                                         BindingPath="IsBuiltin"
+                                                         Width="120" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=routine.setting.isdefault}"
+                                                         BindingPath="IsDefault"
+                                                         Width="120" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=routine.setting.iseditable}"
+                                                         BindingPath="IsEditable"
+                                                         Width="120" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=common.audit.Remarks}"
+                                                         BindingPath="Remarks"
+                                                         Width="200" />
+            <controls:TaktDataGridColumnDefinition Header="{local:Localization Key=common.audit.CreatedTime}"
+                                                         BindingPath="CreatedTime"
+                                                         Width="200"
+                                                         StringFormat="{}{0:yyyy-MM-dd HH:mm:ss}" />
+        </controls:TaktDataGrid.Columns>
+    </controls:TaktDataGrid>
+</UserControl>

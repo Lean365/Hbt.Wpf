@@ -1,0 +1,1363 @@
+﻿<Window x:Class="Takt.Fluent.Views.Generator.CodeGenComponent.CodeGenForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Takt.Fluent.Extensions"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:helpers="clr-namespace:Takt.Fluent.Helpers"
+        xmlns:controls="clr-namespace:Takt.Fluent.Controls"
+        xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+        mc:Ignorable="d"
+        d:DesignHeight="700"
+        d:DesignWidth="900"
+        Title="{Binding Title}" 
+        SizeToContent="Manual" 
+        WindowStartupLocation="Manual"
+        ResizeMode="CanResize" 
+        Background="{DynamicResource MaterialDesignPaper}">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <helpers:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter"/>
+        <helpers:StringToBoolConverter x:Key="StringToBoolConverter"/>
+        <helpers:StringEqualsConverter x:Key="StringEqualsConverter"/>
+        <helpers:IntToBoolConverter x:Key="IntToBoolConverter"/>
+        <helpers:InverseBoolConverter x:Key="InverseBoolConverter"/>
+        <helpers:InvertedBooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter"/>
+        <helpers:ObjectReferenceEqualsConverter x:Key="ObjectReferenceEqualsConverter"/>
+        <helpers:ObjectReferenceToVisibilityConverter x:Key="ObjectReferenceToVisibilityConverter"/>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+        </Style>
+        
+        <!-- TaktDataGrid 样式 -->
+        <Style x:Key="TaktDataGridColumnHeaderStyle"
+               TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="{DynamicResource MaterialDesignCardBackground}" />
+            <Setter Property="Foreground" Value="{DynamicResource MaterialDesignBody}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignDivider}" />
+            <Setter Property="BorderThickness" Value="0,0,1,1" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="Padding" Value="16,8" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="DataGridColumnHeader">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}"
+                                SnapsToDevicePixels="True"
+                                VerticalAlignment="Stretch"
+                                HorizontalAlignment="Stretch">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="TaktDataGridRowStyle"
+               TargetType="DataGridRow">
+            <Setter Property="Background" Value="{DynamicResource MaterialDesignPaper}" />
+            <Setter Property="Foreground" Value="{DynamicResource MaterialDesignBody}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignDivider}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource MaterialDesignCardBackground}" />
+                </Trigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource AccentFillColorDefaultBrush}" />
+                    <Setter Property="Foreground" Value="{DynamicResource TextOnAccentFillColorPrimaryBrush}" />
+                </Trigger>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsSelected" Value="True" />
+                        <Condition Property="Selector.IsSelectionActive" Value="False" />
+                    </MultiTrigger.Conditions>
+                    <Setter Property="Background" Value="{DynamicResource AccentFillColorDefaultBrush}" />
+                    <Setter Property="Foreground" Value="{DynamicResource TextOnAccentFillColorPrimaryBrush}" />
+                </MultiTrigger>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsSelected" Value="True" />
+                        <Condition Property="IsMouseOver" Value="True" />
+                    </MultiTrigger.Conditions>
+                    <Setter Property="Background" Value="{DynamicResource AccentFillColorTertiaryBrush}" />
+                    <Setter Property="Foreground" Value="{DynamicResource TextOnAccentFillColorPrimaryBrush}" />
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="TaktDataGridCellStyle"
+               TargetType="DataGridCell">
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="TextBlock.TextTrimming" Value="CharacterEllipsis" />
+            <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
+            <Setter Property="Padding" Value="12,0" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="DataGridCell">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{DynamicResource MaterialDesignDivider}"
+                                BorderThickness="0,0,1,0"
+                                Padding="{TemplateBinding Padding}"
+                                SnapsToDevicePixels="True"
+                                VerticalAlignment="Stretch"
+                                HorizontalAlignment="Stretch">
+                            <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TabControl Grid.Row="0" Margin="0,0,0,16">
+            <!-- 基本信息 -->
+            <TabItem Header="{local:Localization Key=generator.gentable.basicinfo}">
+                <StackPanel Margin="16">
+                        <!-- 第一行：表名 | 表描述 -->
+                        <Grid Margin="0,0,0,8" MinHeight="56">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="16"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- 表名（左列） -->
+                            <StackPanel Grid.Column="0">
+                                <Grid MinHeight="32">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0">
+                                        <Run Text="*" Foreground="{DynamicResource SystemFillColorCriticalBrush}"/>
+                                        <Run Text="{local:Localization Key=generator.gentable.tablename}"/>
+                                    </TextBlock>
+                                    <TextBox Grid.Column="1" 
+                                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                             materialDesign:HintAssist.HelperText="{Binding TableNameError}"
+                                             materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                             MinHeight="32"
+                                             Padding="12,6"
+                                             FontSize="13"
+                                             VerticalAlignment="Center"
+                                             VerticalContentAlignment="Center"
+                                             Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                             materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                             Text="{Binding TableName, UpdateSourceTrigger=PropertyChanged}"
+                                             IsReadOnly="{Binding IsCreate, Converter={StaticResource InverseBoolConverter}}"/>
+                                </Grid>
+                                <TextBlock Grid.Column="1" 
+                                           Style="{StaticResource ErrorTextStyle}" 
+                                           Text="{Binding TableNameError}"
+                                           Visibility="{Binding TableNameError, Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                                <TextBlock Grid.Column="1" 
+                                           Margin="0,4,0,0"
+                                           FontSize="12"
+                                           Foreground="{DynamicResource MaterialDesignBodyLight}"
+                                           Text="{local:Localization Key=generator.gentable.tablenamehint}"
+                                           Visibility="{Binding IsCreate, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            </StackPanel>
+                            
+                            <!-- 表描述（右列） -->
+                            <StackPanel Grid.Column="2">
+                                <Grid MinHeight="32">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{local:Localization Key=generator.gentable.tabledescription}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                                    <TextBox Grid.Column="1" 
+                                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                             materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                             MinHeight="32"
+                                             Padding="12,6"
+                                             FontSize="13"
+                                             VerticalAlignment="Center"
+                                             VerticalContentAlignment="Center"
+                                             Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                             materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                             Text="{Binding TableDescription, UpdateSourceTrigger=PropertyChanged}"/>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- 第二行：实体类名 -->
+                        <Grid Margin="0,0,0,8" MinHeight="56">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- 实体类名 -->
+                            <StackPanel Grid.Column="0">
+                                <Grid MinHeight="32">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{local:Localization Key=generator.gentable.classname}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                                    <TextBox Grid.Column="1" 
+                                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                             materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                             MinHeight="32"
+                                             Padding="12,6"
+                                             FontSize="13"
+                                             VerticalAlignment="Center"
+                                             VerticalContentAlignment="Center"
+                                             Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                             materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                             Text="{Binding ClassName, UpdateSourceTrigger=PropertyChanged}"/>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- 第三行：作者 -->
+                        <Grid Margin="0,0,0,8" MinHeight="56">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- 作者 -->
+                            <StackPanel Grid.Column="0">
+                                <Grid MinHeight="32">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{local:Localization Key=generator.gentable.author}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                                    <TextBox Grid.Column="1" 
+                                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                             materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                             MinHeight="32"
+                                             Padding="12,6"
+                                             FontSize="13"
+                                             VerticalAlignment="Center"
+                                             VerticalContentAlignment="Center"
+                                             Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                             materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                             Text="{Binding Author, UpdateSourceTrigger=PropertyChanged}"/>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- 备注 -->
+                        <Grid Margin="0,0,0,8" MinHeight="56">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Localization Key=common.audit.Remarks}" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <StackPanel Grid.Column="1">
+                                <TextBox 
+                                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                    materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                    Padding="16,10"
+                                    FontSize="14"
+                                    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                    materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                    Text="{Binding Remarks}"
+                                    TextWrapping="Wrap" 
+                                    AcceptsReturn="True" 
+                                    VerticalScrollBarVisibility="Hidden"
+                                    MinHeight="80"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+            </TabItem>
+
+            <!-- 生成配置 -->
+            <TabItem Header="{local:Localization Key=generator.gentable.genconfig}">
+                <StackPanel Margin="16">
+                        <!-- 第一行：模板类型 -->
+                        <Grid Margin="0,0,0,8" MinHeight="56">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- 模板类型 -->
+                            <StackPanel Grid.Column="0">
+                                <Grid MinHeight="32">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{local:Localization Key=generator.gentable.templatetype}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                                    <ComboBox Grid.Column="1" 
+                                            Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                            SelectedItem="{Binding TemplateType, Mode=TwoWay}"
+                                            VerticalAlignment="Center"
+                                            Height="32"
+                                            FontSize="13"
+                                            Padding="12,6">
+                                        <ComboBox.ItemsSource>
+                                            <x:Array Type="sys:String">
+                                                <sys:String>CRUD</sys:String>
+                                                <sys:String>MasterDetail</sys:String>
+                                                <sys:String>Tree</sys:String>
+                                            </x:Array>
+                                        </ComboBox.ItemsSource>
+                                    </ComboBox>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- 第二行：子表英文全称（仅 MasterDetail 模板显示） -->
+                        <Grid Margin="0,0,0,8" MinHeight="56"
+                              Visibility="{Binding ShowMasterDetailFields, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="16"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- 子表英文全称（左列） -->
+                            <StackPanel Grid.Column="0">
+                                <Grid MinHeight="32">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{local:Localization Key=generator.gentable.detailtablename}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                                    <ComboBox Grid.Column="1" 
+                                            Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                            SelectedItem="{Binding DetailTableName, Mode=TwoWay}"
+                                            ItemsSource="{Binding TableNames}"
+                                            IsEditable="True"
+                                            VerticalAlignment="Center"
+                                            Height="32"
+                                            FontSize="13"
+                                            Padding="12,6"/>
+                                </Grid>
+                            </StackPanel>
+                            
+                            <!-- 子表关联字段名称（右列） -->
+                            <StackPanel Grid.Column="2">
+                                <Grid MinHeight="32">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{local:Localization Key=generator.gentable.detailrelationfield}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                                    <ComboBox Grid.Column="1" 
+                                            Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                            SelectedItem="{Binding DetailRelationField, Mode=TwoWay}"
+                                            ItemsSource="{Binding DetailRelationFieldNames}"
+                                            IsEditable="True"
+                                            VerticalAlignment="Center"
+                                            Height="32"
+                                            FontSize="13"
+                                            Padding="12,6"/>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- 第三行：树编码字段（仅 Tree 模板显示） -->
+                        <Grid Margin="0,0,0,8" MinHeight="56"
+                              Visibility="{Binding ShowTreeFields, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="16"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- 树编码字段（左列） -->
+                            <StackPanel Grid.Column="0">
+                                <Grid MinHeight="32">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{local:Localization Key=generator.gentable.treecodefield}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                                    <ComboBox Grid.Column="1" 
+                                            Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                            SelectedItem="{Binding TreeCodeField, Mode=TwoWay}"
+                                            ItemsSource="{Binding ColumnNames}"
+                                            IsEditable="True"
+                                            VerticalAlignment="Center"
+                                            Height="32"
+                                            FontSize="13"
+                                            Padding="12,6"/>
+                                </Grid>
+                            </StackPanel>
+                            
+                            <!-- 树父编码字段（右列） -->
+                            <StackPanel Grid.Column="2">
+                                <Grid MinHeight="32">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{local:Localization Key=generator.gentable.treeparentcodefield}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                                    <ComboBox Grid.Column="1" 
+                                            Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                            SelectedItem="{Binding TreeParentCodeField, Mode=TwoWay}"
+                                            ItemsSource="{Binding ColumnNames}"
+                                            IsEditable="True"
+                                            VerticalAlignment="Center"
+                                            Height="32"
+                                            FontSize="13"
+                                            Padding="12,6"/>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- 第四行：树名称字段（仅 Tree 模板显示） -->
+                        <Grid Margin="0,0,0,8" MinHeight="56"
+                              Visibility="{Binding ShowTreeFields, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- 树名称字段 -->
+                            <StackPanel Grid.Column="0">
+                                <Grid MinHeight="32">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{local:Localization Key=generator.gentable.treenamefield}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                                    <ComboBox Grid.Column="1" 
+                                            Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                            SelectedItem="{Binding TreeNameField, Mode=TwoWay}"
+                                            ItemsSource="{Binding ColumnNames}"
+                                            IsEditable="True"
+                                            VerticalAlignment="Center"
+                                            Height="32"
+                                            FontSize="13"
+                                            Padding="12,6"/>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- 第五行：命名空间前缀 -->
+                        <Grid Margin="0,0,0,8" MinHeight="56">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- 命名空间前缀 -->
+                            <StackPanel Grid.Column="0">
+                                <Grid MinHeight="32">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{local:Localization Key=generator.gentable.gennamespaceprefix}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                                    <TextBox Grid.Column="1" 
+                                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                             materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                             MinHeight="32"
+                                             Padding="12,6"
+                                             FontSize="13"
+                                             VerticalAlignment="Center"
+                                             VerticalContentAlignment="Center"
+                                             Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                             materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                             Text="{Binding GenNamespacePrefix, UpdateSourceTrigger=PropertyChanged}"/>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- 第六行：生成业务名称 | 生成模块名称 -->
+                        <Grid Margin="0,0,0,8" MinHeight="56">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="16"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- 生成业务名称（左列） -->
+                            <StackPanel Grid.Column="0">
+                                <Grid MinHeight="32">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{local:Localization Key=generator.gentable.genbusinessname}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                                    <TextBox Grid.Column="1" 
+                                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                             materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                             MinHeight="32"
+                                             Padding="12,6"
+                                             FontSize="13"
+                                             VerticalAlignment="Center"
+                                             VerticalContentAlignment="Center"
+                                             Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                             materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                             Text="{Binding GenBusinessName, UpdateSourceTrigger=PropertyChanged}"/>
+                                </Grid>
+                            </StackPanel>
+                            
+                            <!-- 生成模块名称（右列） -->
+                            <StackPanel Grid.Column="2">
+                                <Grid MinHeight="32">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{local:Localization Key=generator.gentable.genmodulename}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                                    <TextBox Grid.Column="1" 
+                                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                             materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                             MinHeight="32"
+                                             Padding="12,6"
+                                             FontSize="13"
+                                             VerticalAlignment="Center"
+                                             VerticalContentAlignment="Center"
+                                             Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                             materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                             Text="{Binding GenModuleName, UpdateSourceTrigger=PropertyChanged}"/>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- 第七行：功能名称 | 权限前缀 -->
+                        <Grid Margin="0,0,0,8" MinHeight="56">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="16"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- 功能名称（左列） -->
+                            <StackPanel Grid.Column="0">
+                                <Grid MinHeight="32">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{local:Localization Key=generator.gentable.genfunctionname}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                                    <TextBox Grid.Column="1" 
+                                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                             materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                             MinHeight="32"
+                                             Padding="12,6"
+                                             FontSize="13"
+                                             VerticalAlignment="Center"
+                                             VerticalContentAlignment="Center"
+                                             Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                             materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                             Text="{Binding GenFunctionName, UpdateSourceTrigger=PropertyChanged}"/>
+                                </Grid>
+                            </StackPanel>
+                            
+                            <!-- 权限前缀（右列） -->
+                            <StackPanel Grid.Column="2">
+                                <Grid MinHeight="32">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{local:Localization Key=generator.gentable.permissionprefix}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                                    <TextBox Grid.Column="1" 
+                                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                             materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                             MinHeight="32"
+                                             Padding="12,6"
+                                             FontSize="13"
+                                             VerticalAlignment="Center"
+                                             VerticalContentAlignment="Center"
+                                             Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                             materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                             Text="{Binding PermissionPrefix, UpdateSourceTrigger=PropertyChanged}"/>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- 第八行：生成方式 | 代码生成路径 -->
+                        <Grid Margin="0,0,0,8" MinHeight="56">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="16"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- 生成方式（左列） -->
+                            <StackPanel Grid.Column="0">
+                                <Grid MinHeight="32">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{local:Localization Key=generator.gentable.gentype}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                        <RadioButton Content="zip" 
+                                                   Style="{StaticResource MaterialDesignRadioButton}"
+                                                   GroupName="GenType"
+                                                   IsChecked="{Binding GenType, Converter={StaticResource StringEqualsConverter}, ConverterParameter=zip, Mode=TwoWay}"
+                                                   Margin="0,0,16,0"
+                                                   FontSize="13"
+                                                   Padding="12,6"/>
+                                        <RadioButton Content="path" 
+                                                   Style="{StaticResource MaterialDesignRadioButton}"
+                                                   GroupName="GenType"
+                                                   IsChecked="{Binding GenType, Converter={StaticResource StringEqualsConverter}, ConverterParameter=path, Mode=TwoWay}"
+                                                   FontSize="13"
+                                                   Padding="12,6"/>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                            
+                            <!-- 代码生成路径（右列，仅当GenType为path时显示） -->
+                            <StackPanel Grid.Column="2"
+                                      Visibility="{Binding ShowFolderField, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <Grid MinHeight="32">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{local:Localization Key=generator.gentable.genpath}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                                    <TextBox Grid.Column="1" 
+                                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                             materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                             MinHeight="32"
+                                             Padding="12,6"
+                                             FontSize="13"
+                                             VerticalAlignment="Center"
+                                             VerticalContentAlignment="Center"
+                                             Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                             materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                             Text="{Binding GenPath, UpdateSourceTrigger=PropertyChanged}"/>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- 第九行：是否有表 | 是否生成菜单 -->
+                        <Grid Margin="0,0,0,8" MinHeight="56">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="16"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- 是否有表（左列） -->
+                            <StackPanel Grid.Column="0">
+                                <Grid MinHeight="32">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{local:Localization Key=generator.gentable.isdatabasetable}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                                    <controls:TaktToggleButton Grid.Column="1" 
+                                                Size="Small"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Left"
+                                                IsChecked="{Binding IsDatabaseTable, Converter={StaticResource IntToBoolConverter}, ConverterParameter=0, Mode=TwoWay}"/>
+                                </Grid>
+                            </StackPanel>
+                            
+                            <!-- 是否生成菜单（右列） -->
+                            <StackPanel Grid.Column="2">
+                                <Grid MinHeight="32">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{local:Localization Key=generator.gentable.isgenmenu}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                                    <controls:TaktToggleButton Grid.Column="1" 
+                                                Size="Small"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Left"
+                                                IsChecked="{Binding IsGenMenu, Converter={StaticResource IntToBoolConverter}, ConverterParameter=0, Mode=TwoWay}"/>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- 第十行：是否生成翻译（单独一行） -->
+                        <Grid Margin="0,0,0,8" MinHeight="40">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Localization Key=generator.gentable.isgentranslation}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <controls:TaktToggleButton Grid.Column="1" 
+                                        Size="Small"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Left"
+                                        IsChecked="{Binding IsGenTranslation, Converter={StaticResource IntToBoolConverter}, ConverterParameter=0, Mode=TwoWay}"/>
+                        </Grid>
+
+                        <!-- 第十一行：是否生成代码（单独一行） -->
+                        <Grid Margin="0,0,0,8" MinHeight="40">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Localization Key=generator.gentable.isgencode}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <controls:TaktToggleButton Grid.Column="1" 
+                                        Size="Small"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Left"
+                                        IsChecked="{Binding IsGenCode, Converter={StaticResource IntToBoolConverter}, ConverterParameter=0, Mode=TwoWay}"/>
+                        </Grid>
+
+                        <!-- 第十二行：生成功能（单独一行横向显示） -->
+                        <Grid Margin="0,0,0,8" MinHeight="40">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <TextBlock Grid.Column="0" 
+                                       Text="{local:Localization Key=generator.gentable.genfunctions}" 
+                                       VerticalAlignment="Center" 
+                                       HorizontalAlignment="Right" 
+                                       Margin="0,0,12,0"/>
+                            <WrapPanel Grid.Column="1" 
+                                       Orientation="Horizontal" 
+                                       VerticalAlignment="Center">
+                                <CheckBox Style="{StaticResource MaterialDesignCheckBox}" Content="List" 
+                                         Margin="0,0,12,0"
+                                         Tag="List"
+                                         Checked="GenFunctionCheckBox_Checked"
+                                         Unchecked="GenFunctionCheckBox_Unchecked"/>
+                                <CheckBox Style="{StaticResource MaterialDesignCheckBox}" Content="Query" 
+                                         Margin="0,0,12,0"
+                                         Tag="Query"
+                                         Checked="GenFunctionCheckBox_Checked"
+                                         Unchecked="GenFunctionCheckBox_Unchecked"/>
+                                <CheckBox Style="{StaticResource MaterialDesignCheckBox}" Content="Detail" 
+                                         Margin="0,0,12,0"
+                                         Tag="Detail"
+                                         Checked="GenFunctionCheckBox_Checked"
+                                         Unchecked="GenFunctionCheckBox_Unchecked"/>
+                                <CheckBox Style="{StaticResource MaterialDesignCheckBox}" Content="Preview" 
+                                         Margin="0,0,12,0"
+                                         Tag="Preview"
+                                         Checked="GenFunctionCheckBox_Checked"
+                                         Unchecked="GenFunctionCheckBox_Unchecked"/>
+                                <CheckBox Style="{StaticResource MaterialDesignCheckBox}" Content="Print" 
+                                         Margin="0,0,12,0"
+                                         Tag="Print"
+                                         Checked="GenFunctionCheckBox_Checked"
+                                         Unchecked="GenFunctionCheckBox_Unchecked"/>
+                                <CheckBox Style="{StaticResource MaterialDesignCheckBox}" Content="Create" 
+                                         Margin="0,0,12,0"
+                                         Tag="Create"
+                                         Checked="GenFunctionCheckBox_Checked"
+                                         Unchecked="GenFunctionCheckBox_Unchecked"/>
+                                <CheckBox Style="{StaticResource MaterialDesignCheckBox}" Content="Update" 
+                                         Margin="0,0,12,0"
+                                         Tag="Update"
+                                         Checked="GenFunctionCheckBox_Checked"
+                                         Unchecked="GenFunctionCheckBox_Unchecked"/>
+                                <CheckBox Style="{StaticResource MaterialDesignCheckBox}" Content="Delete" 
+                                         Margin="0,0,12,0"
+                                         Tag="Delete"
+                                         Checked="GenFunctionCheckBox_Checked"
+                                         Unchecked="GenFunctionCheckBox_Unchecked"/>
+                                <CheckBox Style="{StaticResource MaterialDesignCheckBox}" Content="View" 
+                                         Margin="0,0,12,0"
+                                         Tag="View"
+                                         Checked="GenFunctionCheckBox_Checked"
+                                         Unchecked="GenFunctionCheckBox_Unchecked"/>
+                                <CheckBox Style="{StaticResource MaterialDesignCheckBox}" Content="Import" 
+                                         Margin="0,0,12,0"
+                                         Tag="Import"
+                                         Checked="GenFunctionCheckBox_Checked"
+                                         Unchecked="GenFunctionCheckBox_Unchecked"/>
+                                <CheckBox Style="{StaticResource MaterialDesignCheckBox}" Content="Export" 
+                                         Tag="Export"
+                                         Checked="GenFunctionCheckBox_Checked"
+                                         Unchecked="GenFunctionCheckBox_Unchecked"/>
+                            </WrapPanel>
+                        </Grid>
+
+                        <!-- 第十一行：上级菜单名称（单独一行） -->
+                        <Grid Margin="0,0,0,8" MinHeight="56">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <TextBlock Grid.Column="0" Text="{local:Localization Key=generator.gentable.parentmenuname}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <ComboBox Grid.Column="1" 
+                                    Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                    SelectedValue="{Binding ParentMenuName, Mode=TwoWay}"
+                                    ItemsSource="{Binding Menus}"
+                                    DisplayMemberPath="MenuName"
+                                    SelectedValuePath="MenuName"
+                                    Height="32"
+                                    FontSize="13"
+                                    Padding="12,6"
+                                    IsEditable="True"
+                                    VerticalAlignment="Center"/>
+                        </Grid>
+
+                        <!-- 第十二行：默认排序字段 | 默认排序 -->
+                        <Grid Margin="0,0,0,8" MinHeight="56">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="16"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- 默认排序字段（左列） -->
+                            <StackPanel Grid.Column="0">
+                                <Grid MinHeight="32">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{local:Localization Key=generator.gentable.defaultsortfield}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                                    <ComboBox Grid.Column="1" 
+                                            Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                            SelectedItem="{Binding DefaultSortField, Mode=TwoWay}"
+                                            ItemsSource="{Binding ColumnNames}"
+                                            IsEditable="True"
+                                            VerticalAlignment="Center"
+                                            Height="32"
+                                            FontSize="13"
+                                            Padding="12,6"/>
+                                </Grid>
+                            </StackPanel>
+                            
+                            <!-- 默认排序（右列） -->
+                            <StackPanel Grid.Column="2">
+                                <Grid MinHeight="32">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{local:Localization Key=generator.gentable.defaultsortorder}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                        <RadioButton Content="ASC" 
+                                                   Style="{StaticResource MaterialDesignRadioButton}"
+                                                   GroupName="DefaultSortOrder"
+                                                   IsChecked="{Binding DefaultSortOrder, Converter={StaticResource StringEqualsConverter}, ConverterParameter=ASC, Mode=TwoWay}"
+                                                   Margin="0,0,16,0"
+                                                   FontSize="13"
+                                                   Padding="12,6"/>
+                                        <RadioButton Content="DESC" 
+                                                   Style="{StaticResource MaterialDesignRadioButton}"
+                                                   GroupName="DefaultSortOrder"
+                                                   IsChecked="{Binding DefaultSortOrder, Converter={StaticResource StringEqualsConverter}, ConverterParameter=DESC, Mode=TwoWay}"
+                                                   FontSize="13"
+                                                   Padding="12,6"/>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- 第十三行：其它生成选项 -->
+                        <Grid Margin="0,0,0,8" MinHeight="56">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{local:Localization Key=generator.gentable.options}" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+                            <StackPanel Grid.Column="1">
+                                <TextBox 
+                                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                    materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                                    Padding="16,10"
+                                    FontSize="14"
+                                    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                    materialDesign:HintAssist.Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                    Text="{Binding Options, UpdateSourceTrigger=PropertyChanged}"
+                                    TextWrapping="Wrap" 
+                                    AcceptsReturn="True" 
+                                    VerticalScrollBarVisibility="Hidden"
+                                    MinHeight="80"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+            </TabItem>
+
+            <!-- 字段信息 -->
+            <TabItem Header="{local:Localization Key=generator.gentable.columninfo}">
+                <Grid Margin="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <!-- 工具栏 -->
+                    <StackPanel Grid.Row="0" 
+                              Orientation="Horizontal" 
+                              HorizontalAlignment="Right"
+                              Margin="0,0,0,8">
+                        <Button Content="新增行"
+                                Command="{Binding CreateColumnCommand}"
+                                Style="{StaticResource DefaultPrimary}"/>
+                    </StackPanel>
+                    
+                    <DataGrid x:Name="ColumnsDataGrid"
+                              Grid.Row="1"
+                              DataContext="{Binding}"
+                              ItemsSource="{Binding Columns, FallbackValue={x:Null}}"
+                              SelectedItem="{Binding SelectedColumn, Mode=TwoWay}"
+                              AutoGenerateColumns="False"
+                              CanUserAddRows="False"
+                              CanUserDeleteRows="False"
+                              IsReadOnly="False"
+                              HeadersVisibility="All"
+                              GridLinesVisibility="None"
+                              SelectionMode="Single"
+                              Background="{DynamicResource MaterialDesignPaper}"
+                              BorderThickness="0"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto"
+                              ScrollViewer.CanContentScroll="True"
+                              VirtualizingPanel.IsVirtualizing="True"
+                              VirtualizingPanel.VirtualizationMode="Recycling"
+                              RowStyle="{StaticResource TaktDataGridRowStyle}"
+                              CellStyle="{StaticResource TaktDataGridCellStyle}"
+                              ColumnHeaderStyle="{StaticResource TaktDataGridColumnHeaderStyle}"
+                              materialDesign:DataGridAssist.ColumnHeaderPadding="16,8"
+                              materialDesign:DataGridAssist.CellPadding="0"
+                              BeginningEdit="DataGrid_BeginningEdit"
+                              CellEditEnding="DataGrid_CellEditEnding">
+                        <DataGrid.Style>
+                            <Style TargetType="DataGrid" BasedOn="{StaticResource MaterialDesignDataGrid}">
+                                <Setter Property="RowHeight" Value="36" />
+                                <Setter Property="FontSize" Value="14" />
+                                <Setter Property="RowDetailsVisibilityMode" Value="Collapsed" />
+                                <Setter Property="AlternatingRowBackground" Value="{x:Null}" />
+                            </Style>
+                        </DataGrid.Style>
+                        <DataGrid.Columns>
+                            <!-- 1. ColumnName -->
+                            <DataGridTextColumn Header="{local:Localization Key=generator.gencolumn.columnname}" 
+                                              Binding="{Binding ColumnName, UpdateSourceTrigger=PropertyChanged}" 
+                                              Width="150">
+                                <DataGridTextColumn.IsReadOnly>
+                                    <Binding Path="DataContext.IsDatabaseTable" RelativeSource="{RelativeSource AncestorType=DataGrid}" Converter="{StaticResource IntToBoolConverter}"/>
+                                </DataGridTextColumn.IsReadOnly>
+                            </DataGridTextColumn>
+                            <!-- 2. ColumnDescription -->
+                            <DataGridTextColumn Header="{local:Localization Key=generator.gencolumn.columndescription}" 
+                                              Binding="{Binding ColumnDescription, UpdateSourceTrigger=PropertyChanged}" 
+                                              Width="150">
+                                <DataGridTextColumn.IsReadOnly>
+                                    <Binding Path="DataContext.IsDatabaseTable" RelativeSource="{RelativeSource AncestorType=DataGrid}" Converter="{StaticResource IntToBoolConverter}"/>
+                                </DataGridTextColumn.IsReadOnly>
+                            </DataGridTextColumn>
+                            <!-- 3. ColumnDataType -->
+                            <DataGridTemplateColumn x:Name="ColumnDataTypeColumn"
+                                                   Header="{local:Localization Key=generator.gencolumn.columndatatype}" 
+                                                   Width="120">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding ColumnDataType}" 
+                                                   VerticalAlignment="Center" 
+                                                   Padding="8,0"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <ComboBox SelectedItem="{Binding ColumnDataType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                  ItemsSource="{Binding DataContext.ColumnDataTypes, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                  SelectionChanged="ColumnDataTypeComboBox_SelectionChanged"
+                                                  IsEnabled="{Binding DataContext.IsDatabaseTable, RelativeSource={RelativeSource AncestorType=DataGrid}, Converter={StaticResource IntToBoolConverter}, ConverterParameter=Inverse}"
+                                                  VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
+                            <!-- 4. PropertyName -->
+                            <DataGridTemplateColumn x:Name="PropertyNameColumn"
+                                                   Header="{local:Localization Key=generator.gencolumn.propertyname}" 
+                                                   Width="150">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding PropertyName}" 
+                                                   VerticalAlignment="Center" 
+                                                   Padding="8,0"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding PropertyName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                 IsReadOnly="{Binding DataContext.IsDatabaseTable, RelativeSource={RelativeSource AncestorType=DataGrid}, Converter={StaticResource IntToBoolConverter}}"
+                                                 VerticalAlignment="Center"
+                                                 Padding="8,0"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
+                            <!-- 5. DataType -->
+                            <DataGridTemplateColumn x:Name="DataTypeColumn"
+                                                   Header="{local:Localization Key=generator.gencolumn.datatype}" 
+                                                   Width="100">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding DataType}" 
+                                                   VerticalAlignment="Center" 
+                                                   Padding="8,0"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <ComboBox SelectedItem="{Binding DataType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                  ItemsSource="{Binding DataContext.DataTypes, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                  SelectionChanged="DataTypeComboBox_SelectionChanged"
+                                                  IsEnabled="{Binding DataContext.IsDatabaseTable, RelativeSource={RelativeSource AncestorType=DataGrid}, Converter={StaticResource IntToBoolConverter}, ConverterParameter=Inverse}"
+                                                  VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
+                            <!-- 6. IsNullable -->
+                            <DataGridTemplateColumn Header="{local:Localization Key=generator.gencolumn.isnullable}" 
+                                                   Width="80">
+                                <DataGridTemplateColumn.IsReadOnly>
+                                    <Binding Path="DataContext.IsDatabaseTable" RelativeSource="{RelativeSource AncestorType=DataGrid}" Converter="{StaticResource IntToBoolConverter}"/>
+                                </DataGridTemplateColumn.IsReadOnly>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Style="{StaticResource MaterialDesignCheckBox}"
+                                                              HorizontalAlignment="Center"
+                                                              IsChecked="{Binding IsNullable, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay}"
+                                                              IsEnabled="{Binding DataContext.IsDatabaseTable, RelativeSource={RelativeSource AncestorType=DataGrid}, Converter={StaticResource IntToBoolConverter}, ConverterParameter=Inverse}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <!-- 7. IsPrimaryKey -->
+                            <DataGridTemplateColumn Header="{local:Localization Key=generator.gencolumn.isprimarykey}" 
+                                                   Width="80">
+                                <DataGridTemplateColumn.IsReadOnly>
+                                    <Binding Path="DataContext.IsDatabaseTable" RelativeSource="{RelativeSource AncestorType=DataGrid}" Converter="{StaticResource IntToBoolConverter}"/>
+                                </DataGridTemplateColumn.IsReadOnly>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Style="{StaticResource MaterialDesignCheckBox}"
+                                                              HorizontalAlignment="Center"
+                                                              IsChecked="{Binding IsPrimaryKey, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay}"
+                                                              IsEnabled="{Binding DataContext.IsDatabaseTable, RelativeSource={RelativeSource AncestorType=DataGrid}, Converter={StaticResource IntToBoolConverter}, ConverterParameter=Inverse}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <!-- 8. IsIdentity -->
+                            <DataGridTemplateColumn Header="{local:Localization Key=generator.gencolumn.isidentity}" 
+                                                   Width="80">
+                                <DataGridTemplateColumn.IsReadOnly>
+                                    <Binding Path="DataContext.IsDatabaseTable" RelativeSource="{RelativeSource AncestorType=DataGrid}" Converter="{StaticResource IntToBoolConverter}"/>
+                                </DataGridTemplateColumn.IsReadOnly>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Style="{StaticResource MaterialDesignCheckBox}"
+                                                              HorizontalAlignment="Center"
+                                                              IsChecked="{Binding IsIdentity, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay}"
+                                                              IsEnabled="{Binding DataContext.IsDatabaseTable, RelativeSource={RelativeSource AncestorType=DataGrid}, Converter={StaticResource IntToBoolConverter}, ConverterParameter=Inverse}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <!-- 9. Length -->
+                            <DataGridTextColumn Header="{local:Localization Key=generator.gencolumn.length}" 
+                                              Binding="{Binding Length, UpdateSourceTrigger=PropertyChanged}" 
+                                              Width="80">
+                                <DataGridTextColumn.IsReadOnly>
+                                    <Binding Path="DataContext.IsDatabaseTable" RelativeSource="{RelativeSource AncestorType=DataGrid}" Converter="{StaticResource IntToBoolConverter}"/>
+                                </DataGridTextColumn.IsReadOnly>
+                            </DataGridTextColumn>
+                            <!-- 10. DecimalPlaces -->
+                            <DataGridTextColumn Header="{local:Localization Key=generator.gencolumn.decimalplaces}" 
+                                              Binding="{Binding DecimalPlaces, UpdateSourceTrigger=PropertyChanged}" 
+                                              Width="80">
+                                <DataGridTextColumn.IsReadOnly>
+                                    <Binding Path="DataContext.IsDatabaseTable" RelativeSource="{RelativeSource AncestorType=DataGrid}" Converter="{StaticResource IntToBoolConverter}"/>
+                                </DataGridTextColumn.IsReadOnly>
+                            </DataGridTextColumn>
+                            <!-- 11. DefaultValue -->
+                            <DataGridTextColumn Header="{local:Localization Key=generator.gencolumn.defaultvalue}" 
+                                              Binding="{Binding DefaultValue, UpdateSourceTrigger=PropertyChanged}" 
+                                              Width="120">
+                                <DataGridTextColumn.IsReadOnly>
+                                    <Binding Path="DataContext.IsDatabaseTable" RelativeSource="{RelativeSource AncestorType=DataGrid}" Converter="{StaticResource IntToBoolConverter}"/>
+                                </DataGridTextColumn.IsReadOnly>
+                            </DataGridTextColumn>
+                            <!-- 12. OrderNum -->
+                            <DataGridTextColumn Header="{local:Localization Key=generator.gencolumn.ordernum}" 
+                                              Binding="{Binding OrderNum, UpdateSourceTrigger=PropertyChanged}" 
+                                              Width="60"/>
+                            <!-- 13. IsQuery -->
+                            <DataGridTemplateColumn Header="{local:Localization Key=generator.gencolumn.isquery}" 
+                                                   Width="80">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Style="{StaticResource MaterialDesignCheckBox}"
+                                                              HorizontalAlignment="Center"
+                                                              IsChecked="{Binding IsQuery, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Style="{StaticResource MaterialDesignCheckBox}"
+                                                              HorizontalAlignment="Center"
+                                                              IsChecked="{Binding IsQuery, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
+                            <!-- 14. QueryType -->
+                            <DataGridComboBoxColumn x:Name="QueryTypeColumn"
+                                                   Header="{local:Localization Key=generator.gencolumn.querytype}" 
+                                                   SelectedItemBinding="{Binding QueryType, UpdateSourceTrigger=PropertyChanged}" 
+                                                   Width="120"/>
+                            <!-- 15. IsCreate -->
+                            <DataGridTemplateColumn Header="{local:Localization Key=generator.gencolumn.iscreate}" 
+                                                   Width="80">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Style="{StaticResource MaterialDesignCheckBox}"
+                                                              HorizontalAlignment="Center"
+                                                              IsChecked="{Binding IsCreate, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Style="{StaticResource MaterialDesignCheckBox}"
+                                                              HorizontalAlignment="Center"
+                                                              IsChecked="{Binding IsCreate, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
+                            <!-- 16. IsUpdate -->
+                            <DataGridTemplateColumn Header="{local:Localization Key=generator.gencolumn.isupdate}" 
+                                                   Width="80">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Style="{StaticResource MaterialDesignCheckBox}"
+                                                              HorizontalAlignment="Center"
+                                                              IsChecked="{Binding IsUpdate, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Style="{StaticResource MaterialDesignCheckBox}"
+                                                              HorizontalAlignment="Center"
+                                                              IsChecked="{Binding IsUpdate, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
+                            <!-- 17. IsDelete -->
+                            <DataGridTemplateColumn Header="{local:Localization Key=generator.gencolumn.isdelete}" 
+                                                   Width="80">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Style="{StaticResource MaterialDesignCheckBox}"
+                                                              HorizontalAlignment="Center"
+                                                              IsChecked="{Binding IsDelete, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Style="{StaticResource MaterialDesignCheckBox}"
+                                                              HorizontalAlignment="Center"
+                                                              IsChecked="{Binding IsDelete, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
+                            <!-- 18. IsList -->
+                            <DataGridTemplateColumn Header="{local:Localization Key=generator.gencolumn.islist}" 
+                                                   Width="80">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Style="{StaticResource MaterialDesignCheckBox}"
+                                                              HorizontalAlignment="Center"
+                                                              IsChecked="{Binding IsList, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Style="{StaticResource MaterialDesignCheckBox}"
+                                                              HorizontalAlignment="Center"
+                                                              IsChecked="{Binding IsList, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
+                            <!-- 19. IsExport -->
+                            <DataGridTemplateColumn Header="{local:Localization Key=generator.gencolumn.isexport}" 
+                                                   Width="80">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Style="{StaticResource MaterialDesignCheckBox}"
+                                                              HorizontalAlignment="Center"
+                                                              IsChecked="{Binding IsExport, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Style="{StaticResource MaterialDesignCheckBox}"
+                                                              HorizontalAlignment="Center"
+                                                              IsChecked="{Binding IsExport, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
+                            <!-- 20. IsSort -->
+                            <DataGridTemplateColumn Header="{local:Localization Key=generator.gencolumn.issort}" 
+                                                   Width="80">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Style="{StaticResource MaterialDesignCheckBox}"
+                                                              HorizontalAlignment="Center"
+                                                              IsChecked="{Binding IsSort, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Style="{StaticResource MaterialDesignCheckBox}"
+                                                              HorizontalAlignment="Center"
+                                                              IsChecked="{Binding IsSort, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
+                            <!-- 21. IsRequired -->
+                            <DataGridTemplateColumn Header="{local:Localization Key=generator.gencolumn.isrequired}" 
+                                                   Width="80">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Style="{StaticResource MaterialDesignCheckBox}"
+                                                              HorizontalAlignment="Center"
+                                                              IsChecked="{Binding IsRequired, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Style="{StaticResource MaterialDesignCheckBox}"
+                                                              HorizontalAlignment="Center"
+                                                              IsChecked="{Binding IsRequired, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
+                            <!-- 22. IsForm -->
+                            <DataGridTemplateColumn Header="{local:Localization Key=generator.gencolumn.isform}" 
+                                                   Width="80">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Style="{StaticResource MaterialDesignCheckBox}"
+                                                              HorizontalAlignment="Center"
+                                                              IsChecked="{Binding IsForm, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Style="{StaticResource MaterialDesignCheckBox}"
+                                                              HorizontalAlignment="Center"
+                                                              IsChecked="{Binding IsForm, Converter={StaticResource IntToBoolConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
+                            <!-- 23. FormControlType -->
+                            <DataGridComboBoxColumn x:Name="FormControlTypeColumn"
+                                                   Header="{local:Localization Key=generator.gencolumn.formcontroltype}" 
+                                                   SelectedItemBinding="{Binding FormControlType, UpdateSourceTrigger=PropertyChanged}" 
+                                                   Width="120"/>
+                            <!-- 24. DictType -->
+                            <DataGridComboBoxColumn x:Name="DictTypeColumn"
+                                                   Header="{local:Localization Key=generator.gencolumn.dicttype}" 
+                                                   SelectedItemBinding="{Binding DictType, UpdateSourceTrigger=PropertyChanged}" 
+                                                   Width="120"/>
+                            <!-- Remarks -->
+                            <DataGridTextColumn Header="{local:Localization Key=common.audit.Remarks}" 
+                                              Binding="{Binding Remarks, UpdateSourceTrigger=PropertyChanged}" 
+                                              Width="150"/>
+                            <!-- 操作列 -->
+                            <DataGridTemplateColumn Header="{local:Localization Key=common.operation}" Width="120" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <!-- 更新按钮 -->
+                                            <Button Style="{StaticResource DefaultIconPlainSuccessSmall}"
+                                                    Width="24"
+                                                    Height="24"
+                                                    Margin="2,0"
+                                                    ToolTip="{local:Localization Key=common.button.update}"
+                                                    Command="{Binding DataContext.UpdateColumnCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                    CommandParameter="{Binding}">
+                                                <Button.Visibility>
+                                                    <MultiBinding Converter="{StaticResource ObjectReferenceToVisibilityConverter}" ConverterParameter="Inverse">
+                                                        <Binding />
+                                                        <Binding Path="DataContext.EditingColumn" RelativeSource="{RelativeSource AncestorType=DataGrid}"/>
+                                                    </MultiBinding>
+                                                </Button.Visibility>
+                                                <materialDesign:PackIcon Kind="Pencil" Width="16" Height="16"/>
+                                            </Button>
+                                            <!-- 保存按钮 -->
+                                            <Button Style="{StaticResource DefaultIconPlainSuccessSmall}"
+                                                    Width="24"
+                                                    Height="24"
+                                                    Margin="2,0"
+                                                    ToolTip="{local:Localization Key=common.button.save}"
+                                                    Command="{Binding DataContext.SaveColumnCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                    CommandParameter="{Binding}">
+                                                <Button.Visibility>
+                                                    <MultiBinding Converter="{StaticResource ObjectReferenceToVisibilityConverter}">
+                                                        <Binding />
+                                                        <Binding Path="DataContext.EditingColumn" RelativeSource="{RelativeSource AncestorType=DataGrid}"/>
+                                                    </MultiBinding>
+                                                </Button.Visibility>
+                                                <materialDesign:PackIcon Kind="Check" Width="16" Height="16"/>
+                                            </Button>
+                                            <!-- 取消按钮 -->
+                                            <Button Style="{StaticResource DefaultIconPlainWarningSmall}"
+                                                    Width="24"
+                                                    Height="24"
+                                                    Margin="2,0"
+                                                    ToolTip="{local:Localization Key=common.button.cancel}"
+                                                    Command="{Binding DataContext.CancelUpdateCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}">
+                                                <Button.Visibility>
+                                                    <MultiBinding Converter="{StaticResource ObjectReferenceToVisibilityConverter}">
+                                                        <Binding />
+                                                        <Binding Path="DataContext.EditingColumn" RelativeSource="{RelativeSource AncestorType=DataGrid}"/>
+                                                    </MultiBinding>
+                                                </Button.Visibility>
+                                                <materialDesign:PackIcon Kind="Close" Width="16" Height="16"/>
+                                            </Button>
+                                            <!-- 删除按钮 -->
+                                            <Button Style="{StaticResource DefaultIconPlainWarningSmall}"
+                                                    Width="24"
+                                                    Height="24"
+                                                    Margin="2,0"
+                                                    ToolTip="{local:Localization Key=common.button.delete}"
+                                                    Command="{Binding DataContext.DeleteColumnCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                    CommandParameter="{Binding}">
+                                                <Button.Visibility>
+                                                    <MultiBinding Converter="{StaticResource ObjectReferenceToVisibilityConverter}" ConverterParameter="Inverse">
+                                                        <Binding />
+                                                        <Binding Path="DataContext.EditingColumn" RelativeSource="{RelativeSource AncestorType=DataGrid}"/>
+                                                    </MultiBinding>
+                                                </Button.Visibility>
+                                                <materialDesign:PackIcon Kind="Delete" Width="16" Height="16"/>
+                                            </Button>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button IsDefault="True" 
+                    Command="{Binding SaveCommand}" 
+                    Content="{local:Localization Key=common.button.submit}" 
+                    Style="{StaticResource DefaultPrimary}"
+                    Margin="0,0,12,0"/>
+            <Button IsCancel="True" 
+                    Content="{local:Localization Key=common.button.cancel}"
+                    Style="{StaticResource DefaultInfo}"/>
+        </StackPanel>
+    </Grid>
+</Window>

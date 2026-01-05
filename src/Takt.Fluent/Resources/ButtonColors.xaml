@@ -1,0 +1,112 @@
+<!-- ========================================
+     项目名称：节拍(Takt)中小企业平台 · Takt SMEs Platform
+     命名空间：Takt.Fluent.Resources
+     文件名称：ButtonColors.xaml
+     创建时间：2025-11-11
+     创建人：Takt365(Cursor AI)
+     功能描述：定义按钮颜色资源
+
+     版权信息：Copyright (c) 2025 Takt All rights reserved.
+     免责声明：此软件使用 MIT License，作者不承担任何使用风险。
+     ======================================== -->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <!-- Primary 颜色（蓝色/强调色） -->
+    <SolidColorBrush x:Key="ButtonPrimaryDefaultBrush" Color="#2886de"/>
+    <SolidColorBrush x:Key="ButtonPrimaryHoverBrush" Color="#62abf5"/>
+    <SolidColorBrush x:Key="ButtonPrimaryPressedBrush" Color="#2886de"/>
+    <SolidColorBrush x:Key="ButtonPrimaryActiveBrush" Color="#62abf5"/>
+    <SolidColorBrush x:Key="ButtonPrimaryDisabledBrush" Color="#bdbdbd"/>
+    
+    <!-- Success 颜色（绿色） -->
+    <SolidColorBrush x:Key="ButtonSuccessDefaultBrush" Color="#107c10"/>
+    <SolidColorBrush x:Key="ButtonSuccessHoverBrush" Color="#54b054"/>
+    <SolidColorBrush x:Key="ButtonSuccessPressedBrush" Color="#107c10"/>
+    <SolidColorBrush x:Key="ButtonSuccessActiveBrush" Color="#54b054"/>
+    <SolidColorBrush x:Key="ButtonSuccessDisabledBrush" Color="#bdbdbd"/>
+    
+    <!-- Info 颜色（灰色/中性色） -->
+    <SolidColorBrush x:Key="ButtonInfoDefaultBrush" Color="#b3b3b3"/>
+    <SolidColorBrush x:Key="ButtonInfoHoverBrush" Color="#c7c7c7"/>
+    <SolidColorBrush x:Key="ButtonInfoPressedBrush" Color="#b3b3b3"/>
+    <SolidColorBrush x:Key="ButtonInfoActiveBrush" Color="#c7c7c7"/>
+    <SolidColorBrush x:Key="ButtonInfoDisabledBrush" Color="#bdbdbd"/>
+    
+    <!-- Warning 颜色（橙色） -->
+    <SolidColorBrush x:Key="ButtonWarningDefaultBrush" Color="#f7630c"/>
+    <SolidColorBrush x:Key="ButtonWarningHoverBrush" Color="#f98845"/>
+    <SolidColorBrush x:Key="ButtonWarningPressedBrush" Color="#f7630c"/>
+    <SolidColorBrush x:Key="ButtonWarningActiveBrush" Color="#f98845"/>
+    <SolidColorBrush x:Key="ButtonWarningDisabledBrush" Color="#bdbdbd"/>
+    
+    <!-- WarningA 颜色（当天 - 最浅橙色） -->
+    <SolidColorBrush x:Key="ButtonWarningADefaultBrush" Color="#f8833e"/>
+    <SolidColorBrush x:Key="ButtonWarningAHoverBrush" Color="#ffba08"/>
+    <SolidColorBrush x:Key="ButtonWarningAPressedBrush" Color="#f8833e"/>
+    <SolidColorBrush x:Key="ButtonWarningAActiveBrush" Color="#f8833e"/>
+    <SolidColorBrush x:Key="ButtonWarningADisabledBrush" Color="#bdbdbd"/>
+    
+    <!-- WarningB 颜色（7天 - 中等橙色） -->
+    <SolidColorBrush x:Key="ButtonWarningBDefaultBrush" Color="#f8833e"/>
+    <SolidColorBrush x:Key="ButtonWarningBHoverBrush" Color="#faa307"/>
+    <SolidColorBrush x:Key="ButtonWarningBPressedBrush" Color="#f8833e"/>
+    <SolidColorBrush x:Key="ButtonWarningBActiveBrush" Color="#f8833e"/>
+    <SolidColorBrush x:Key="ButtonWarningBDisabledBrush" Color="#bdbdbd"/>
+    
+    <!-- WarningC 颜色（30天 - 较深橙色） -->
+    <SolidColorBrush x:Key="ButtonWarningCDefaultBrush" Color="#f77325"/>
+    <SolidColorBrush x:Key="ButtonWarningCHoverBrush" Color="#f48c06"/>
+    <SolidColorBrush x:Key="ButtonWarningCPressedBrush" Color="#f77325"/>
+    <SolidColorBrush x:Key="ButtonWarningCActiveBrush" Color="#f77325"/>
+    <SolidColorBrush x:Key="ButtonWarningCDisabledBrush" Color="#bdbdbd"/>
+    
+    <!-- Danger 颜色（红色） -->
+    <SolidColorBrush x:Key="ButtonDangerDefaultBrush" Color="#c50f1f"/>
+    <SolidColorBrush x:Key="ButtonDangerHoverBrush" Color="#e85c6f"/>
+    <SolidColorBrush x:Key="ButtonDangerPressedBrush" Color="#c50f1f"/>
+    <SolidColorBrush x:Key="ButtonDangerActiveBrush" Color="#e85c6f"/>
+    <SolidColorBrush x:Key="ButtonDangerDisabledBrush" Color="#bdbdbd"/>
+    
+    <!-- Feature 颜色（紫色/粉紫色） -->
+    <SolidColorBrush x:Key="ButtonFeatureDefaultBrush" Color="#b146c2"/>
+    <SolidColorBrush x:Key="ButtonFeatureHoverBrush" Color="#cf87da"/>
+    <SolidColorBrush x:Key="ButtonFeaturePressedBrush" Color="#b146c2"/>
+    <SolidColorBrush x:Key="ButtonFeatureActiveBrush" Color="#cf87da"/>
+    <SolidColorBrush x:Key="ButtonFeatureDisabledBrush" Color="#bdbdbd"/>
+    
+    <!-- Accent 颜色（蓝紫色） -->
+    <SolidColorBrush x:Key="ButtonAccentDefaultBrush" Color="#7160e8"/>
+    <SolidColorBrush x:Key="ButtonAccentHoverBrush" Color="#a79cf1"/>
+    <SolidColorBrush x:Key="ButtonAccentPressedBrush" Color="#7160e8"/>
+    <SolidColorBrush x:Key="ButtonAccentActiveBrush" Color="#a79cf1"/>
+    <SolidColorBrush x:Key="ButtonAccentDisabledBrush" Color="#bdbdbd"/>
+    
+    <!-- Brand 颜色（青色/青绿色） -->
+    <SolidColorBrush x:Key="ButtonBrandDefaultBrush" Color="#00b7c3"/>
+    <SolidColorBrush x:Key="ButtonBrandHoverBrush" Color="#58d3db"/>
+    <SolidColorBrush x:Key="ButtonBrandPressedBrush" Color="#00b7c3"/>
+    <SolidColorBrush x:Key="ButtonBrandActiveBrush" Color="#58d3db"/>
+    <SolidColorBrush x:Key="ButtonBrandDisabledBrush" Color="#bdbdbd"/>
+    
+    <!-- Promo 颜色（粉红色） -->
+    <SolidColorBrush x:Key="ButtonPromoDefaultBrush" Color="#e43ba6"/>
+    <SolidColorBrush x:Key="ButtonPromoHoverBrush" Color="#ef85c8"/>
+    <SolidColorBrush x:Key="ButtonPromoPressedBrush" Color="#e43ba6"/>
+    <SolidColorBrush x:Key="ButtonPromoActiveBrush" Color="#ef85c8"/>
+    <SolidColorBrush x:Key="ButtonPromoDisabledBrush" Color="#bdbdbd"/>
+    
+    <!-- 文本颜色（用于按钮上的文字） -->
+    <SolidColorBrush x:Key="ButtonTextOnPrimaryBrush" Color="#ebf3fc"/>
+    <SolidColorBrush x:Key="ButtonTextOnSuccessBrush" Color="#ebf3fc"/>
+    <SolidColorBrush x:Key="ButtonTextOnWarningBrush" Color="#ebf3fc"/>
+    <SolidColorBrush x:Key="ButtonTextOnDangerBrush" Color="#ebf3fc"/>
+    <SolidColorBrush x:Key="ButtonTextOnInfoBrush" Color="#ebf3fc"/>
+    <SolidColorBrush x:Key="ButtonTextOnFeatureBrush" Color="#ebf3fc"/>
+    <SolidColorBrush x:Key="ButtonTextOnAccentBrush" Color="#ebf3fc"/>
+    <SolidColorBrush x:Key="ButtonTextOnBrandBrush" Color="#ebf3fc"/>
+    <SolidColorBrush x:Key="ButtonTextOnPromoBrush" Color="#ebf3fc"/>
+    <SolidColorBrush x:Key="ButtonTextDisabledBrush" Color="#909399"/>
+    
+</ResourceDictionary>
+

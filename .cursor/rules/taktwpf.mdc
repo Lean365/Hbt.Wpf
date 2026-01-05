@@ -1,0 +1,93 @@
+---
+alwaysApply: true
+---
+
+# 节拍(Takt)中小企业管理平台 · Takt SMEs Platform 项目规则
+
+## 项目信息
+
+- **项目名称**: 节拍(Takt)中小企业管理平台（Takt SMEs Platform）
+- **技术栈**: .NET 9.0, WPF, MVVM 模式
+- **架构模式**: Clean Architecture（分层架构）
+- **项目结构**: @docs/README.md
+
+## 核心原则
+
+1. **基于真实代码**：所有结论必须基于真实代码，不能推测
+2. **明确信息来源**：必须说明信息来源（代码、文档、推测）
+3. **提供足够上下文**：提供完整的项目背景、代码位置、依赖关系
+4. **验证所有输出**：使用验证清单检查 AI 生成的代码
+
+## 规则文件结构
+
+本项目的规则文件已拆分为多个可组合的小规则：
+
+- **architecture.mdc** - 架构规范和分层原则
+- **naming.mdc** - 命名规范和文件组织
+- **mvvm.mdc** - MVVM 模式规范
+- **dependency-injection.mdc** - 依赖注入规范
+- **async.mdc** - 异步编程规范
+- **prompt.mdc** - 提示语编写规范
+- **context.mdc** - 上下文管理规范
+
+## 快速参考
+
+### 命名规范
+- 类名必须以 `Takt` 开头（如 `TaktUserService`）
+- 接口必须以 `ITakt` 开头（如 `ITaktUserService`）
+- 异步方法必须以 `Async` 结尾
+- 参考：@.cursor/rules/naming.mdc
+
+### 架构规范
+- 分层架构：Fluent -> Application -> Domain -> Infrastructure -> Common
+- 依赖方向只能向下，禁止跨层调用
+- 参考：@.cursor/rules/architecture.mdc
+
+### MVVM 规范
+- View 只负责 UI，不包含业务逻辑
+- ViewModel 通过构造函数注入依赖
+- 参考：@.cursor/rules/mvvm.mdc
+
+## 文件头模板
+
+所有源码文件必须包含统一的头部注释，参照 `@src/Takt.Application/Dtos/Identity/LoginDto.cs:1-12`：
+
+```csharp
+// ========================================
+// 项目名称：节拍(Takt)中小企业管理平台 · Takt SMEs Platform
+// 命名空间：{Namespace}
+// 文件名称：{FileName}
+// 创建时间：{CreatedTime}
+// 创建人：Takt365(Cursor AI)
+// 功能描述：{Description}
+//
+// 版权信息：Copyright (c) 2025 Takt SMEs Platform. All rights reserved.
+// 免责声明：此软件使用 MIT License，作者不承担任何使用风险。
+// ========================================
+```
+
+## 文件引用格式
+
+使用 `@文件路径` 引用文件：
+- `@src/Takt.Fluent/Views/MainWindow.xaml`
+- `@src/Takt.Fluent/ViewModels/DashboardViewModel.cs:40`（带行号）
+
+## 提示语格式
+
+```
+[任务类型] [目标描述]
+
+**相关代码**：
+- @文件路径:行号
+
+**需求**：
+- 具体需求
+
+**约束条件**：
+- 必须遵循的规范
+
+**验证要求**：
+- 必须基于真实代码验证
+```
+
+参考：@.cursor/rules/prompt.mdc 和 @.cursor/rules/context.mdc

@@ -1,0 +1,83 @@
+---
+alwaysApply: true
+---
+
+# 命名规范
+
+## 类命名
+
+**强制要求**：类名必须以 `Takt` 开头
+
+```csharp
+// ✅ 正确
+public class TaktUserService { }
+public class TaktAuthenticationService { }
+
+// ❌ 错误
+public class UserService { }  // 缺少 Hbt 前缀
+```
+
+**示例文件**：
+- @src/Takt.Application/Services/（查看实际类名）
+
+## 接口命名
+
+**强制要求**：接口必须以 `ITakt` 开头
+
+```csharp
+// ✅ 正确
+public interface ITaktUserService { }
+public interface ITaktAuthenticationService { }
+
+// ❌ 错误
+public interface IUserService { }  // 缺少 IHbt 前缀
+```
+
+**示例文件**：
+- @src/Takt.Application/Services/（查看实际接口名）
+
+## 方法命名
+
+**异步方法**：必须以 `Async` 结尾
+
+```csharp
+// ✅ 正确
+public async Task<List<UserDto>> GetUsersAsync() { }
+public async Task<UserDto> GetUserByIdAsync(int id) { }
+
+// ❌ 错误
+public async Task<List<UserDto>> GetUsers() { }  // 缺少 Async 后缀
+```
+
+**示例文件**：
+- @src/Takt.Application/Services/（查看实际方法名）
+
+## 文件命名
+
+- View 文件：`[功能名]View.xaml`（如 `UserView.xaml`）
+- ViewModel 文件：`[功能名]ViewModel.cs`（如 `UserViewModel.cs`）
+- Service 接口：`I[功能名]Service.cs`（如 `IUserService.cs`）
+- Service 实现：`[功能名]Service.cs`（如 `UserService.cs`）
+
+**示例文件**：
+- @src/Takt.Fluent/Views/Identity/UserView.xaml
+- @src/Takt.Fluent/ViewModels/Identity/UserViewModel.cs
+
+## 变量命名
+
+- 私有字段：`_camelCase`（如下划线 + 驼峰）
+- 公共属性：`PascalCase`
+- 局部变量：`camelCase`
+
+```csharp
+// ✅ 正确
+public class TaktUserService
+{
+    private readonly IUserRepository _userRepository;  // 私有字段
+    public int UserId { get; set; }  // 公共属性
+    private void ProcessUser()
+    {
+        var userName = "test";  // 局部变量
+    }
+}
+```

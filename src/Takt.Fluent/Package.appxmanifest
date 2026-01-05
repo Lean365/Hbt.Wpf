@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+  xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
+  xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap uap3 uap5 desktop rescap">
+
+  <Identity
+    Name="Takt"
+    Publisher="CN=Takt IT Co.,Ltd."
+    Version="0.0.2.0" />
+
+  <Properties>
+    <DisplayName>节拍中小企业平台</DisplayName>
+    <PublisherDisplayName>节拍信息科技有限公司（Takt IT Co.,Ltd.）</PublisherDisplayName>
+    <Description>节拍(Takt)中小企业平台 - 基于 WPF 开发的企业级中后台管理系统</Description>
+    <Logo>Assets\takt.png</Logo>
+  </Properties>
+
+  <Resources>
+    <Resource Language="zh-CN">
+      <DisplayName>节拍中小企业平台</DisplayName>
+      <Description>节拍(Takt)中小企业平台 - 基于 WPF 开发的企业级中后台管理系统</Description>
+    </Resource>
+    <Resource Language="en-US">
+      <DisplayName>Takt SMEs Platform</DisplayName>
+      <Description>Takt SMEs Platform - Enterprise-level middle and back-office management system based on WPF</Description>
+    </Resource>
+    <Resource Language="ja-JP">
+      <DisplayName>タクト中小企業管理プラットフォーム</DisplayName>
+      <Description>タクト中小企業管理プラットフォーム - WPFベースのエンタープライズレベルのミドル・バックオフィス管理システム</Description>
+    </Resource>
+  </Resources>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.17763.0" MaxVersionTested="10.0.22621.0" />
+  </Dependencies>
+
+  <Capabilities>
+    <rescap:Capability Name="runFullTrust" />
+    <Capability Name="internetClient" />
+    <Capability Name="privateNetworkClientServer" />
+  </Capabilities>
+
+  <Applications>
+    <Application Id="Takt.Fluent"
+                 Executable="Takt.Fluent.exe"
+                 EntryPoint="Windows.FullTrustApplication">
+      <uap:VisualElements
+        DisplayName="节拍中小企业平台"
+        Description="节拍(Takt)中小企业平台 - 基于 WPF 开发的企业级中后台管理系统"
+        Square150x150Logo="Assets\takt.png"
+        Square44x44Logo="Assets\takt.png"
+        BackgroundColor="#FFFFFF">
+        <uap:DefaultTile Wide310x150Logo="Assets\takt.png" />
+        <uap:SplashScreen Image="Assets\takt.png" />
+      </uap:VisualElements>
+
+      <Extensions>
+        <desktop:Extension Category="windows.fullTrustProcess" EntryPoint="Windows.FullTrustApplication">
+          <desktop:FullTrustProcess>
+            <desktop:ParameterGroup GroupId="Takt.Fluent" Parameters="/launch" />
+          </desktop:FullTrustProcess>
+        </desktop:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+</Package>
+

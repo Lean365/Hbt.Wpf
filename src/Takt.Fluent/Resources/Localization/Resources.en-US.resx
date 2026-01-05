@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="database.connectionerror.title" xml:space="preserve">
+    <value>Database Connection Failed</value>
+  </data>
+  <data name="database.connectionerror.failed" xml:space="preserve">
+    <value>Database connection failed, unable to start the system.
+
+Please check the database server and connection string configuration.</value>
+  </data>
+  <data name="database.connectionerror.failed_detail" xml:space="preserve">
+    <value>Database connection failed, unable to start the system.
+
+Please check:
+1. Is the database server running normally
+2. Is the connection string configured correctly (appsettings.json)
+3. Has the database been created
+
+To automatically initialize the database, please set in appsettings.json:
+- "EnableCodeFirst": true (automatically create table structure)
+- "EnableSeedData": true (automatically initialize seed data)</value>
+  </data>
+  <data name="database.connectionerror.exception_startup" xml:space="preserve">
+    <value>Database connection check failed: {0}
+
+The application will close.</value>
+  </data>
+  <data name="database.tables_not_initialized.title" xml:space="preserve">
+    <value>Database Not Initialized</value>
+  </data>
+  <data name="database.tables_not_initialized.message" xml:space="preserve">
+    <value>Database not initialized, unable to start the system.
+
+Detected that database tables do not exist, the system needs to initialize the database.
+
+Please set one of the following configurations in appsettings.json:
+
+Option 1: Automatically create table structure
+  "EnableCodeFirst": true
+
+Option 2: Automatically initialize complete data
+  "EnableCodeFirst": true
+  "EnableSeedData": true
+
+After configuration, please restart the application.</value>
+  </data>
+  <data name="database.initialization.title" xml:space="preserve">
+    <value>Database Initialization</value>
+  </data>
+  <data name="database.initialization.error" xml:space="preserve">
+    <value>Database initialization failed: {0}
+
+The application will close.</value>
+  </data>
+  <data name="application.startup.error" xml:space="preserve">
+    <value>Application startup failed: {0}
+
+Details: {1}</value>
+  </data>
+  <data name="application.startup.error.title" xml:space="preserve">
+    <value>Startup Error</value>
+  </data>
+  <data name="common.messagebox.error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+</root>
+

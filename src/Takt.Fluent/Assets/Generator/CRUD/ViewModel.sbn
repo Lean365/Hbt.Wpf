@@ -1,0 +1,356 @@
+//===================================================================
+// 项目名 : Takt.Wpf
+// 文件名 : {{ class_name }}ViewModel.cs
+// 创建者 : {{ author }}
+// 创建时间: {{ created_time }}
+// 版本号 : 0.0.1
+// 描述    : {{ table_description }}管理视图模型（列表、筛选、增删改导出）
+//===================================================================
+
+using System;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
+using Takt.Application.Dtos{{~ if module_code != "" }}.{{ module_code }}{{~ end }};
+using Takt.Application.Services{{~ if module_code != "" }}.{{ module_code }}{{~ end }};
+using Takt.Common.Logging;
+using Takt.Common.Results;
+using Takt.Domain.Interfaces;
+using Takt.Fluent.Controls;
+using Takt.Fluent.Views{{~ if module_code != "" }}.{{ module_code }}{{~ end }};
+using QueryContext = Takt.Fluent.Controls.QueryContext;
+using PageRequest = Takt.Fluent.Controls.PageRequest;
+
+namespace Takt.Fluent.ViewModels{{~ if module_code != "" }}.{{ module_code }}{{~ end }};
+
+/// <summary>
+/// {{ table_description }}管理视图模型
+/// </summary>
+public partial class {{ class_name }}ViewModel : ObservableObject
+{
+    private readonly I{{ class_name }}Service _{{ class_name | string.downcase }}Service;
+    private readonly IServiceProvider _serviceProvider;
+    private readonly ILocalizationManager _localizationManager;
+    private readonly OperLogManager? _operLog;
+
+    public ObservableCollection<{{ class_name }}Dto> {{ class_name }}s { get; } = new();
+
+    [ObservableProperty]
+    private {{ class_name }}Dto? _selected{{ class_name }};
+
+    [ObservableProperty]
+    private string _keyword = string.Empty;
+
+    [ObservableProperty]
+    private int _pageIndex = 1;
+
+    [ObservableProperty]
+    private int _pageSize = 20;
+
+    [ObservableProperty]
+    private int _totalCount;
+
+    [ObservableProperty]
+    private bool _isLoading;
+
+    [ObservableProperty]
+    private string? _errorMessage;
+
+    [ObservableProperty]
+    private string? _successMessage;
+
+    [ObservableProperty]
+    private string _emptyMessage = string.Empty;
+
+    /// <summary>
+    /// 总页数（根据 TotalCount 与 PageSize 计算）
+    /// </summary>
+    public int TotalPages => PageSize <= 0 ? 0 : (int)Math.Ceiling((double)TotalCount / PageSize);
+
+    /// <summary>
+    /// 是否存在上一页
+    /// </summary>
+    public bool HasPreviousPage => PageIndex > 1;
+
+    /// <summary>
+    /// 是否存在下一页
+    /// </summary>
+    public bool HasNextPage => PageIndex < TotalPages;
+
+    public {{ class_name }}ViewModel(
+        I{{ class_name }}Service {{ class_name | string.downcase }}Service,
+        IServiceProvider serviceProvider,
+        ILocalizationManager localizationManager,
+        OperLogManager? operLog = null)
+    {
+        _{{ class_name | string.downcase }}Service = {{ class_name | string.downcase }}Service ?? throw new ArgumentNullException(nameof({{ class_name | string.downcase }}Service));
+        _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
+        _localizationManager = localizationManager ?? throw new ArgumentNullException(nameof(localizationManager));
+        _operLog = operLog;
+
+        EmptyMessage = _localizationManager.GetString("common.noData") ?? "暂无数据";
+
+        _ = LoadAsync();
+    }
+
+    /// <summary>
+    /// 加载{{ table_description }}列表
+    /// </summary>
+    private async Task LoadAsync()
+    {
+        if (IsLoading)
+        {
+            return;
+        }
+
+        IsLoading = true;
+        ErrorMessage = null;
+        SuccessMessage = null;
+
+        try
+        {
+            _operLog?.Information("[{{ class_name }}View] Load {{ table_description | string.downcase }}: pageIndex={PageIndex}, pageSize={PageSize}, keyword={Keyword}", PageIndex, PageSize, Keyword);
+
+            // 构建查询DTO
+            var query = new {{ class_name }}QueryDto
+            {
+                PageIndex = PageIndex,
+                PageSize = PageSize,
+                Keywords = string.IsNullOrWhiteSpace(Keyword) ? null! : Keyword.Trim()
+            };
+
+            var result = await _{{ class_name | string.downcase }}Service.GetListAsync(query);
+
+            if (!result.Success || result.Data == null)
+            {
+                {{ class_name }}s.Clear();
+                TotalCount = 0;
+                ErrorMessage = result.Message ?? _localizationManager.GetString("{{ module_code }}.{{ class_name }}.LoadFailed") ?? "加载{{ table_description }}数据失败";
+                System.Windows.Input.CommandManager.InvalidateRequerySuggested();
+                return;
+            }
+
+            {{ class_name }}s.Clear();
+            foreach (var item in result.Data.Items)
+            {
+                {{ class_name }}s.Add(item);
+            }
+            
+            // 数据加载完成后，重新评估所有命令的 CanExecute
+            System.Windows.Input.CommandManager.InvalidateRequerySuggested();
+
+            TotalCount = result.Data.TotalNum;
+            OnPropertyChanged(nameof(TotalPages));
+            OnPropertyChanged(nameof(HasNextPage));
+            OnPropertyChanged(nameof(HasPreviousPage));
+
+            UpdateEmptyMessage();
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = ex.Message;
+            _operLog?.Error(ex, "[{{ class_name }}View] 加载{{ table_description }}列表失败");
+        }
+        finally
+        {
+            IsLoading = false;
+            if (string.IsNullOrWhiteSpace(ErrorMessage))
+            {
+                UpdateEmptyMessage();
+            }
+        }
+    }
+
+    partial void OnErrorMessageChanged(string? value)
+    {
+        UpdateEmptyMessage();
+    }
+
+    private void UpdateEmptyMessage()
+    {
+        if (!string.IsNullOrWhiteSpace(ErrorMessage))
+        {
+            EmptyMessage = ErrorMessage!;
+            return;
+        }
+
+        EmptyMessage = _localizationManager.GetString("common.noData") ?? "暂无数据";
+    }
+
+    /// <summary>
+    /// 查询命令（来自自定义表格）
+    /// </summary>
+    [RelayCommand]
+    private async Task QueryAsync(QueryContext context)
+    {
+        Keyword = context.Keyword;
+        if (PageIndex != context.PageIndex)
+        {
+            PageIndex = context.PageIndex <= 0 ? 1 : context.PageIndex;
+        }
+
+        if (PageSize != context.PageSize)
+        {
+            PageSize = context.PageSize <= 0 ? 20 : context.PageSize;
+        }
+
+        await LoadAsync();
+    }
+
+    /// <summary>
+    /// 重置查询
+    /// </summary>
+    [RelayCommand]
+    private async Task ResetAsync(QueryContext context)
+    {
+        Keyword = string.Empty;
+        PageIndex = 1;
+        await LoadAsync();
+    }
+
+    /// <summary>
+    /// 分页变化
+    /// </summary>
+    [RelayCommand]
+    private async Task PageChangedAsync(PageRequest request)
+    {
+        if (PageIndex != request.PageIndex)
+        {
+            PageIndex = request.PageIndex <= 0 ? 1 : request.PageIndex;
+        }
+
+        if (PageSize != request.PageSize && request.PageSize > 0)
+        {
+            PageSize = request.PageSize;
+        }
+
+        await LoadAsync();
+    }
+
+    /// <summary>
+    /// 新建{{ table_description }}
+    /// </summary>
+    [RelayCommand]
+    private void Create()
+    {
+        Show{{ class_name }}Form(null);
+    }
+
+    /// <summary>
+    /// 更新{{ table_description }}
+    /// </summary>
+    [RelayCommand]
+    private void Update({{ class_name }}Dto? item)
+    {
+        // 如果没有传递参数，使用 Selected{{ class_name }}
+        if (item == null)
+        {
+            item = Selected{{ class_name }};
+        }
+
+        if (item == null)
+        {
+            return;
+        }
+
+        Selected{{ class_name }} = item;
+        Show{{ class_name }}Form(item);
+    }
+
+    /// <summary>
+    /// 删除{{ table_description }}
+    /// </summary>
+    [RelayCommand]
+    private async Task DeleteAsync({{ class_name }}Dto? item)
+    {
+        if (item == null)
+        {
+            return;
+        }
+
+        Selected{{ class_name }} = item;
+
+        var confirmText = _localizationManager.GetString("{{ module_code }}.{{ class_name }}.DeleteConfirm") ?? "确定要删除该{{ table_description }}吗？";
+        var owner = System.Windows.Application.Current?.MainWindow;
+        if (!TaktMessageManager.ShowDeleteConfirm(confirmText, owner))
+        {
+            return;
+        }
+
+        try
+        {
+            var result = await _{{ class_name | string.downcase }}Service.DeleteAsync(item.Id);
+            if (!result.Success)
+            {
+                var entityName = _localizationManager.GetString("{{ module_code }}.{{ class_name }}.Keyword") ?? "{{ table_description }}";
+                var errorMessage = result.Message ?? string.Format(_localizationManager.GetString("common.failed.delete") ?? "{0}删除失败", entityName);
+                TaktMessageManager.ShowError(errorMessage);
+                return;
+            }
+
+            var entityNameSuccess = _localizationManager.GetString("{{ module_code }}.{{ class_name }}.Keyword") ?? "{{ table_description }}";
+            var successMessage = string.Format(_localizationManager.GetString("common.success.delete") ?? "{0}删除成功", entityNameSuccess);
+            TaktMessageManager.ShowSuccess(successMessage);
+            await LoadAsync();
+        }
+        catch (Exception ex)
+        {
+            var errorMessage = ex.Message;
+            TaktMessageManager.ShowError(errorMessage);
+            _operLog?.Error(ex, "[{{ class_name }}View] 删除{{ table_description }}失败，Id={Id}", item.Id);
+        }
+    }
+
+    /// <summary>
+    /// 打开{{ table_description }}表单窗口
+    /// </summary>
+    /// <param name="item">要编辑的{{ table_description }}，null 表示新建</param>
+    private void Show{{ class_name }}Form({{ class_name }}Dto? item)
+    {
+        try
+        {
+            var window = _serviceProvider.GetRequiredService<Takt.Fluent.Views{{~ if module_code != "" }}.{{ module_code }}{{~ end }}.{{ class_name }}Component.{{ class_name }}Form>();
+            if (window.DataContext is not {{ class_name }}FormViewModel formViewModel)
+            {
+                throw new InvalidOperationException("{{ class_name }}Form DataContext 不是 {{ class_name }}FormViewModel");
+            }
+
+            if (item == null)
+            {
+                formViewModel.ForCreate();
+            }
+            else
+            {
+                formViewModel.ForUpdate(item);
+            }
+
+            formViewModel.SaveSuccessCallback = async () =>
+            {
+                window.Close();
+                await LoadAsync();
+            };
+
+            window.Owner = System.Windows.Application.Current?.MainWindow;
+            window.ShowDialog();
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = ex.Message;
+            _operLog?.Error(ex, "[{{ class_name }}View] 打开{{ table_description }}表单窗口失败");
+        }
+    }
+
+    partial void OnSelected{{ class_name }}Changed({{ class_name }}Dto? value)
+    {
+        // 通知命令系统重新评估所有命令的 CanExecute
+        UpdateCommand.NotifyCanExecuteChanged();
+        DeleteCommand.NotifyCanExecuteChanged();
+        CreateCommand.NotifyCanExecuteChanged();
+        
+        // 同时触发全局命令重新评估，确保行操作按钮也能正确更新
+        System.Windows.Input.CommandManager.InvalidateRequerySuggested();
+    }
+}
+

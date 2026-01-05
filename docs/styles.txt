@@ -1,0 +1,74 @@
+			default	round	circle	text
+			Plain	Plain	Plain	
+Primary	悬浮	Hover(MouseOver)	#0f6cbd	#0f6cbd	#0f6cbd	#0f6cbd
+Primary	点击	Pressed	#115ea3	#115ea3	#115ea3	#115ea3
+Primary	激活	Active(Selected)	#0f6cbd	#0f6cbd	#0f6cbd	#0f6cbd
+Primary	禁用	Disabled	#bdbdbd	#bdbdbd	#bdbdbd	#bdbdbd
+						
+Success	悬浮	Hover(MouseOver)	#54b054	#54b054	#54b054	#54b054
+Success	点击	Pressed	#107c10	#107c10	#107c10	#107c10
+Success	激活	Active(Selected)	#54b054	#54b054	#54b054	#54b054
+Success	禁用	Disabled	#bdbdbd	#bdbdbd	#bdbdbd	#bdbdbd
+						
+Info	悬浮	Hover(MouseOver)	#c7c7c7	#c7c7c7	#c7c7c7	#c7c7c7
+Info	点击	Pressed	#b3b3b3	#b3b3b3	#b3b3b3	#b3b3b3
+Info	激活	Active(Selected)	#c7c7c7	#c7c7c7	#c7c7c7	#c7c7c7
+Info	禁用	Disabled	#bdbdbd	#bdbdbd	#bdbdbd	#bdbdbd
+						
+Warning	悬浮	Hover(MouseOver)	#f7630c	#f7630c	#f7630c	#f7630c
+Warning	点击	Pressed	#f98845	#f98845	#f98845	#f98845
+Warning	激活	Active(Selected)	#f7630c	#f7630c	#f7630c	#f7630c
+Warning	禁用	Disabled	#bdbdbd	#bdbdbd	#bdbdbd	#bdbdbd
+						
+Danger	悬浮	Hover(MouseOver)	#c50f1f	#c50f1f	#c50f1f	#c50f1f
+Danger	点击	Pressed	#b10e1c	#b10e1c	#b10e1c	#b10e1c
+Danger	激活	Active(Selected)	#c50f1f	#c50f1f	#c50f1f	#c50f1f
+Danger	禁用	Disabled	#bdbdbd	#bdbdbd	#bdbdbd	#bdbdbd
+						
+						
+			default+Plain	round+Plain	circle+Plain	text+Plain
+						
+Primary	悬浮	Hover(MouseOver)	#0f6cbd	#0f6cbd	#0f6cbd	#0f6cbd
+Primary	点击	Pressed	#115ea3	#115ea3	#115ea3	#115ea3
+Primary	激活	Active(Selected)	#0f6cbd	#0f6cbd	#0f6cbd	#0f6cbd
+Primary	禁用	Disabled	#bdbdbd	#bdbdbd	#bdbdbd	#bdbdbd
+						
+Success	悬浮	Hover(MouseOver)	#54b054	#54b054	#54b054	#54b054
+Success	点击	Pressed	#107c10	#107c10	#107c10	#107c10
+Success	激活	Active(Selected)	#54b054	#54b054	#54b054	#54b054
+Success	禁用	Disabled	#bdbdbd	#bdbdbd	#bdbdbd	#bdbdbd
+						
+Info	悬浮	Hover(MouseOver)	#c7c7c7	#c7c7c7	#c7c7c7	#c7c7c7
+Info	点击	Pressed	#b3b3b3	#b3b3b3	#b3b3b3	#b3b3b3
+Info	激活	Active(Selected)	#c7c7c7	#c7c7c7	#c7c7c7	#c7c7c7
+Info	禁用	Disabled	#bdbdbd	#bdbdbd	#bdbdbd	#bdbdbd
+						
+Warning	悬浮	Hover(MouseOver)	#f7630c	#f7630c	#f7630c	#f7630c
+Warning	点击	Pressed	#f98845	#f98845	#f98845	#f98845
+Warning	激活	Active(Selected)	#f7630c	#f7630c	#f7630c	#f7630c
+Warning	禁用	Disabled	#bdbdbd	#bdbdbd	#bdbdbd	#bdbdbd
+						
+Danger	悬浮	Hover(MouseOver)	#c50f1f	#c50f1f	#c50f1f	#c50f1f
+Danger	点击	Pressed	#b10e1c	#b10e1c	#b10e1c	#b10e1c
+Danger	激活	Active(Selected)	#c50f1f	#c50f1f	#c50f1f	#c50f1f
+Danger	禁用	Disabled	#bdbdbd	#bdbdbd	#bdbdbd	#bdbdbd
+						
+Feature	悬浮	Hover(MouseOver)	#cf87da	#cf87da	#cf87da	#cf87da
+Feature	点击	Pressed	#b146c2	#b146c2	#b146c2	#b146c2
+Feature	激活	Active(Selected)	#cf87da	#cf87da	#cf87da	#cf87da
+Feature	禁用	Disabled	#bdbdbd	#bdbdbd	#bdbdbd	#bdbdbd
+						
+Accent	悬浮	Hover(MouseOver)	#a79cf1	#a79cf1	#a79cf1	#a79cf1
+Accent	点击	Pressed	#7160e8	#7160e8	#7160e8	#7160e8
+Accent	激活	Active(Selected)	#a79cf1	#a79cf1	#a79cf1	#a79cf1
+Accent	禁用	Disabled	#bdbdbd	#bdbdbd	#bdbdbd	#bdbdbd
+						
+Brand	悬浮	Hover(MouseOver)	#58d3db	#58d3db	#58d3db	#58d3db
+Brand	点击	Pressed	#00b7c3	#00b7c3	#00b7c3	#00b7c3
+Brand	激活	Active(Selected)	#58d3db	#58d3db	#58d3db	#58d3db
+Brand	禁用	Disabled	#bdbdbd	#bdbdbd	#bdbdbd	#bdbdbd
+						
+Promo	悬浮	Hover(MouseOver)	#ef85c8	#ef85c8	#ef85c8	#ef85c8
+Promo	点击	Pressed	#e43ba6	#e43ba6	#e43ba6	#e43ba6
+Promo	激活	Active(Selected)	#ef85c8	#ef85c8	#ef85c8	#ef85c8
+Promo	禁用	Disabled	#bdbdbd	#bdbdbd	#bdbdbd	#bdbdbd
